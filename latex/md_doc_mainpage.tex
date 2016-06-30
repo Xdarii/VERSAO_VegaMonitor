@@ -1,0 +1,27 @@
+
+
+\section*{Plugin Qgis\+: Pour le traitement des données M\+O\+D\+IS M\+O\+D13\+Q1 et l\textquotesingle{}extraction de métrique phénologique}
+
+\subsection*{M\+O\+D13\+Q1\+:}
+
+Les données mondiales de M\+O\+D13\+Q1 sont fournies tous les 16 jours à une résolution spatiale de 250 mètres dans une projection sinusoïdale avec une fauchée qui permet de couvrir de vaste zone (2350 Km). Tous les pixels d\textquotesingle{}une image ne sont pas pris à la même date car pour chaque pixel il compare sa valeur sur les 16 jours et c\textquotesingle{}est la plus grande valeur qui est retenu.
+
+\subsection*{Prétraitement}
+
+\subsubsection*{Découper}
+
+Les données téléchargées étant dans la majeur partie des cas trop grandes pour notre zone d\textquotesingle{}études nous avons pris soin de fournir à l\textquotesingle{}utilisateur la possibilité de découper sa zone en fonction d\textquotesingle{}un fichier shape (.shp) qui délimite sa zone d\textquotesingle{}études. \subsubsection*{Interpolation}
+
+L\textquotesingle{}option prétraitement en plus de l\textquotesingle{}option de découpage dispose d\textquotesingle{}une fonctionnalité d\textquotesingle{}interpolation. Cette option permet de ramener toutes les images du N\+D\+VI à un intervalle de 16 jours si cela n\textquotesingle{}est pas le cas. C’est-\/à-\/dire en interpolant on s’assure que tous les pixels d’une image soient pris à la même date et que successivement les images soient à un intervalle de 16 jours. En plus d’interpoler les images cette option propose de filtrer les images en sorties dans le cas où nous avons affaire à des images bruitées.
+
+\subsubsection*{Lissage}
+
+Une option de filtrage est également disponible pour ce qui souhaiterais uniquement lisser les données qu\textquotesingle{}ils disposent que ce soit du M\+O\+D\+IS ou autres satellites.
+
+\subsection*{Métrique Phénologique}
+
+L’extraction des métrique phénologique fournit entre autre la détermination du start of season (S\+OS), end of season (E\+OS), le lenght of season (L\+OS), les cumules du N\+D\+VI avant et après la date de floraison et les anomalies associées pour chaque pixel de l’image pour toute l’année.
+
+{\itshape Pour toutes informations supplémentaires veuillez consulter le wiki}
+
+\href{https://github.com/Xdarii/QGIS_Traitement_and_Pheno/wiki/M%C3%A9trique-Ph%C3%A9nologique}{\tt https\+://github.\+com/\+Xdarii/\+Q\+G\+I\+S\+\_\+\+Traitement\+\_\+and\+\_\+\+Pheno/wiki/\+M\%\+C3\%\+A9trique-\/\+Ph\%\+C3\%\+A9nologique} \href{https://github.com/Xdarii/QGIS_Traitement_and_Pheno/wiki/Pr%C3%A9traitement}{\tt https\+://github.\+com/\+Xdarii/\+Q\+G\+I\+S\+\_\+\+Traitement\+\_\+and\+\_\+\+Pheno/wiki/\+Pr\%\+C3\%\+A9traitement} 
