@@ -5,7 +5,8 @@ var indexSectionsWithContent =
   2: "v",
   3: "_cfmprtw",
   4: "_abcdeghilmopqstuvw",
-  5: "abcdefhilmnopqrstuvwxy"
+  5: "abcdefhilmnopqrstuvwxy",
+  6: "p"
 };
 
 var indexSectionNames =
@@ -15,7 +16,8 @@ var indexSectionNames =
   2: "namespaces",
   3: "files",
   4: "functions",
-  5: "variables"
+  5: "variables",
+  6: "pages"
 };
 
 var indexSectionLabels =
@@ -25,6 +27,7 @@ var indexSectionLabels =
   2: "Espaces de nommage",
   3: "Fichiers",
   4: "Fonctions",
-  5: "Variables"
+  5: "Variables",
+  6: "Pages"
 };
 
