@@ -1,0 +1,48 @@
+.TH "VERSAO_P2I.TVDI" 3 "Jeudi 30 Juin 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_P2I.TVDI \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Fonctions"
+
+.in +1c
+.ti -1c
+.RI "def \fBTVDI_function\fP (inNDVI, inLST, pas=0\&.02, t=1, s1Min=0\&.3, s2Max=0\&.8, ss1Min=0\&.2, ss2Max=0\&.8)"
+.br
+.in -1c
+.SH "Documentation des fonctions"
+.PP 
+.SS "def VERSAO_P2I\&.TVDI\&.TVDI_function ( inNDVI,  inLST,  pas = \fC0\&.02\fP,  t = \fC1\fP,  s1Min = \fC0\&.3\fP,  s2Max = \fC0\&.8\fP,  ss1Min = \fC0\&.2\fP,  ss2Max = \fC0\&.8\fP)"
+
+.PP
+.nf
+Ce script permet de calculer le TVDI.
+
+cette fonction est une traduction en python du script IDL publié par Monica Garcia, et il est basé sur l'article:
+(Garcia,M., Fernández, N., Villagarcía, L., Domingo, F.,  Puigdefábregas,J. & I. Sandholt. 2014. 2014. 
+Accuracy of the Temperature–Vegetation Dryness Index using MODIS under water-limited vs. 
+energy-limited evapotranspiration conditions  Remote Sensing of Environment 149, 100-117.) 
+
+Entrée:
+    inNDVI: image de NDVI en entrée
+    inLST: image de temperature en entrée
+    pas: intervalle du NDVI
+    
+    s1Min: seuil inferieur pour determiner l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmax
+    s2Max: seuil superieur pour determiner  l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmax
+    ss1Min: seuil inferieur pour determiner  l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmin
+    ss2Max: sseuil superieur pour determiner  l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmin
+    
+    t : t=0 pour utiliser la méthode implémenté par Garcia M (voir l'article) et t=1 pour utiliser toutes les valeurs sans aucun seuils.
+Sortie: 
+    TVDI: correspond au TVDI calculé 
+
+.fi
+.PP
+ 
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.

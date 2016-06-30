@@ -1,0 +1,109 @@
+.TH "VERSAO_P2I.class_pretraitement.ProgressBar" 3 "Jeudi 30 Juin 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_P2I.class_pretraitement.ProgressBar \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Fonctions membres publiques"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP (self, progress_bar)"
+.br
+.ti -1c
+.RI "def \fBactive\fP (self, ok)"
+.br
+.ti -1c
+.RI "def \fBset_value\fP (self, value)"
+.br
+.ti -1c
+.RI "def \fBprogression\fP (self, add)"
+.br
+.in -1c
+.SS "Attributs publics"
+
+.in +1c
+.ti -1c
+.RI "\fBbar\fP"
+.br
+.in -1c
+.SH "Description détaillée"
+.PP 
+
+.PP
+.nf
+This class allows to manage a number of features depending on the progress bar    
+
+.fi
+.PP
+ 
+.SH "Documentation des constructeurs et destructeur"
+.PP 
+.SS "def VERSAO_P2I\&.class_pretraitement\&.ProgressBar\&.__init__ ( self,  progress_bar)"
+
+.PP
+.nf
+Constructor.
+
+.fi
+.PP
+ 
+.SH "Documentation des fonctions membres"
+.PP 
+.SS "def VERSAO_P2I\&.class_pretraitement\&.ProgressBar\&.active ( self,  ok)"
+
+.PP
+.nf
+allows to activate and deactivate the bar
+Parameters:
+----------
+ ok: is a boolean indicating whether the bar should be enabled or not
+Returns:
+--------
+ nothing--
+
+.fi
+.PP
+ 
+.PP
+Références VERSAO_P2I\&.class_pretraitement\&.ProgressBar\&.set_value()\&.
+.SS "def VERSAO_P2I\&.class_pretraitement\&.ProgressBar\&.progression ( self,  add)"
+
+.PP
+.nf
+ Helps move the progress bar by replacing its value by the input value 
+ if it is less than 100.
+ Parameters:
+ ----------
+  add: new value of the progress bar
+ Returns:
+  nothing--
+.fi
+.PP
+ 
+.PP
+Références VERSAO_P2I\&.class_pretraitement\&.ProgressBar\&.set_value()\&.
+.SS "def VERSAO_P2I\&.class_pretraitement\&.ProgressBar\&.set_value ( self,  value)"
+
+.PP
+.nf
+replace the value of the progress bar by the setting input  
+Parameters:
+----------
+ value: new value of the progression bar
+Returns:
+ nothing--
+
+.fi
+.PP
+ 
+.SH "Documentation des données membres"
+.PP 
+.SS "VERSAO_P2I\&.class_pretraitement\&.ProgressBar\&.bar"
+
+
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.

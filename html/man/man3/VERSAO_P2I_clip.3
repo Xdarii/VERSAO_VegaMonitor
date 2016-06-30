@@ -1,0 +1,49 @@
+.TH "VERSAO_P2I.clip" 3 "Jeudi 30 Juin 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_P2I.clip \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Fonctions"
+
+.in +1c
+.ti -1c
+.RI "def \fBworld2Pixel\fP (geoMatrix, x, y)"
+.br
+.ti -1c
+.RI "def \fBclipRaster\fP (srcImage, G, P, shapefile_path)"
+.br
+.in -1c
+.SH "Documentation des fonctions"
+.PP 
+.SS "def VERSAO_P2I\&.clip\&.clipRaster ( srcImage,  G,  P,  shapefile_path)"
+
+.PP
+.nf
+Cette fonction prend en entrée un Raster et un vecteur puis elle
+renvoie un tableau decouper selon l'emprise du vecteur.
+Entree: 
+raster_path: raster en entrée
+shapefile_path: shape par lequel le raster sera découper
+Sortie: clip
+
+.fi
+.PP
+ 
+.PP
+Références VERSAO_P2I\&.clip\&.world2Pixel()\&.
+.SS "def VERSAO_P2I\&.clip\&.world2Pixel ( geoMatrix,  x,  y)"
+
+.PP
+.nf
+Uses a gdal geomatrix (gdal.GetGeoTransform()) to calculate
+the pixel location of a geospatial coordinate
+
+.fi
+.PP
+ 
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.

@@ -1575,120 +1575,124 @@ class CalculIndicateur():
             calculates the VHI (vegetation health index)
             """
             self.depart()
+#            try:
+            self.qgisInterface.messageBar().pushMessage("Info", u"calcul du VHI...", level=QgsMessageBar.INFO, duration=3)
+            imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
+            [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
+            [nL,nC,i]=NDVI.shape
+            sos=0
+            eos=0
+            tos=0
+            nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
+            out=sp.zeros((nL,nC,nZ))
+            new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
+            if self.cumuleChecked:
+                new,sos,eos,tos=self.cumule(new)
+            if not self.on:
+                 self.stop()
+                 return
+            progress=1
+            prefixe="vhi_"
+            lienNdvi=self.interface.cheminNDVI_temperature.text()
+            lListe=[]   
             try:
-                self.qgisInterface.messageBar().pushMessage("Info", u"calcul du VHI...", level=QgsMessageBar.INFO, duration=3)
-                imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
-                [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
-                [nL,nC,i]=NDVI.shape
-                sos=0
-                eos=0
-                tos=0
-                nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
-                out=sp.zeros((nL,nC,nZ))
-                new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
-                if self.cumuleChecked:
-                    new,sos,eos,tos=self.cumule(new)
-                if not self.on:
-                     self.stop()
-                     return
-                progress=1
-                prefixe="vhi_"
-                lienNdvi=self.interface.cheminNDVI_temperature.text()
-                lListe=[]   
-                try:
-                    lListe,nYear,ok=test_lien_data_date(self.interface,lienNdvi,"NDVI",self.imageParAn,self.checked_multi,self.iDebut,self.iFin,self.debutSerie,self.finSerie,self.debutT,self.finT,self.dureeSerie,self.dureeT)    
-                except:
-                    QgsMessageLog.logMessage(u"un problème rencontré sur les données du NDVI")
-                    
-                if not ok:
-                    QApplication.restoreOverrideCursor()
-                    self.Bar.active(0)
-                    return
-              
-                imageNDVI=os.path.join(lienNdvi , lListe[0])
-                [temp,GeoTransform1,Projection1]=open_data(imageNDVI)                 
-                inNdvi=concatenation_serie(lienNdvi,lListe,self.dureeT,self.imageParAn,self.checked_multi)
-                
-                if  self.interface.aggregate_Yes.isChecked() :
-                    QApplication.processEvents()
-                    
-                    a=self.interface.facteur_aggregate.value()  
-                    
-                    if self.interface.function_aggregate.currentText().lower()=="mean":
-                        inNdvi1=block_reduce(inNdvi,(a,a,1),sp.mean)
-                        
-                    if self.interface.function_aggregate.currentText().lower()=="min":
-                        inNdvi1=block_reduce(inNdvi,(a,a,1),sp.min)
-                        
-                    if self.interface.function_aggregate.currentText().lower()=="max":
-                        inNdvi1=block_reduce(inNdvi,(a,a,1),sp.max)
-                        
-                    if self.interface.function_aggregate.currentText().lower()=="median":
-                        inNdvi1=block_reduce(inNdvi,(a,a,1),sp.median)
-                        
-                    [nLL,nCC,nZZ]=inNdvi1.shape
-                    
-                    if nL > nLL :
-                        nLLL=nLL
-                    else:
-                        nLLL=nL
-                    if nC > nCC :
-                        nCCC=nCC
-                    else:
-                        nCCC=nC
-                    inV=inNdvi1[:nLLL,:nCCC,:]
-                    inT=new[:nLLL,:nCCC,:]
-                    out=sp.zeros((nLLL,nCCC,nZ))
-                    miniT=sp.zeros((nLLL,nCCC))
-                    maxiT=sp.zeros((nLLL,nCCC))
-                    miniV=sp.zeros((nLLL,nCCC))
-                    maxiV=sp.zeros((nLLL,nCCC))
-                    outTci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
-                    outVci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
-                else:
-                    [nLL,nCC,nZZ]=inNdvi.shape
-                    
-                    if nL > nLL or nL < nLL or nC > nCC or nC < nCC :
-                        QMessageBox.warning(self.interface, u'Problème de données ', u"les données doivent avoir la même taille ")
-                        QApplication.restoreOverrideCursor()
-                        self.active_progressBar_temperature(0)
-                        return
-                    miniT=sp.zeros((nL,nC))
-                    maxiT=sp.zeros((nL,nC))
-                    miniV=sp.zeros((nL,nC))
-                    maxiV=sp.zeros((nL,nC))
-                    outTci=sp.empty((nL,nC,nZ),dtype='float16')
-                    outVci=sp.empty((nL,nC,nZ),dtype='float16')
-                    inV=inNdvi[:nLLL,:nCCC,:]
-                    inT=new[:nLLL,:nCCC,:]
-                for m in range(self.imageParAn):
-                     
-                     for x in range(nL):
-                         
-                         progress=progress+(1.0/nL*75/self.imageParAn)
-                         
-                         self.Bar.progression(progress)
-                         
-                         for y in range(nC):
-                             miniT[x,y]=sp.nanmin(inT[x,y,sp.arange(m,nZ,self.imageParAn)])+0.0000001
-                             maxiT[x,y]=sp.nanmax(inT[x,y,sp.arange(m,nZ,self.imageParAn)]) 
-                             
-                             miniV[x,y]=sp.nanmin(inV[x,y,sp.arange(m,nZ,self.imageParAn)])+0.0000001
-                             maxiV[x,y]=sp.nanmax(inV[x,y,sp.arange(m,nZ,self.imageParAn)]) 
-                             
-                     for ll in range(m,nZ,self.imageParAn):
-                         
-                         outVci[:,:,ll]=(inV[:,:,ll] - miniV)/(maxiV-miniV)
-                         outTci[:,:,ll]=(maxiT-inT[:,:,ll])/(maxiT-miniT)
-                         
-                out=0.5*(outVci + outTci)
-                self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,)
-                QApplication.restoreOverrideCursor()   
+                lListe,nYear,ok=test_lien_data_date(self.interface,lienNdvi,"NDVI",self.imageParAn,self.checked_multi,self.iDebut,self.iFin,self.debutSerie,self.finSerie,self.debutT,self.finT,self.dureeSerie,self.dureeT)    
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calul du vhi, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
-                  self.stop()
-                  QApplication.restoreOverrideCursor()
-                  return
+                QgsMessageLog.logMessage(u"un problème rencontré sur les données du NDVI")
+                
+            if not ok:
+                QApplication.restoreOverrideCursor()
+                self.Bar.active(0)
+                return
+          
+            imageNDVI=os.path.join(lienNdvi , lListe[0])
+            [temp,GeoTransform1,Projection1]=open_data(imageNDVI)                 
+            inNdvi=concatenation_serie(lienNdvi,lListe,self.dureeT,self.imageParAn,self.checked_multi)
+            
+            if  self.interface.aggregate_Yes.isChecked() :
+                QApplication.processEvents()
+                
+                a=self.interface.facteur_aggregate.value()  
+                
+                if self.interface.function_aggregate.currentText().lower()=="mean":
+                    inNdvi1=block_reduce(inNdvi,(a,a,1),sp.mean)
+                    
+                if self.interface.function_aggregate.currentText().lower()=="min":
+                    inNdvi1=block_reduce(inNdvi,(a,a,1),sp.min)
+                    
+                if self.interface.function_aggregate.currentText().lower()=="max":
+                    inNdvi1=block_reduce(inNdvi,(a,a,1),sp.max)
+                    
+                if self.interface.function_aggregate.currentText().lower()=="median":
+                    inNdvi1=block_reduce(inNdvi,(a,a,1),sp.median)
+                    
+                [nLL,nCC,nZZ]=inNdvi1.shape
+                
+                if nL > nLL :
+                    nLLL=nLL
+                else:
+                    nLLL=nL
+                if nC > nCC :
+                    nCCC=nCC
+                else:
+                    nCCC=nC
+                inV=inNdvi1[:nLLL,:nCCC,:]
+                inT=new[:nLLL,:nCCC,:]
+                out=sp.zeros((nLLL,nCCC,nZ))
+                miniT=sp.zeros((nLLL,nCCC))
+                maxiT=sp.zeros((nLLL,nCCC))
+                miniV=sp.zeros((nLLL,nCCC))
+                maxiV=sp.zeros((nLLL,nCCC))
+                outTci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
+                outVci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
+            else:
+                [nLL,nCC,nZZ]=inNdvi.shape
+                if nL > nLL :
+                    nLLL=nLL
+                else:
+                    nLLL=nL
+                if nC > nCC :
+                    nCCC=nCC
+                else:
+                    nCCC=nC
+                
+                inV=inNdvi[:nLLL,:nCCC,:]
+                inT=new[:nLLL,:nCCC,:]
+                out=sp.zeros((nLLL,nCCC,nZ))
+                miniT=sp.zeros((nLLL,nCCC))
+                maxiT=sp.zeros((nLLL,nCCC))
+                miniV=sp.zeros((nLLL,nCCC))
+                maxiV=sp.zeros((nLLL,nCCC))
+                outTci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
+                outVci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
+            for m in range(self.imageParAn):
+                 
+                 for x in range(nL):
+                     
+                     progress=progress+(1.0/nL*75/self.imageParAn)
+                     
+                     self.Bar.progression(progress)
+                     
+                     for y in range(nC):
+                         miniT[x,y]=sp.nanmin(inT[x,y,sp.arange(m,nZ,self.imageParAn)])+0.0000001
+                         maxiT[x,y]=sp.nanmax(inT[x,y,sp.arange(m,nZ,self.imageParAn)]) 
+                         
+                         miniV[x,y]=sp.nanmin(inV[x,y,sp.arange(m,nZ,self.imageParAn)])+0.0000001
+                         maxiV[x,y]=sp.nanmax(inV[x,y,sp.arange(m,nZ,self.imageParAn)]) 
+                         
+                 for ll in range(m,nZ,self.imageParAn):
+                     
+                     outVci[:,:,ll]=(inV[:,:,ll] - miniV)/(maxiV-miniV)
+                     outTci[:,:,ll]=(maxiT-inT[:,:,ll])/(maxiT-miniT)
+                     
+            out=0.5*(outVci + outTci)
+            self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,)
+            QApplication.restoreOverrideCursor()   
+#            except:
+#                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calul du vhi", level=QgsMessageBar.CRITICAL)
+#                  self.stop()
+#                  QApplication.restoreOverrideCursor()
+#                  return
             
     def tvdi (self):
             
@@ -1775,11 +1779,10 @@ class CalculIndicateur():
                         else:
                             nCCC=nC
                             
-                        QMessageBox.warning(self.interface, u' ', u"les données n'ont pas la même taille ")
         					
-                        inV=inNdvi[:nL,:nC,:]
-                        inT=new[:nL,:nC,:]
-                        out=sp.zeros((nL,nC,nZ))
+                        inV=inNdvi[:nLLL,:nCCC,:]
+                        inT=new[:nLLL,:nCCC,:]
+                        out=sp.zeros((nLLL,nCCC,nZ))
                         
                     for kk in range(nZ):
                         if not self.on:
@@ -1791,7 +1794,7 @@ class CalculIndicateur():
                     self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,)
                     QApplication.restoreOverrideCursor()
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calcul du tvdi, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calcul du tvdi", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
                   return
@@ -1800,8 +1803,7 @@ class CalculIndicateur():
         """
         saves the calculated indicators with the corresponding anomalies        
         """
-        
-        self.qgisInterface.messageBar().pushMessage("Info", u"Enrégistrement...", level=QgsMessageBar.INFO, duration=3)
+        self.qgisInterface.messageBar().pushMessage("Info", u"caclcul d'anomalies...", level=QgsMessageBar.INFO, duration=3)
         [xx,yy,zz]=out.shape
         nZ=self.dureeT*self.imageParAn
         moy=sp.zeros((xx,yy))
@@ -1858,6 +1860,7 @@ class CalculIndicateur():
             write_data(output_name5,tSosEos,GeoTransform,Projection)
                     
         annee=self.debutT
+        self.qgisInterface.messageBar().pushMessage("Info", u"Enrégistrement...", level=QgsMessageBar.INFO, duration=3)
         for k in range(self.dureeT):
             progress=progress+(1.0/self.dureeT*3)
             self.Bar.progression(progress)

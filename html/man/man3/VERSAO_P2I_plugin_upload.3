@@ -1,0 +1,138 @@
+.TH "VERSAO_P2I.plugin_upload" 3 "Jeudi 30 Juin 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_P2I.plugin_upload \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Fonctions"
+
+.in +1c
+.ti -1c
+.RI "def \fBmain\fP (parameters, arguments)"
+.br
+.ti -1c
+.RI "def \fBhide_password\fP (url, start=6)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "string \fBPROTOCOL\fP = 'http'"
+.br
+.ti -1c
+.RI "string \fBSERVER\fP = 'plugins\&.qgis\&.org'"
+.br
+.ti -1c
+.RI "string \fBPORT\fP = '80'"
+.br
+.ti -1c
+.RI "string \fBENDPOINT\fP = '/plugins/RPC2/'"
+.br
+.ti -1c
+.RI "bool \fBVERBOSE\fP = False"
+.br
+.ti -1c
+.RI "\fBparser\fP = OptionParser(usage='%prog [\fBoptions\fP] plugin\&.zip')"
+.br
+.ti -1c
+.RI "\fBdest\fP"
+.br
+.ti -1c
+.RI "\fBhelp\fP"
+.br
+.ti -1c
+.RI "\fBmetavar\fP"
+.br
+.ti -1c
+.RI "\fBoptions\fP"
+.br
+.ti -1c
+.RI "\fBargs\fP"
+.br
+.ti -1c
+.RI "\fBserver\fP"
+.br
+.ti -1c
+.RI "\fBport\fP"
+.br
+.ti -1c
+.RI "\fBusername\fP = getpass\&.getuser()"
+.br
+.ti -1c
+.RI "\fBres\fP = raw_input()"
+.br
+.ti -1c
+.RI "\fBpassword\fP"
+.br
+.in -1c
+.SH "Documentation des fonctions"
+.PP 
+.SS "def VERSAO_P2I\&.plugin_upload\&.hide_password ( url,  start = \fC6\fP)"
+
+.PP
+.nf
+Returns the http url with password part replaced with '*'.
+
+:param url: URL to upload the plugin to.
+:type url: str
+
+:param start: Position of start of password.
+:type start: int
+
+.fi
+.PP
+ 
+.SS "def VERSAO_P2I\&.plugin_upload\&.main ( parameters,  arguments)"
+
+.PP
+.nf
+Main entry point.
+
+:param parameters: Command line parameters.
+:param arguments: Command line arguments.
+
+.fi
+.PP
+ 
+.PP
+Références VERSAO_P2I\&.plugin_upload\&.hide_password()\&.
+.SH "Documentation des variables"
+.PP 
+.SS "VERSAO_P2I\&.plugin_upload\&.args"
+
+.SS "VERSAO_P2I\&.plugin_upload\&.dest"
+
+.SS "string VERSAO_P2I\&.plugin_upload\&.ENDPOINT = '/plugins/RPC2/'"
+
+.SS "VERSAO_P2I\&.plugin_upload\&.help"
+
+.SS "VERSAO_P2I\&.plugin_upload\&.metavar"
+
+.SS "VERSAO_P2I\&.plugin_upload\&.options"
+
+.SS "VERSAO_P2I\&.plugin_upload\&.parser = OptionParser(usage='%prog [\fBoptions\fP] plugin\&.zip')"
+
+.SS "VERSAO_P2I\&.plugin_upload\&.password"
+
+.SS "string VERSAO_P2I\&.plugin_upload\&.PORT = '80'"
+
+.SS "VERSAO_P2I\&.plugin_upload\&.port"
+
+.SS "string VERSAO_P2I\&.plugin_upload\&.PROTOCOL = 'http'"
+
+.SS "VERSAO_P2I\&.plugin_upload\&.res = raw_input()"
+
+.SS "string VERSAO_P2I\&.plugin_upload\&.SERVER = 'plugins\&.qgis\&.org'"
+
+.SS "VERSAO_P2I\&.plugin_upload\&.server"
+
+.SS "VERSAO_P2I\&.plugin_upload\&.username = getpass\&.getuser()"
+
+.SS "bool VERSAO_P2I\&.plugin_upload\&.VERBOSE = False"
+
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.

@@ -1,0 +1,98 @@
+.TH "VERSAO_P2I.wh_filter" 3 "Jeudi 30 Juin 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_P2I.wh_filter \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Fonctions"
+
+.in +1c
+.ti -1c
+.RI "def \fBwhfilter\fP (a, weights=None, lamb=1600, p=3)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "\fBx\fP = np\&.arange(200);"
+.br
+.ti -1c
+.RI "int \fBy\fP = \fBx\fP**2"
+.br
+.ti -1c
+.RI "\fByp\fP = \fBwhfilter\fP(\fBy\fP,lamb=0\&.01,weights=1\&./(1+np\&.abs(\fBy\fP)));"
+.br
+.ti -1c
+.RI "\fBlabel\fP"
+.br
+.in -1c
+.SH "Description détaillée"
+.PP 
+
+.PP
+.nf
+  Smoothing of Spectra using Whittaker-Handerson Graduation Method
+  Copyright (c) 2013, rhambach. 
+    This file is part of the TEMareels package and released
+    under the MIT-Licence. See LICENCE file for details.
+    you can find the script on:
+    https://github.com/rhambach/TEMareels/blob/master/tools/wh_filter.py
+
+.fi
+.PP
+ 
+.SH "Documentation des fonctions"
+.PP 
+.SS "def VERSAO_P2I\&.wh_filter\&.whfilter ( a,  weights = \fCNone\fP,  lamb = \fC1600\fP,  p = \fC3\fP)"
+
+.PP
+.nf
+Generalized Whittaker-Handerson Graduation Method
+Parameters
+----------
+a : array-like
+      The input array, shape (n,)
+weights : array-like or None
+      Weights
+lamb : float
+      The relative importance between goodness of fit 
+      and smoothness (smoothness increases with lamb).
+p : integer, default 3
+      The degree of smoothness. We minimize the p-th 
+      finite-differences of the graduated data. Examples:
+      p=2 Hodrick-Prescott filter;
+      p=3 Whittaker-Henderson method;
+      Note: moments 0..p-1 will be conserved by graduation
+
+Returns
+-------
+out : array
+      The smoothed data
+References
+----------
+implementation of scikits.statsmodels.tsa.filters.hp_filter.py
+Alicja S. Nocon & William F. Scott (2012): "An extension of the 
+   Whittaker-Henderson method of graduation", Scandinavian 
+   Actuarial Journal, 2012:1, 70-79
+Whittaker, E. T. (1922). "On a new method of graduation", 
+   Proceedings of the Edinburgh Mathematical Society 41,63-75.
+
+.fi
+.PP
+ 
+.SH "Documentation des variables"
+.PP 
+.SS "VERSAO_P2I\&.wh_filter\&.label"
+
+.SS "VERSAO_P2I\&.wh_filter\&.x = np\&.arange(200);"
+
+.SS "VERSAO_P2I\&.wh_filter\&.y = \fBx\fP**2"
+
+.SS "VERSAO_P2I\&.wh_filter\&.yp = \fBwhfilter\fP(\fBy\fP,lamb=0\&.01,weights=1\&./(1+np\&.abs(\fBy\fP)));"
+
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.
