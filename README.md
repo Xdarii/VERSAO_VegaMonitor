@@ -9,4 +9,4 @@
 
 
 
-*[Lien vers le wiki sur Github pour plus d'informations](https://github.com/Xdarii/VERSAO_P2I/wiki/Calcul-d'indicateurs)*
+*[Lien vers le wiki sur Github pour plus d'informations](https://github.com/Xdarii/VERSAO_P2I/wiki/)*
