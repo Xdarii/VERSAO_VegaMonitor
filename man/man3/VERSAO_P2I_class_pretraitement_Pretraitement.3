@@ -1,0 +1,413 @@
+.TH "VERSAO_P2I.class_pretraitement.Pretraitement" 3 "Jeudi 30 Juin 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_P2I.class_pretraitement.Pretraitement \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Fonctions membres publiques"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP (self, dlg, iface)"
+.br
+.ti -1c
+.RI "def \fBstop\fP (self)"
+.br
+.ti -1c
+.RI "def \fBdepart\fP (self)"
+.br
+.ti -1c
+.RI "def \fBdecoupage\fP (self)"
+.br
+.ti -1c
+.RI "def \fBinterpolation\fP (self)"
+.br
+.ti -1c
+.RI "def \fBsave\fP (self, inData, typeTraitement, prefixe, GeoTransform, Projection, progress, message)"
+.br
+.ti -1c
+.RI "def \fBagregation_temporelle\fP (self, newNdvi, progress, pourcent)"
+.br
+.ti -1c
+.RI "def \fBlisser\fP (self)"
+.br
+.in -1c
+.SS "Attributs publics"
+
+.in +1c
+.ti -1c
+.RI "\fBinterface\fP"
+.br
+.ti -1c
+.RI "\fBqgisInterface\fP"
+.br
+.ti -1c
+.RI "\fBon\fP"
+.br
+.ti -1c
+.RI "\fBBar\fP"
+.br
+.ti -1c
+.RI "\fBlissage\fP"
+.br
+.ti -1c
+.RI "\fBwindow\fP"
+.br
+.ti -1c
+.RI "\fBorder\fP"
+.br
+.ti -1c
+.RI "\fBlamb\fP"
+.br
+.ti -1c
+.RI "\fBp\fP"
+.br
+.ti -1c
+.RI "\fBinUnit\fP"
+.br
+.ti -1c
+.RI "\fBinMin\fP"
+.br
+.ti -1c
+.RI "\fBinMax\fP"
+.br
+.ti -1c
+.RI "\fBimageParAn\fP"
+.br
+.RI "\fIréalisation de l'interpolation cyclique \fP"
+.ti -1c
+.RI "\fBperiodeTemporelle\fP"
+.br
+.ti -1c
+.RI "\fBdebutSerie\fP"
+.br
+.ti -1c
+.RI "\fBfinSerie\fP"
+.br
+.ti -1c
+.RI "\fBdureeSerie\fP"
+.br
+.ti -1c
+.RI "\fBdebutT\fP"
+.br
+.ti -1c
+.RI "\fBfinT\fP"
+.br
+.ti -1c
+.RI "\fBdureeT\fP"
+.br
+.ti -1c
+.RI "\fBiDebut\fP"
+.br
+.ti -1c
+.RI "\fBiFin\fP"
+.br
+.ti -1c
+.RI "\fBnomPrefixe\fP"
+.br
+.ti -1c
+.RI "\fBlienSave\fP"
+.br
+.ti -1c
+.RI "\fBlienDonnee\fP"
+.br
+.ti -1c
+.RI "\fBfacteureEchelle\fP"
+.br
+.ti -1c
+.RI "\fBtemperatureChecked\fP"
+.br
+.ti -1c
+.RI "\fBpluriAnnuelle\fP"
+.br
+.ti -1c
+.RI "\fBchecked_multi\fP"
+.br
+.ti -1c
+.RI "\fBok\fP"
+.br
+.ti -1c
+.RI "\fBreechantillonage\fP"
+.br
+.in -1c
+.SH "Description détaillée"
+.PP 
+
+.PP
+.nf
+this class allows retrieve the information entered on the pretreatment 
+interface then applies the required pretreatment.    
+
+.fi
+.PP
+ 
+.PP
+Définition à la ligne 352 du fichier class_pretraitement\&.py\&.
+.SH "Documentation des constructeurs et destructeur"
+.PP 
+.SS "def VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.__init__ ( self,  dlg,  iface)"
+
+.PP
+.nf
+initialise de la classe et récupération des informations
+Parameters:
+----------
+   dlg: correspond à l'interface réaliser sur QT
+   iface: permet d'interagir avec l'interface de QGIS pour afficher des messages sur l'évolution du traitement
+Returns:
+--------
+ nothing--
+
+.fi
+.PP
+ 
+.PP
+Définition à la ligne 360 du fichier class_pretraitement\&.py\&.
+.SH "Documentation des fonctions membres"
+.PP 
+.SS "def VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.agregation_temporelle ( self,  newNdvi,  progress,  pourcent)"
+
+.PP
+.nf
+allows to bring the data to no regular time by aggregating data.
+Parameters:
+-----------
+     newNdvi: input data to aggregate
+     percent: how many percent the progress bar should be between advanced during this treatment
+     progress: the state of the progress bar
+
+Returns:
+--------
+     out: aggregating data according to the chosen value by the interface
+     progress: new value of the progress bar       
+
+.fi
+.PP
+ 
+.PP
+Définition à la ligne 863 du fichier class_pretraitement\&.py\&.
+.PP
+Références VERSAO_P2I\&.my_aggregate\&.block_reduce(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, et VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.reechantillonage\&.
+.SS "def VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.decoupage ( self)"
+
+.PP
+.nf
+  Allows to cut and save data         
+
+.fi
+.PP
+ 
+.PP
+Définition à la ligne 465 du fichier class_pretraitement\&.py\&.
+.PP
+Références VERSAO_P2I\&.my_aggregate\&.block_reduce(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_P2I\&.clip\&.clipRaster(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.depart(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.facteureEchelle, VERSAO_P2I\&.class_pretraitement\&.gestion_temperature(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inMax, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inMin, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inUnit, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lamb, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lissage, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.function_data_raster\&.open_data(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.order, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.p, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.reechantillonage, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.save(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.temperatureChecked, VERSAO_P2I\&.class_pretraitement\&.test_existe_lien(), VERSAO_P2I\&.wh_filter\&.whfilter(), et VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.window\&.
+.SS "def VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.depart ( self)"
+
+.PP
+.nf
+START 
+
+.fi
+.PP
+ 
+.PP
+Définition à la ligne 454 du fichier class_pretraitement\&.py\&.
+.PP
+Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on\&.
+.SS "def VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.interpolation ( self)"
+
+.PP
+.nf
+Allow to interpol and save data
+
+.fi
+.PP
+ 
+.PP
+Définition à la ligne 635 du fichier class_pretraitement\&.py\&.
+.PP
+Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.agregation_temporelle(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.concatenation_serie(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutSerie, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.depart(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeSerie, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.facteureEchelle, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.finSerie, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.finT, VERSAO_P2I\&.class_pretraitement\&.gestion_temperature(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.iDebut, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.iFin, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inMax, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inMin, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inUnit, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lamb, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lissage, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.ok, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.function_data_raster\&.open_data(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.order, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.p, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.periodeTemporelle, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.reechantillonage, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.save(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.temperatureChecked, VERSAO_P2I\&.class_pretraitement\&.test_lien_data_date(), VERSAO_P2I\&.wh_filter\&.whfilter(), et VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.window\&.
+.SS "def VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lisser ( self)"
+
+.PP
+.nf
+smoothes the data and / or to create multi-time series            
+
+.fi
+.PP
+ 
+.PP
+Définition à la ligne 893 du fichier class_pretraitement\&.py\&.
+.PP
+Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.agregation_temporelle(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.concatenation_serie(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.depart(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.facteureEchelle, VERSAO_P2I\&.class_pretraitement\&.gestion_temperature(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inMax, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inMin, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inUnit, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lamb, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lissage, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.function_data_raster\&.open_data(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.order, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.p, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.reechantillonage, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.save(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.temperatureChecked, VERSAO_P2I\&.wh_filter\&.whfilter(), et VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.window\&.
+.SS "def VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.save ( self,  inData,  typeTraitement,  prefixe,  GeoTransform,  Projection,  progress,  message)"
+
+.PP
+.nf
+Save the processed data        
+Parameters:
+-----------
+    inData: data to save
+    typeTraitement: string, name of the type of pretreatement
+    prefixe: sttring, type of the filter (nofilter,filter_WS_, ..)
+    GeoTransform: data geotransform
+    Projection: data projection
+    progress: value of the progress bar
+    message : message to show at the end of the save      
+Returns:
+--------
+    nothing ---
+.fi
+.PP
+ 
+.PP
+Définition à la ligne 791 du fichier class_pretraitement\&.py\&.
+.PP
+Références VERSAO_P2I\&.my_aggregate\&.block_reduce(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.finT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienSave, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.nomPrefixe, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.pluriAnnuelle, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop(), et VERSAO_P2I\&.function_data_raster\&.write_data()\&.
+.SS "def VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop ( self)"
+
+.PP
+.nf
+STOP
+
+.fi
+.PP
+ 
+.PP
+Définition à la ligne 443 du fichier class_pretraitement\&.py\&.
+.PP
+Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on\&.
+.SH "Documentation des données membres"
+.PP 
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.Bar"
+
+.PP
+Définition à la ligne 375 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.checked_multi"
+
+.PP
+Définition à la ligne 419 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutSerie"
+
+.PP
+Définition à la ligne 393 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutT"
+
+.PP
+Définition à la ligne 398 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeSerie"
+
+.PP
+Définition à la ligne 396 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT"
+
+.PP
+Définition à la ligne 401 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.facteureEchelle"
+
+.PP
+Définition à la ligne 411 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.finSerie"
+
+.PP
+Définition à la ligne 394 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.finT"
+
+.PP
+Définition à la ligne 399 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.iDebut"
+
+.PP
+Définition à la ligne 403 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.iFin"
+
+.PP
+Définition à la ligne 404 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn"
+
+.PP
+réalisation de l'interpolation cyclique 
+.PP
+Définition à la ligne 391 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inMax"
+
+.PP
+Définition à la ligne 389 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inMin"
+
+.PP
+Définition à la ligne 388 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.interface"
+
+.PP
+Définition à la ligne 372 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.inUnit"
+
+.PP
+Définition à la ligne 387 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lamb"
+
+.PP
+Définition à la ligne 383 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienDonnee"
+
+.PP
+Définition à la ligne 410 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienSave"
+
+.PP
+Définition à la ligne 408 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lissage"
+
+.PP
+Définition à la ligne 378 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.nomPrefixe"
+
+.PP
+Définition à la ligne 406 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.ok"
+
+.PP
+Définition à la ligne 422 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on"
+
+.PP
+Définition à la ligne 374 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.order"
+
+.PP
+Définition à la ligne 381 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.p"
+
+.PP
+Définition à la ligne 384 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.periodeTemporelle"
+
+.PP
+Définition à la ligne 392 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.pluriAnnuelle"
+
+.PP
+Définition à la ligne 414 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.qgisInterface"
+
+.PP
+Définition à la ligne 373 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.reechantillonage"
+
+.PP
+Définition à la ligne 437 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.temperatureChecked"
+
+.PP
+Définition à la ligne 412 du fichier class_pretraitement\&.py\&.
+.SS "VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.window"
+
+.PP
+Définition à la ligne 380 du fichier class_pretraitement\&.py\&.
+
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.
