@@ -81,24 +81,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
 <div class="title">VERSAO Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>"Prétraitement et Param Pheno QGIS")</p>
-<h1>Plugin Qgis: Pour le traitement des données MODIS MOD13Q1 et l'extraction de métrique phénologique</h1>
-<h2>MOD13Q1:</h2>
-<p>Les données mondiales de MOD13Q1 sont fournies tous les 16 jours à une résolution spatiale de 250 mètres dans une projection sinusoïdale avec une fauchée qui permet de couvrir de vaste zone (2350 Km). Tous les pixels d'une image ne sont pas pris à la même date car pour chaque pixel il compare sa valeur sur les 16 jours et c'est la plus grande valeur qui est retenu.</p>
-<h2>Prétraitement</h2>
-<h3>Découper</h3>
-<p>Les données téléchargées étant dans la majeur partie des cas trop grandes pour notre zone d'études nous avons pris soin de fournir à l'utilisateur la possibilité de découper sa zone en fonction d'un fichier shape (.shp) qui délimite sa zone d'études. </p><h3>Interpolation</h3>
-<p>L'option prétraitement en plus de l'option de découpage dispose d'une fonctionnalité d'interpolation. Cette option permet de ramener toutes les images du NDVI à un intervalle de 16 jours si cela n'est pas le cas. C’est-à-dire en interpolant on s’assure que tous les pixels d’une image soient pris à la même date et que successivement les images soient à un intervalle de 16 jours. En plus d’interpoler les images cette option propose de filtrer les images en sorties dans le cas où nous avons affaire à des images bruitées.</p>
-<h3>Lissage</h3>
-<p>Une option de filtrage est également disponible pour ce qui souhaiterais uniquement lisser les données qu'ils disposent que ce soit du MODIS ou autres satellites.</p>
-<h2>Métrique Phénologique</h2>
-<p>L’extraction des métrique phénologique fournit entre autre la détermination du start of season (SOS), end of season (EOS), le lenght of season (LOS), les cumules du NDVI avant et après la date de floraison et les anomalies associées pour chaque pixel de l’image pour toute l’année.</p>
-<p><em>Pour toutes informations supplémentaires veuillez consulter le wiki</em></p>
-<p><a href="https://github.com/Xdarii/QGIS_Traitement_and_Pheno/wiki/M%C3%A9trique-Ph%C3%A9nologique">https://github.com/Xdarii/QGIS_Traitement_and_Pheno/wiki/M%C3%A9trique-Ph%C3%A9nologique</a> <a href="https://github.com/Xdarii/QGIS_Traitement_and_Pheno/wiki/Pr%C3%A9traitement">https://github.com/Xdarii/QGIS_Traitement_and_Pheno/wiki/Pr%C3%A9traitement</a> </p>
+<div class="textblock"><div class="image">
+<img src="https://github.com/Xdarii/QGIS_Traitement_and_Pheno/blob/master/icon.png"  alt="Logo" title="Prétraitement et Param Pheno QGIS"/>
+</div>
+<p>#Plugin QGIS <a class="el" href="namespace_v_e_r_s_a_o___p2_i.html">VERSAO_P2I</a> Ce plugin permet de:</p>
+<ul>
+<li>Prétraiter les données satellitaires (.tif) (filtre des données bruitées, reconstruction des profils temporels et découpage).</li>
+<li>D’extraire les différentes variables permettant de décrire l’évolution de la végétation (détection des métriques phénologiques) ou des conditions climatiques au cours de la saison des cultures (calcul de la variation spatio-temporelle de la température, ...).</li>
+</ul>
+<p><em><a href="https://github.com/Xdarii/VERSAO_P2I/wiki/">Lien vers le wiki sur Github pour plus d'informations</a></em> <em><a href="https://github.com/Xdarii/VERSAO_P2I/">Lien vers le projet</a></em> </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Généré le Jeudi 30 Juin 2016 13:27:50 pour VERSAO par &#160;<a href="http://www.doxygen.org/index.html">
+Généré le Jeudi 30 Juin 2016 15:48:21 pour VERSAO par &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
