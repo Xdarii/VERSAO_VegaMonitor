@@ -16,6 +16,7 @@ import os.path
 from function_data_raster import open_data, write_data
 from metriquePheno import metrique_pheno_Tang,metrique_pheno_vito,metrique_pheno_greenbrown,metrique_pheno_param
 from clip import clipRaster
+
 from scipy.signal import savgol_filter
 from scipy import interpolate
 from wh_filter import whfilter
@@ -1089,22 +1090,22 @@ class detection_phenologique():
             #variable qui stocke les 11 metriques pour chaque années 
                 metrique=sp.empty((L,C,11),dtype='float16') 
                 #tableaux dans les quelles les differentes metriques seront stockées séparemment
-                sos=sp.zeros((L,C,self.dureeT),dtype='float16')
-                eos=sos #start of season
-                los=sos #length of seaon
-                maxi=sos 
+                sos=sp.zeros((L,C,self.dureeT),dtype='uint16')
+                eos=sp.zeros((L,C,self.dureeT),dtype='uint16') #start of season
+                los=sp.zeros((L,C,self.dureeT),dtype='uint16') #length of seaon
+                maxi=sp.zeros((L,C,self.dureeT),dtype='uint16')
                 
-                area=sos #cumule du ndvi sur l'ensemble de la saison
-                areaBef=sos # cumul du NDVI avant le max de la saison
-                areaAft=sos # cumul après le max de la saison
+                area=sp.empty((L,C,self.dureeT),dtype='float16') #cumule du ndvi sur l'ensemble de la saison
+                areaBef=sp.empty((L,C,self.dureeT),dtype='float16')# cumul du NDVI avant le max de la saison
+                areaAft=sp.empty((L,C,self.dureeT),dtype='float16') # cumul après le max de la saison
     
-                anomalieSos=sos # anomalie sur le dé but de la saison
-                anomalieEos=sos #anomalie sur la fin de la saison
-                anomalieLos=sos #anomalie sur la longueur de la saison
+                anomalieSos=sp.empty((L,C,self.dureeT),dtype='float16') # anomalie sur le dé but de la saison
+                anomalieEos=sp.empty((L,C,self.dureeT),dtype='float16') #anomalie sur la fin de la saison
+                anomalieLos=sp.empty((L,C,self.dureeT),dtype='float16') #anomalie sur la longueur de la saison
                 
-                anomalieArea=sos # anomalie sur le cumul total 
-                anomalieAreaBef=sos #anomalie sur le cumul avant max
-                anomalieAreaAft=sos #anomalie sur le cumul après max
+                anomalieArea=sp.empty((L,C,self.dureeT),dtype='float16')# anomalie sur le cumul total 
+                anomalieAreaBef=sp.empty((L,C,self.dureeT),dtype='float16') #anomalie sur le cumul avant max
+                anomalieAreaAft=sp.empty((L,C,self.dureeT),dtype='float16') #anomalie sur le cumul après max
             except:
                 QgsMessageLog.logMessage("un problème rencontré lors de la déclaration des variables qui doivent stocker les differents paramètres")
             try:
@@ -1162,7 +1163,7 @@ class detection_phenologique():
                                      out1=metrique_pheno_Tang(ndvi,self.seuil1,self.seuil2)
                              outListe=metrique_pheno_param(ndvi,out1[0],out1[1],out1[4])
                              parametre=out1[0:3]+outListe
-                             self.Bar.set_value(progress)
+                             self.Bar.progression(progress)
                              metrique[x,y,:]=sp.array(parametre)
                     
                     sos[:,:,k]=metrique[:,:,0]
@@ -1226,32 +1227,32 @@ class detection_phenologique():
                   return
             try:         
                 #enregistrement de TOS
-                write_data(os.path.join(self.lienSave,"TOS_"+name),maxi,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_TOS_"+name),maxi,GeoTransform,Projection)
                 #enregistrement de sos
-                write_data(os.path.join(self.lienSave,"SOS_"+name),sos,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_SOS_"+name),sos,GeoTransform,Projection)
                 #enregistrement eos
-                write_data(os.path.join(self.lienSave,"EOS_"+name), eos,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_EOS_"+name), eos,GeoTransform,Projection)
                 #enregistrement los
-                write_data(os.path.join(self.lienSave,"LOS_"+name),los,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_LOS_"+name),los,GeoTransform,Projection)
                 #enregistrement area
-                write_data(os.path.join(self.lienSave,"area_"+name),area,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_area_"+name),area,GeoTransform,Projection)
                 #enregistrement areaAft
-                write_data(os.path.join(self.lienSave,"areaAfter_max_"+name),areaAft,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_areaAfter_max_"+name),areaAft,GeoTransform,Projection)
                 #enregistrement areaBef
-                write_data(os.path.join(self.lienSave,"areaBefore_max_"+name),areaBef,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_areaBefore_max_"+name),areaBef,GeoTransform,Projection)
     
                 #enregistrement de anomalie sos
-                write_data(os.path.join(self.lienSave,"anomalie_SOS_"+name),anomalieSos,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_anomalie_SOS_"+name),anomalieSos,GeoTransform,Projection)
                 #enregistrement anomalie eos
-                write_data(os.path.join(self.lienSave,"anomalie_EOS_"+name), anomalieEos,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_anomalie_EOS_"+name), anomalieEos,GeoTransform,Projection)
                 #enregistrement anomalielos
-                write_data(os.path.join(self.lienSave,"anomalie_LOS_"+name),anomalieLos,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_anomalie_LOS_"+name),anomalieLos,GeoTransform,Projection)
                 #enregistrement anomalie area
-                write_data(os.path.join(self.lienSave,"anomalie_area_"+name),anomalieArea,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_anomalie_area_"+name),anomalieArea,GeoTransform,Projection)
                 #enregistrement anomalie areaAft
-                write_data(os.path.join(self.lienSave,"anomalie_areaAfter_max_"+name),anomalieAreaBef,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_anomalie_areaAfter_max_"+name),anomalieAreaBef,GeoTransform,Projection)
                 #enregistrement anomalie AreaAFT
-                write_data(os.path.join(self.lienSave,"anomalie_areaBefore_max_"+name),anomalieAreaAft,GeoTransform,Projection)
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_anomalie_areaBefore_max_"+name),anomalieAreaAft,GeoTransform,Projection)
             except:
                   self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été lors de l'enregistrement des métriques phénologiques et ou anomalies, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
                   self.stop()
@@ -1385,7 +1386,14 @@ class CalculIndicateur():
                 [eos,G,P]=open_data(lienEos)                 
                 [tos,G,P]=open_data(lienTos) 
                 [nL,nC,nZ]=new.shape
-                
+                if sos.shape==eos.shape and sos.shape==tos.shape :
+                    pass
+                else:
+                    QMessageBox.warning(self.interface, u'Problème de données ', u"le SOS, TOS et EOS doivent avoir la même taille ")
+                    self.stop
+                    QApplication.restoreOverrideCursor() 
+                    return new,sos,eos,tos
+
                 if  self.interface.aggregate_Yes.isChecked() :
                     QApplication.processEvents()
                     
@@ -1430,9 +1438,20 @@ class CalculIndicateur():
                     [nLL,nCC,nZZ]=tos.shape
                     if nL > nLL or nL < nLL or nC > nCC or nC < nCC :
                         QMessageBox.warning(self.interface, u'Problème de données ', u"les données doivent avoir la même taille ")
-                        self.stop()
-                        QApplication.restoreOverrideCursor() 
-                        return new,sos,eos,tos
+                    
+                    if nL > nLL :
+                        nLLL=nLL
+                    else:
+                        nLLL=nL
+                    if nC > nCC :
+                        nCCC=nCC
+                    else:
+                        nCCC=nC
+                    sos=sos[:nLLL,:nCCC,:]
+                    eos=eos[:nLLL,:nCCC,:]
+                    tos=tos[:nLLL,:nCCC,:]
+                    new=new[:nLLL,:nCCC,:]
+                        
                 
                 if sos.ndim>2 and eos.ndim>2 and tos.ndim>2:
                     
@@ -1562,10 +1581,10 @@ class CalculIndicateur():
                              self.stop()
                              return
                          out[:,:,ll]=(maxi-new[:,:,ll])/(maxi-mini+0.0000001)
-                self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection)
+                self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,1)
                 QApplication.restoreOverrideCursor()
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du tci, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calcul tci", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
                   return
@@ -1575,124 +1594,124 @@ class CalculIndicateur():
             calculates the VHI (vegetation health index)
             """
             self.depart()
-#            try:
-            self.qgisInterface.messageBar().pushMessage("Info", u"calcul du VHI...", level=QgsMessageBar.INFO, duration=3)
-            imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
-            [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
-            [nL,nC,i]=NDVI.shape
-            sos=0
-            eos=0
-            tos=0
-            nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
-            out=sp.zeros((nL,nC,nZ))
-            new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
-            if self.cumuleChecked:
-                new,sos,eos,tos=self.cumule(new)
-            if not self.on:
-                 self.stop()
-                 return
-            progress=1
-            prefixe="vhi_"
-            lienNdvi=self.interface.cheminNDVI_temperature.text()
-            lListe=[]   
             try:
-                lListe,nYear,ok=test_lien_data_date(self.interface,lienNdvi,"NDVI",self.imageParAn,self.checked_multi,self.iDebut,self.iFin,self.debutSerie,self.finSerie,self.debutT,self.finT,self.dureeSerie,self.dureeT)    
+                self.qgisInterface.messageBar().pushMessage("Info", u"calcul du VHI...", level=QgsMessageBar.INFO, duration=3)
+                imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
+                [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
+                [nL,nC,i]=NDVI.shape
+                sos=0
+                eos=0
+                tos=0
+                nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
+                out=sp.zeros((nL,nC,nZ))
+                new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
+                if self.cumuleChecked:
+                    new,sos,eos,tos=self.cumule(new)
+                if not self.on:
+                     self.stop()
+                     return
+                progress=1
+                prefixe="vhi_"
+                lienNdvi=self.interface.cheminNDVI_temperature.text()
+                lListe=[]   
+                try:
+                    lListe,nYear,ok=test_lien_data_date(self.interface,lienNdvi,"NDVI",self.imageParAn,self.checked_multi,self.iDebut,self.iFin,self.debutSerie,self.finSerie,self.debutT,self.finT,self.dureeSerie,self.dureeT)    
+                except:
+                    QgsMessageLog.logMessage(u"un problème rencontré sur les données du NDVI")
+                    
+                if not ok:
+                    QApplication.restoreOverrideCursor()
+                    self.Bar.active(0)
+                    return
+              
+                imageNDVI=os.path.join(lienNdvi , lListe[0])
+                [temp,GeoTransform1,Projection1]=open_data(imageNDVI)                 
+                inNdvi=concatenation_serie(lienNdvi,lListe,self.dureeT,self.imageParAn,self.checked_multi)
+                
+                if  self.interface.aggregate_Yes.isChecked() :
+                    QApplication.processEvents()
+                    
+                    a=self.interface.facteur_aggregate.value()  
+                    
+                    if self.interface.function_aggregate.currentText().lower()=="mean":
+                        inNdvi1=block_reduce(inNdvi,(a,a,1),sp.mean)
+                        
+                    if self.interface.function_aggregate.currentText().lower()=="min":
+                        inNdvi1=block_reduce(inNdvi,(a,a,1),sp.min)
+                        
+                    if self.interface.function_aggregate.currentText().lower()=="max":
+                        inNdvi1=block_reduce(inNdvi,(a,a,1),sp.max)
+                        
+                    if self.interface.function_aggregate.currentText().lower()=="median":
+                        inNdvi1=block_reduce(inNdvi,(a,a,1),sp.median)
+                        
+                    [nLL,nCC,nZZ]=inNdvi1.shape
+                    
+                    if nL > nLL :
+                        nLLL=nLL
+                    else:
+                        nLLL=nL
+                    if nC > nCC :
+                        nCCC=nCC
+                    else:
+                        nCCC=nC
+                    inV=inNdvi1[:nLLL,:nCCC,:]
+                    inT=new[:nLLL,:nCCC,:]
+                    out=sp.zeros((nLLL,nCCC,nZ))
+                    miniT=sp.zeros((nLLL,nCCC))
+                    maxiT=sp.zeros((nLLL,nCCC))
+                    miniV=sp.zeros((nLLL,nCCC))
+                    maxiV=sp.zeros((nLLL,nCCC))
+                    outTci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
+                    outVci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
+                else:
+                    [nLL,nCC,nZZ]=inNdvi.shape
+                    if nL > nLL :
+                        nLLL=nLL
+                    else:
+                        nLLL=nL
+                    if nC > nCC :
+                        nCCC=nCC
+                    else:
+                        nCCC=nC
+                    
+                    inV=inNdvi[:nLLL,:nCCC,:]
+                    inT=new[:nLLL,:nCCC,:]
+                    out=sp.zeros((nLLL,nCCC,nZ))
+                    miniT=sp.zeros((nLLL,nCCC))
+                    maxiT=sp.zeros((nLLL,nCCC))
+                    miniV=sp.zeros((nLLL,nCCC))
+                    maxiV=sp.zeros((nLLL,nCCC))
+                    outTci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
+                    outVci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
+                for m in range(self.imageParAn):
+                     
+                     for x in range(nL):
+                         
+                         progress=progress+(1.0/nL*75/self.imageParAn)
+                         
+                         self.Bar.progression(progress)
+                         
+                         for y in range(nC):
+                             miniT[x,y]=sp.nanmin(inT[x,y,sp.arange(m,nZ,self.imageParAn)])+0.0000001
+                             maxiT[x,y]=sp.nanmax(inT[x,y,sp.arange(m,nZ,self.imageParAn)]) 
+                             
+                             miniV[x,y]=sp.nanmin(inV[x,y,sp.arange(m,nZ,self.imageParAn)])+0.0000001
+                             maxiV[x,y]=sp.nanmax(inV[x,y,sp.arange(m,nZ,self.imageParAn)]) 
+                             
+                     for ll in range(m,nZ,self.imageParAn):
+                         
+                         outVci[:,:,ll]=(inV[:,:,ll] - miniV)/(maxiV-miniV)
+                         outTci[:,:,ll]=(maxiT-inT[:,:,ll])/(maxiT-miniT)
+                         
+                out=0.5*(outVci + outTci)
+                self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,)
+                QApplication.restoreOverrideCursor()   
             except:
-                QgsMessageLog.logMessage(u"un problème rencontré sur les données du NDVI")
-                
-            if not ok:
-                QApplication.restoreOverrideCursor()
-                self.Bar.active(0)
-                return
-          
-            imageNDVI=os.path.join(lienNdvi , lListe[0])
-            [temp,GeoTransform1,Projection1]=open_data(imageNDVI)                 
-            inNdvi=concatenation_serie(lienNdvi,lListe,self.dureeT,self.imageParAn,self.checked_multi)
-            
-            if  self.interface.aggregate_Yes.isChecked() :
-                QApplication.processEvents()
-                
-                a=self.interface.facteur_aggregate.value()  
-                
-                if self.interface.function_aggregate.currentText().lower()=="mean":
-                    inNdvi1=block_reduce(inNdvi,(a,a,1),sp.mean)
-                    
-                if self.interface.function_aggregate.currentText().lower()=="min":
-                    inNdvi1=block_reduce(inNdvi,(a,a,1),sp.min)
-                    
-                if self.interface.function_aggregate.currentText().lower()=="max":
-                    inNdvi1=block_reduce(inNdvi,(a,a,1),sp.max)
-                    
-                if self.interface.function_aggregate.currentText().lower()=="median":
-                    inNdvi1=block_reduce(inNdvi,(a,a,1),sp.median)
-                    
-                [nLL,nCC,nZZ]=inNdvi1.shape
-                
-                if nL > nLL :
-                    nLLL=nLL
-                else:
-                    nLLL=nL
-                if nC > nCC :
-                    nCCC=nCC
-                else:
-                    nCCC=nC
-                inV=inNdvi1[:nLLL,:nCCC,:]
-                inT=new[:nLLL,:nCCC,:]
-                out=sp.zeros((nLLL,nCCC,nZ))
-                miniT=sp.zeros((nLLL,nCCC))
-                maxiT=sp.zeros((nLLL,nCCC))
-                miniV=sp.zeros((nLLL,nCCC))
-                maxiV=sp.zeros((nLLL,nCCC))
-                outTci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
-                outVci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
-            else:
-                [nLL,nCC,nZZ]=inNdvi.shape
-                if nL > nLL :
-                    nLLL=nLL
-                else:
-                    nLLL=nL
-                if nC > nCC :
-                    nCCC=nCC
-                else:
-                    nCCC=nC
-                
-                inV=inNdvi[:nLLL,:nCCC,:]
-                inT=new[:nLLL,:nCCC,:]
-                out=sp.zeros((nLLL,nCCC,nZ))
-                miniT=sp.zeros((nLLL,nCCC))
-                maxiT=sp.zeros((nLLL,nCCC))
-                miniV=sp.zeros((nLLL,nCCC))
-                maxiV=sp.zeros((nLLL,nCCC))
-                outTci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
-                outVci=sp.zeros((nLLL,nCCC,nZ),dtype='float16')
-            for m in range(self.imageParAn):
-                 
-                 for x in range(nL):
-                     
-                     progress=progress+(1.0/nL*75/self.imageParAn)
-                     
-                     self.Bar.progression(progress)
-                     
-                     for y in range(nC):
-                         miniT[x,y]=sp.nanmin(inT[x,y,sp.arange(m,nZ,self.imageParAn)])+0.0000001
-                         maxiT[x,y]=sp.nanmax(inT[x,y,sp.arange(m,nZ,self.imageParAn)]) 
-                         
-                         miniV[x,y]=sp.nanmin(inV[x,y,sp.arange(m,nZ,self.imageParAn)])+0.0000001
-                         maxiV[x,y]=sp.nanmax(inV[x,y,sp.arange(m,nZ,self.imageParAn)]) 
-                         
-                 for ll in range(m,nZ,self.imageParAn):
-                     
-                     outVci[:,:,ll]=(inV[:,:,ll] - miniV)/(maxiV-miniV)
-                     outTci[:,:,ll]=(maxiT-inT[:,:,ll])/(maxiT-miniT)
-                     
-            out=0.5*(outVci + outTci)
-            self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,)
-            QApplication.restoreOverrideCursor()   
-#            except:
-#                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calul du vhi", level=QgsMessageBar.CRITICAL)
-#                  self.stop()
-#                  QApplication.restoreOverrideCursor()
-#                  return
+                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calul du vhi", level=QgsMessageBar.CRITICAL)
+                  self.stop()
+                  QApplication.restoreOverrideCursor()
+                  return
             
     def tvdi (self):
             
@@ -1799,7 +1818,7 @@ class CalculIndicateur():
                   QApplication.restoreOverrideCursor()
                   return
                                 
-    def save(self,out,sos,eos,tos,prefixe,progress,GeoTransform,Projection):
+    def save(self,out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,tci=0):
         """
         saves the calculated indicators with the corresponding anomalies        
         """
@@ -1850,36 +1869,63 @@ class CalculIndicateur():
                         deb= kk*self.imageParAn+sos[x,y,kk] 
                         fin= kk *self.imageParAn + eos[x,y,kk]
                         tSosEos[x,y,kk]=sp.sum( out[x,y, deb:fin ]) #CUMULE SOS_EOS
-                        
-            output_name3=os.path.join(self.lienSave,'cumule_tSosTos_'+self.nomPrefixe+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-            output_name4=os.path.join(self.lienSave,'cumule_tTosEos_'+self.nomPrefixe+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-            output_name5=os.path.join(self.lienSave,'cumule_tSosEos_'+self.nomPrefixe+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+            #calcul d'anomalies
+            
+            anomalieTsos_tos=(tSosTos-sp.nanmean(tSosTos))/sp.nanstd(tSosTos)
+            
+            anomalieTsos_eos=(tTosEos-sp.nanmean(tTosEos))/sp.nanstd(tTosEos)
+            
+            anomalieTtos_eos=(tTosEos-sp.nanmean(tTosEos))/sp.nanstd(tTosEos)
+            
+            #enregistrement
+            output_name3=os.path.join(self.lienSave,self.nomPrefixe+'_cumul_tSosTos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+            output_name4=os.path.join(self.lienSave,self.nomPrefixe+'_cumul_tTosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+            output_name5=os.path.join(self.lienSave,self.nomPrefixe+'_cumul_tSosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+
+            output_name6=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tSosTos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+            output_name7=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tTosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+            output_name8=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tSosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
             
             write_data(output_name3,tSosTos,GeoTransform,Projection)
             write_data(output_name4,tTosEos,GeoTransform,Projection)
             write_data(output_name5,tSosEos,GeoTransform,Projection)
+            
+            write_data(output_name6,anomalieTsos_tos,GeoTransform,Projection)
+            write_data(output_name7,anomalieTsos_eos,GeoTransform,Projection)
+            write_data(output_name8,anomalieTtos_eos,GeoTransform,Projection)
                     
         annee=self.debutT
         self.qgisInterface.messageBar().pushMessage("Info", u"Enrégistrement...", level=QgsMessageBar.INFO, duration=3)
-        for k in range(self.dureeT):
-            progress=progress+(1.0/self.dureeT*3)
-            self.Bar.progression(progress)
-            QApplication.processEvents()
-            self.Bar.set_value(progress)
-            deb=k*self.imageParAn
-            fin=(k+1)*self.imageParAn
-            if not self.on:
-                 self.stop()
-                 return
-            image=out[:,:,deb:fin]
-            ano=anomalie[:,:,deb:fin]
-            output_name=os.path.join(self.lienSave,self.nomPrefixe+prefixe +str(annee)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-            output_name2=os.path.join(self.lienSave,'anomalie_'+self.nomPrefixe+prefixe +str(annee)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-            write_data(output_name,image,GeoTransform,Projection)
-            write_data(output_name2,ano,GeoTransform,Projection)
+        
+        for ll in range(0,self.imageParAn):
             
+            output_name2=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_'+prefixe +str(ll)+'.tif') 
+            write_data(output_name2,anomalie[:,:,sp.arange(ll,nZ,self.imageParAn)],GeoTransform,Projection)  
             
-            annee=annee+1
+        if tci==0:
+            for k in range(self.dureeT):
+                progress=progress+(1.0/self.dureeT*3)
+                self.Bar.progression(progress)
+                QApplication.processEvents()
+                self.Bar.progression(progress)
+                deb=k*self.imageParAn
+                fin=(k+1)*self.imageParAn
+                if not self.on:
+                     self.stop()
+                     return
+                image=out[:,:,deb:fin]
+                output_name=os.path.join(self.lienSave,self.nomPrefixe+prefixe +str(annee)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+                write_data(output_name,image,GeoTransform,Projection)
+                
+                
+                annee=annee+1
+        else:
+            for ll in range(0,self.imageParAn):
+                
+                output_name=os.path.join(self.lienSave,self.nomPrefixe+prefixe +str(ll)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+                write_data(output_name,out[:,:,sp.arange(ll,nZ,self.imageParAn)],GeoTransform,Projection)  
+                annee=annee+1
+                
     
         self.Bar.set_value(100)
         QMessageBox.information(self.interface, u'succès', u"traitement effectué avec succès")

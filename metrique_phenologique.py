@@ -133,8 +133,37 @@ class metriquePhenologique:
         
         self.dlg.radioButton_interpDefaut.clicked.connect(self.active_defaut_interpol)
         self.dlg.radioButton_autre_interpol.clicked.connect(self.active_defaut_interpol)
+        self.dlg.MOD13Q1.currentChanged[int].connect(self.choixTab)
         self.dlg.cancel.clicked.connect(self.stop)
         
+    def choixTab(self,index):
+        """
+        Permet de gerer les differentes options déja choisies par l'utilisateur ou les paramètres par défaut
+        """
+        if self.dlg.radioButton_default.isChecked():
+            self.dlg.frame_seuil.setEnabled(0)
+        if self.dlg.radioButton_seuil.isChecked():
+            self.dlg.frame_seuil.setEnabled(1)
+        if self.dlg.decoupage.isChecked():
+            self.selection_Decoupage()            
+        if self.dlg.interpolation.isChecked():
+            self.selection_Interpolation()
+        if self.dlg.lissage.isChecked():
+            self.selection_Lissage()
+            
+        if self.dlg.cwsi.isChecked():
+            self.selection_cwsi()
+            
+        if self.dlg.tci.isChecked():
+            self.selection_tci()
+            
+        if self.dlg.tvdi.isChecked():
+            self.selection_tvdi()
+        if self.dlg.vhi.isChecked():
+            self.selection_vhi()
+        if self.dlg.cumule.isChecked():
+            self.selection_cumule()
+
     def stop(self):
         
         QApplication.processEvents
