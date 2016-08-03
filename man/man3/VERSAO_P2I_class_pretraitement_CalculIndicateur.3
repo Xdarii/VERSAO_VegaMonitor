@@ -1,4 +1,4 @@
-.TH "VERSAO_P2I.class_pretraitement.CalculIndicateur" 3 "Jeudi 30 Juin 2016" "VERSAO" \" -*- nroff -*-
+.TH "VERSAO_P2I.class_pretraitement.CalculIndicateur" 3 "Mercredi 3 Août 2016" "VERSAO" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -34,7 +34,7 @@ VERSAO_P2I.class_pretraitement.CalculIndicateur \-
 .RI "def \fBtvdi\fP (self)"
 .br
 .ti -1c
-.RI "def \fBsave\fP (self, out, sos, eos, tos, \fBprefixe\fP, \fBprogress\fP, GeoTransform, Projection)"
+.RI "def \fBsave\fP (self, out, sos, eos, tos, \fBprefixe\fP, \fBprogress\fP, GeoTransform, Projection, \fBtci\fP=0)"
 .br
 .in -1c
 .SS "Attributs publics"
@@ -151,35 +151,30 @@ Constructor.
 
 .PP
 .nf
-permet de prétraiter les données de sos, eos et tos (agrégation ou pas, gère les tailles, ..)            
+Allows to preprocess sos, eos et tos           
 
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.my_aggregate\&.block_reduce(), VERSAO_P2I\&.metrique_phenologique\&.metriquePhenologique\&.dlg, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeSerie, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.dureeSerie, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.dureeSerie, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.interface, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.interface, VERSAO_P2I\&.function_data_raster\&.open_data(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.stop(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.stop(), et VERSAO_P2I\&.class_pretraitement\&.test_existe_lien()\&.
 .SS "def VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.cwsi ( self)"
 
 .PP
 .nf
-permet de calculer le crop water stress index
+Allows to  calculate  crop water stress index
 
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.concatenation_serie(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.cumule(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.cumuleChecked, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.lienDonnee, et VERSAO_P2I\&.function_data_raster\&.open_data()\&.
 .SS "def VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.depart ( self)"
 
 .PP
 .nf
-START, disable the validation button and the active progress bar        
+START, disable the validation button and the active progress bar       
+
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.on, et VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.on\&.
-.SS "def VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.save ( self,  out,  sos,  eos,  tos,  prefixe,  progress,  GeoTransform,  Projection)"
+.SS "def VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.save ( self,  out,  sos,  eos,  tos,  prefixe,  progress,  GeoTransform,  Projection,  tci = \fC0\fP)"
 
 .PP
 .nf
@@ -188,8 +183,6 @@ saves the calculated indicators with the corresponding anomalies
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.cumuleChecked, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.debutT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.debutT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.finT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.finT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.finT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.interface, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.interface, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienSave, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.lienSave, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.lienSave, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.nomPrefixe, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.nomPrefixe, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.nomPrefixe, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.on, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.on, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.stop(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.stop(), et VERSAO_P2I\&.function_data_raster\&.write_data()\&.
 .SS "def VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.stop ( self)"
 
 .PP
@@ -199,41 +192,33 @@ STOP, activate the validation button and disable progress bar
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.on, et VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.on\&.
 .SS "def VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.tci ( self)"
 
 .PP
 .nf
-calculates the TCI (temperature conditions index)  
+Allows to calculate the TCI (temperature conditions index)  
 
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.concatenation_serie(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.cumule(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.cumuleChecked, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.depart(), VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.depart(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.depart(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.on, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.on, VERSAO_P2I\&.function_data_raster\&.open_data(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.save(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.save(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.stop(), et VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.stop()\&.
 .SS "def VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.tvdi ( self)"
 
 .PP
 .nf
-calculates the TVDI (temperature-vegetation dryness index)
+Allows to calculate the TVDI (temperature-vegetation dryness index)
 
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.my_aggregate\&.block_reduce(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.concatenation_serie(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.cumule(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.cumuleChecked, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutSerie, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.debutSerie, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.debutSerie, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.debutT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.debutT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.depart(), VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.depart(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.depart(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeSerie, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.dureeSerie, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.dureeSerie, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.finSerie, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.finSerie, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.finSerie, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.finT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.finT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.finT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.iDebut, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.iDebut, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.iDebut, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.iFin, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.iFin, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.iFin, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.interface, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.interface, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.on, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.on, VERSAO_P2I\&.function_data_raster\&.open_data(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.save(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.save(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.stop(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.stop(), VERSAO_P2I\&.class_pretraitement\&.test_lien_data_date(), et VERSAO_P2I\&.TVDI\&.TVDI_function()\&.
 .SS "def VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.vhi ( self)"
 
 .PP
 .nf
-calculates the VHI (vegetation health index)
+Allows to calculate  the VHI (vegetation health index)
 
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.my_aggregate\&.block_reduce(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.concatenation_serie(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.cumule(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.cumuleChecked, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutSerie, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.debutSerie, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.debutSerie, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.debutT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.debutT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.depart(), VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.depart(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.depart(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeSerie, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.dureeSerie, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.dureeSerie, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.finSerie, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.finSerie, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.finSerie, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.finT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.finT, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.finT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.iDebut, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.iDebut, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.iDebut, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.iFin, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.iFin, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.iFin, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.interface, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.interface, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.on, VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.on, VERSAO_P2I\&.function_data_raster\&.open_data(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.save(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.save(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.stop(), VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.stop(), et VERSAO_P2I\&.class_pretraitement\&.test_lien_data_date()\&.
 .SH "Documentation des données membres"
 .PP 
 .SS "VERSAO_P2I\&.class_pretraitement\&.CalculIndicateur\&.Bar"

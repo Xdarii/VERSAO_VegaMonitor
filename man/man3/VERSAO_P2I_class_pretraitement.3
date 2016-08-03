@@ -1,4 +1,4 @@
-.TH "VERSAO_P2I.class_pretraitement" 3 "Jeudi 30 Juin 2016" "VERSAO" \" -*- nroff -*-
+.TH "VERSAO_P2I.class_pretraitement" 3 "Mercredi 3 Août 2016" "VERSAO" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -44,12 +44,12 @@ VERSAO_P2I.class_pretraitement \-
 .RI "def \fBgestion_temperature\fP (inData, inUnit, inMin, inMax)"
 .br
 .ti -1c
-.RI "def \fBconcatenation_serie\fP (lienDonnee, lListe, dureeT, imageParAn, checked_multi)"
+.RI "def \fBconcatenation_serie\fP (lienDonnee, lListe, dureeT, imageParAn, checked_multi, iDebut, iFin)"
 .br
 .in -1c
 .SH "Documentation des fonctions"
 .PP 
-.SS "def VERSAO_P2I\&.class_pretraitement\&.concatenation_serie ( lienDonnee,  lListe,  dureeT,  imageParAn,  checked_multi)"
+.SS "def VERSAO_P2I\&.class_pretraitement\&.concatenation_serie ( lienDonnee,  lListe,  dureeT,  imageParAn,  checked_multi,  iDebut,  iFin)"
 
 .PP
 .nf
@@ -58,8 +58,6 @@ create a series containing all the images that are in the specified directory
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.function_data_raster\&.open_data()\&.
 .SS "def VERSAO_P2I\&.class_pretraitement\&.gestion_temperature ( inData,  inUnit,  inMin,  inMax)"
 
 .PP
@@ -83,7 +81,7 @@ Parameters:
 .PP
 .nf
  verifies that the supplied data type corresponds to what was in the directory
- #parameters:
+ parameters:
  -----------
      data: data
      list: list data
@@ -92,7 +90,7 @@ Parameters:
      imageParAn: number of images per year
      iDebut: index of the first image from the list
      IFIN: index of the last image
- #Returns:
+ Returns:
  --------
      lList: the list corresponding to the processing period specified by the user
      Nyear: Duration in year of treatment
@@ -166,8 +164,6 @@ the dates entered and returns a list corresponding to the processing time requir
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.function_data_raster\&.open_data(), VERSAO_P2I\&.class_pretraitement\&.test_bande_data(), VERSAO_P2I\&.class_pretraitement\&.test_existe_data(), et VERSAO_P2I\&.class_pretraitement\&.test_existe_lien()\&.
 .SH "Auteur"
 .PP 
 Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.

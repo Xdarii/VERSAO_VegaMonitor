@@ -120,11 +120,11 @@ Fonctions</h2></td></tr>
 <tr class="separator:a4e644dac1d558b34c160a28a708b984d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9b518e42af815927f3852db9f249e2db"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1class__pretraitement.html#a9b518e42af815927f3852db9f249e2db">gestion_temperature</a> (inData, inUnit, inMin, inMax)</td></tr>
 <tr class="separator:a9b518e42af815927f3852db9f249e2db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35b9da877faa489b881bc5ab9d794f74"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1class__pretraitement.html#a35b9da877faa489b881bc5ab9d794f74">concatenation_serie</a> (lienDonnee, lListe, dureeT, imageParAn, checked_multi)</td></tr>
-<tr class="separator:a35b9da877faa489b881bc5ab9d794f74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c6dea72ed0a8f99a4a73c6e49ad5137"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1class__pretraitement.html#a9c6dea72ed0a8f99a4a73c6e49ad5137">concatenation_serie</a> (lienDonnee, lListe, dureeT, imageParAn, checked_multi, iDebut, iFin)</td></tr>
+<tr class="separator:a9c6dea72ed0a8f99a4a73c6e49ad5137"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Documentation des fonctions</h2>
-<a class="anchor" id="a35b9da877faa489b881bc5ab9d794f74"></a>
+<a class="anchor" id="a9c6dea72ed0a8f99a4a73c6e49ad5137"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -156,7 +156,19 @@ Fonctions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>checked_multi</em>&#160;</td>
+          <td class="paramname"><em>checked_multi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>iDebut</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>iFin</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -167,8 +179,6 @@ Fonctions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">create a series containing all the images that are in the specified directory    
 </pre> 
-<p>Références <a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1function__data__raster.html#abbf0a6653920c6bf7271fa69c248ac22">VERSAO_P2I.function_data_raster.open_data()</a>.</p>
-
 </div>
 </div>
 <a class="anchor" id="a9b518e42af815927f3852db9f249e2db"></a>
@@ -279,7 +289,7 @@ Parameters:
       </table>
 </div><div class="memdoc">
 <pre class="fragment"> verifies that the supplied data type corresponds to what was in the directory
- #parameters:
+ parameters:
  -----------
      data: data
      list: list data
@@ -288,7 +298,7 @@ Parameters:
      imageParAn: number of images per year
      iDebut: index of the first image from the list
      IFIN: index of the last image
- #Returns:
+ Returns:
  --------
      lList: the list corresponding to the processing period specified by the user
      Nyear: Duration in year of treatment
@@ -557,14 +567,12 @@ Parameters:
 </div><div class="memdoc">
 <pre class="fragment">used to test the existence of the links, the presence of data and tests 
 the dates entered and returns a list corresponding to the processing time required.    </pre> 
-<p>Références <a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1function__data__raster.html#abbf0a6653920c6bf7271fa69c248ac22">VERSAO_P2I.function_data_raster.open_data()</a>, <a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1class__pretraitement.html#ac01c8be3a9a7aa6f4af62bd738bae5cb">VERSAO_P2I.class_pretraitement.test_bande_data()</a>, <a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1class__pretraitement.html#a78e31881cee68f96a89920d7dc5c0f2b">VERSAO_P2I.class_pretraitement.test_existe_data()</a>, et <a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1class__pretraitement.html#a1507c0f77593a880e1e3ba5a1ab75f64">VERSAO_P2I.class_pretraitement.test_existe_lien()</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Généré le Jeudi 30 Juin 2016 16:05:40 pour VERSAO par &#160;<a href="http://www.doxygen.org/index.html">
+Généré le Mercredi 3 Août 2016 16:49:05 pour VERSAO par &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

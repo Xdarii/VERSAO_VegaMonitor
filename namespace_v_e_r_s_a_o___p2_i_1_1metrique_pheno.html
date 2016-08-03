@@ -98,14 +98,34 @@ var searchBox = new SearchBox("searchBox", "search",false,'Recherche');
 Fonctions</h2></td></tr>
 <tr class="memitem:a17ff036b77e41937b6ef0c5abe810ea6"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1metrique_pheno.html#a17ff036b77e41937b6ef0c5abe810ea6">metrique_pheno_greenbrown</a> (ndvi=sp.empty, methode=&quot;trs&quot;, seuil1=-1, seuil2=-1)</td></tr>
 <tr class="separator:a17ff036b77e41937b6ef0c5abe810ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc7ab455bf2f33f8faf65121a46d8ec7"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1metrique_pheno.html#acc7ab455bf2f33f8faf65121a46d8ec7">metrique_pheno_vito</a> (ndvi=sp.empty, seuil1=0.3, seuil2=0.75)</td></tr>
-<tr class="separator:acc7ab455bf2f33f8faf65121a46d8ec7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1696e380b7132c56ac384b9b7b5e5359"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1metrique_pheno.html#a1696e380b7132c56ac384b9b7b5e5359">metrique_pheno_Tang</a> (ndvi=sp.empty, seuil1=-1, seuil2=-1)</td></tr>
-<tr class="separator:a1696e380b7132c56ac384b9b7b5e5359"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39acbfef5a349506d1bdbe7689ad677d"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1metrique_pheno.html#a39acbfef5a349506d1bdbe7689ad677d">metrique_pheno_vito</a> (ndvi=sp.empty, seuil1=0.25, seuil2=0.75)</td></tr>
+<tr class="separator:a39acbfef5a349506d1bdbe7689ad677d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad82487b356c39b61146e94bcf27d7d9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1metrique_pheno.html#aad82487b356c39b61146e94bcf27d7d9">metrique_pheno_derivative</a> (ndvi=sp.empty)</td></tr>
+<tr class="separator:aad82487b356c39b61146e94bcf27d7d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac40346ccd44833a4ade12e0606bc5393"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_v_e_r_s_a_o___p2_i_1_1metrique_pheno.html#ac40346ccd44833a4ade12e0606bc5393">metrique_pheno_param</a> (inNdvi=sp.empty, inSos=0, inEos=0, inIndMax=0)</td></tr>
 <tr class="separator:ac40346ccd44833a4ade12e0606bc5393"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Documentation des fonctions</h2>
+<a class="anchor" id="aad82487b356c39b61146e94bcf27d7d9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def VERSAO_P2I.metriquePheno.metrique_pheno_derivative </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>ndvi</em> = <code>sp.empty</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">This method use the second derivative of the NDVI to identifie the dates of beginning of season, end of season and more.
+ Parameters:
+ ----------
+    
+    ndvi : correspond à l'evolution DU NDVI pour un pixel sur une année</pre> 
+</div>
+</div>
 <a class="anchor" id="a17ff036b77e41937b6ef0c5abe810ea6"></a>
 <div class="memitem">
 <div class="memproto">
@@ -141,18 +161,17 @@ Fonctions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Ce script permet d'identifier les dates de debut de saison,
-de fin de saison à partir du NDVI.
-il est inspiré du script R:https://github.com/rforge/greenbrown/blob/master/pkg/greenbrown/R/PhenoTrs.R
-Entrée:
-    ndvi: les données de ndvi
-    seuil1: correspond au seuil autour du quel on pense trouver le debut de la vegetation
-    seuil2: correspond au seuil autour du quel on pense trouver la sénéscence
-    ndvi : correspond à l'evolution DU NDVI pour un pixel sur une année
-    methode: correspond à la methode à utiliser pour l'estimation
-Sortie:
-    une liste contenant le sos, eos, los, indMin n(indice du min),indMax (indice du max), ndvi min et ndvi max
-</pre> 
+<pre class="fragment">This script uses an absolue threshold to identifie the dates of beginning ,end , length, of season and other metrics
+ Parameters:
+ ----------
+     ndvi: ndvi of data
+     threshold1: corresponds to the threshold around which we think to find the beginning of the vegetation
+     threshold2: corresponds to the threshold around which we think to find senescence
+     ndvi: is the Evolution OF NDVI for a pixel over a year
+     method: is the method used to estimate
+ Returns:
+ ------
+     a list containing the sos, eos, los, indMin n (index min), indMax (index max) ndvi min and max ndvi    </pre> 
 </div>
 </div>
 <a class="anchor" id="ac40346ccd44833a4ade12e0606bc5393"></a>
@@ -190,63 +209,22 @@ Sortie:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Ce script a pour objectif de calculer differentes metriques phenologique 
-à partir du NDVI
+<pre class="fragment">This script aims to calculate different metrics phenological from NDVI   
 
-Entree:
-inNDVI: le NDVI
-inSos:  la seizaine correspondant au debut de saison
-inEos:  la seizaine correspondant à la fin de saison
-inIndMax: indice de la valeur maximale du NDVI (floraison)
+ Parameters:
+ ----------
+ inNDVI: NDVI
+ Insos: seizaine the corresponding early in season
+ inEos: the seizaine corresponding to the end of season
+ inIndMax: index of the maximum NDVI value (flowering)
 
-Sortie:
-outListe: une liste contenant l'ensemble des métriques phénologiques calculées</pre> 
+ Returns:
+ ------
+ outListe: a list containing all the phenological metric calculated    
+</pre> 
 </div>
 </div>
-<a class="anchor" id="a1696e380b7132c56ac384b9b7b5e5359"></a>
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">def VERSAO_P2I.metriquePheno.metrique_pheno_Tang </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>ndvi</em> = <code>sp.empty</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>seuil1</em> = <code>-1</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>seuil2</em> = <code>-1</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<pre class="fragment">Ce script permet d'identifier les dates de debut de saison,
-de fin de saison à partir du NDVI. Elle est aussi appelé methode à seuil variable
-En utilisant l'option par défaut le seuil utilisé correspond à celui conseillé dans :
-Variability and Climate Change Trend in Vegetation Phenology of Recent Decades in the Greater Khingan
-Mountain Area, Northeastern China
- Huan Tang , Zhenwang Li , Zhiliang Zhu , Baorui Chen , Baohui Zhang  and Xiaoping Xin ,
- 
-
-seuil1: correspond au seuil autour du quel on pense trouver le debut de la croissance de la végétation
-seuil1: correspond au seuil autour du quel on pense trouver la fin de la croissance de la végétation
-
-ndvi : correspond à l'evolution DU NDVI pour un pixel sur une année</pre> 
-</div>
-</div>
-<a class="anchor" id="acc7ab455bf2f33f8faf65121a46d8ec7"></a>
+<a class="anchor" id="a39acbfef5a349506d1bdbe7689ad677d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -260,7 +238,7 @@ ndvi : correspond à l'evolution DU NDVI pour un pixel sur une année</pre>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>seuil1</em> = <code>0.3</code>, </td>
+          <td class="paramname"><em>seuil1</em> = <code>0.25</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -275,22 +253,24 @@ ndvi : correspond à l'evolution DU NDVI pour un pixel sur une année</pre>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Ce script permet d'identifier les dates de debut de saison, de fin de saison à partir du NDVI à partir d'un seuil.
-Entrée:
-    ndvi: les données de ndvi
-    seuil1: correspond au seuil autour du quel on pense trouver le debut de la vegetation
-    seuil2: correspond au seuil autour du quel on pense trouver la sénéscence
-    ndvi : correspond à l'evolution DU NDVI pour un pixel sur une année
-    methode: correspond à la methode à utiliser pour l'estimation
-Sortie:
-    une liste contenant le sos, eos, los, indMin n(indice du min),indMax (indice du max), ndvi min et ndvi max
+<pre class="fragment">This script uses a relative threshold to identifie the dates of beginning of season, end of season .    
+ Parameters:
+ ----------
+     ndvi: ndvi of data
+     threshold1: corresponds to the threshold around which we think to find the beginning of the vegetation
+     threshold2: corresponds to the threshold around which we think to find senescence
+     ndvi: is the Evolution OF NDVI for a pixel over a year
+     method: is the method used to estimate
+ Returns:
+ ------
+     a list containing the sos, eos, los, indMin n (index min), indMax (index max), ndvi min and max ndvi    
 </pre> 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Généré le Jeudi 30 Juin 2016 16:05:40 pour VERSAO par &#160;<a href="http://www.doxygen.org/index.html">
+Généré le Mercredi 3 Août 2016 16:49:05 pour VERSAO par &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>

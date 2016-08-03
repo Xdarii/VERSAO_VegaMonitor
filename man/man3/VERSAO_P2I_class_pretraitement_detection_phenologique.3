@@ -1,4 +1,4 @@
-.TH "VERSAO_P2I.class_pretraitement.detection_phenologique" 3 "Jeudi 30 Juin 2016" "VERSAO" \" -*- nroff -*-
+.TH "VERSAO_P2I.class_pretraitement.detection_phenologique" 3 "Mercredi 3 Août 2016" "VERSAO" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -102,27 +102,6 @@ VERSAO_P2I.class_pretraitement.detection_phenologique \-
 
 .in +1c
 .ti -1c
-.RI "string \fBmethode\fP = '_white_'"
-.br
-.ti -1c
-.RI "\fBout1\fP = metrique_pheno_greenbrown(ndvi,'white',self\&.seuil1,self\&.seuil2)"
-.br
-.ti -1c
-.RI "\fBoutListe\fP = metrique_pheno_param(ndvi,\fBout1\fP[0],\fBout1\fP[1],\fBout1\fP[4])"
-.br
-.ti -1c
-.RI "\fBparametre\fP = \fBout1\fP[0:3]+\fBoutListe\fP"
-.br
-.ti -1c
-.RI "\fBoutput_name\fP = os\&.path\&.join(self\&.lienSave,self\&.nomPrefixe+u'_metrique'+\fBmethode\fP+str(\fBannee\fP)+'\&.tif')"
-.br
-.ti -1c
-.RI "int \fBannee\fP = annee+1"
-.br
-.ti -1c
-.RI "string \fBname\fP = \fBmethode\fP+str(self\&.debutT)+'\-'"
-.br
-.ti -1c
 .RI "\fBlevel\fP"
 .br
 .ti -1c
@@ -209,8 +188,6 @@ START, disable the validation button and the active progress bar
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, et VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.on\&.
 .SS "def VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.estimation ( self)"
 
 .PP
@@ -222,8 +199,6 @@ and anomalies
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.checked_multi, VERSAO_P2I\&.class_pretraitement\&.concatenation_serie(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.debutT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.debutT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.depart(), VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.depart(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.facteureEchelle, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.facteureEchelle, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.lienDonnee, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.methode, VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.on, VERSAO_P2I\&.function_data_raster\&.open_data(), VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.stop(), et VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.stop()\&.
 .SS "def VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.stop ( self)"
 
 .PP
@@ -232,12 +207,8 @@ STOP, activate the validation button and disable progress bar
 .fi
 .PP
  
-.PP
-Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, et VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.on\&.
 .SH "Documentation des données membres"
 .PP 
-.SS "int VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.annee = annee+1\fC [static]\fP"
-
 .SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.Bar"
 
 .SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.checked_multi"
@@ -276,8 +247,6 @@ Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, et VERSAO_P2
 
 .SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.methode"
 
-.SS "string VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.methode = '_white_'\fC [static]\fP"
-
 .SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.moyArea = sp\&.nanmean(area,2)\fC [static]\fP"
 
 .SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.moyAreaAft = sp\&.nanmean(areaAft,2)\fC [static]\fP"
@@ -290,21 +259,11 @@ Références VERSAO_P2I\&.class_pretraitement\&.Pretraitement\&.on, et VERSAO_P2
 
 .SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.moySos = sp\&.nanmean(sos,2)\fC [static]\fP"
 
-.SS "string VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.name = \fBmethode\fP+str(self\&.debutT)+'\-'\fC [static]\fP"
-
 .SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.nomPrefixe"
 
 .SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.ok"
 
 .SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.on"
-
-.SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.out1 = metrique_pheno_greenbrown(ndvi,'white',self\&.seuil1,self\&.seuil2)\fC [static]\fP"
-
-.SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.outListe = metrique_pheno_param(ndvi,\fBout1\fP[0],\fBout1\fP[1],\fBout1\fP[4])\fC [static]\fP"
-
-.SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.output_name = os\&.path\&.join(self\&.lienSave,self\&.nomPrefixe+u'_metrique'+\fBmethode\fP+str(\fBannee\fP)+'\&.tif')\fC [static]\fP"
-
-.SS "VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.parametre = \fBout1\fP[0:3]+\fBoutListe\fP\fC [static]\fP"
 
 .SS "int VERSAO_P2I\&.class_pretraitement\&.detection_phenologique\&.pas2 = (1\&./self\&.dureeT)*4\fC [static]\fP"
 
