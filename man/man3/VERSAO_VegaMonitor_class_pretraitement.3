@@ -1,0 +1,173 @@
+.TH "VERSAO_VegaMonitor.class_pretraitement" 3 "Mercredi 3 Août 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_VegaMonitor.class_pretraitement \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBCalculIndicateur\fP"
+.br
+.ti -1c
+.RI "class \fBdetection_phenologique\fP"
+.br
+.ti -1c
+.RI "class \fBPretraitement\fP"
+.br
+.ti -1c
+.RI "class \fBProgressBar\fP"
+.br
+.in -1c
+.SS "Fonctions"
+
+.in +1c
+.ti -1c
+.RI "def \fBtest_existe_lien\fP (dlg, lienDonnee, nomRepertoire)"
+.br
+.ti -1c
+.RI "def \fBtest_existe_data\fP (dlg, lienDonnee, nomRepertoire)"
+.br
+.ti -1c
+.RI "def \fBtest_bande_data\fP (dlg, data, liste, nomRepertoire, checked, imageParAn, iDebut, iFin)"
+.br
+.ti -1c
+.RI "def \fBtest_date\fP (dlg, debutSerie, finSerie, debutT, finT, dureeSerie, dureeT, nYear, checked, nomRepertoire='11')"
+.br
+.ti -1c
+.RI "def \fBtest_lien_data_date\fP (dlg, lienNdvi, nomRepertoire, imageParAn, checked, iDebut, iFin, debutSerie, finSerie, debutT, finT, dureeSerie, dureeT)"
+.br
+.ti -1c
+.RI "def \fBgestion_temperature\fP (inData, inUnit, inMin, inMax)"
+.br
+.ti -1c
+.RI "def \fBconcatenation_serie\fP (lienDonnee, lListe, dureeT, imageParAn, checked_multi, iDebut, iFin)"
+.br
+.in -1c
+.SH "Documentation des fonctions"
+.PP 
+.SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.concatenation_serie ( lienDonnee,  lListe,  dureeT,  imageParAn,  checked_multi,  iDebut,  iFin)"
+
+.PP
+.nf
+create a series containing all the images that are in the specified directory    
+
+.fi
+.PP
+ 
+.PP
+Références VERSAO_VegaMonitor\&.function_data_raster\&.open_data()\&.
+.SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.gestion_temperature ( inData,  inUnit,  inMin,  inMax)"
+
+.PP
+.nf
+allows to add a specific treatment to temperature data.
+if the data are in ° K are converted to C and management of extreme values is éffectuée to reduce noise
+Parameters:
+----------
+     InData: data
+     inUnit: unit temperature data (° C or ° K)
+     Inmin: the lowest value for the area
+     INMAX: temperature value highest in the area
+ Returns:
+ --------
+     Outdata: data converted into ° C and management of extreme values    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.test_bande_data ( dlg,  data,  liste,  nomRepertoire,  checked,  imageParAn,  iDebut,  iFin)"
+
+.PP
+.nf
+ verifies that the supplied data type corresponds to what was in the directory
+ parameters:
+ -----------
+     data: data
+     list: list data
+     dirname: directory name
+     checked: to know the data type specified by the user (single band, a picture by year, multi-annual)
+     imageParAn: number of images per year
+     iDebut: index of the first image from the list
+     IFIN: index of the last image
+ Returns:
+ --------
+     lList: the list corresponding to the processing period specified by the user
+     Nyear: Duration in year of treatment
+     ok: 1 if all goes well, otherwise 0    
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.test_date ( dlg,  debutSerie,  finSerie,  debutT,  finT,  dureeSerie,  dureeT,  nYear,  checked,  nomRepertoire = \fC'11'\fP)"
+
+.PP
+.nf
+ verifies that the length of the data entered by the user matches the data in the directory, it also vérife that start dates <end dates
+
+ Parameters:
+ ----------
+     debutSerie: year of the beginning of the series
+     finSerie: year-end of the series
+     debutT: early treatment
+     Fint: end of treatment
+     dureeSerie: the series time
+     Nyear: number of years of data available in the directory
+     checked: type specifier data
+     dirname: directory name
+ Returns:
+ --------
+     ok: boolean 1 if all goes well and 0 otherwise        
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.test_existe_data ( dlg,  lienDonnee,  nomRepertoire)"
+
+.PP
+.nf
+ verifies the existence of data in the specified directory
+ parameters:
+ ----------
+ lienDonnee: check link
+ nomRpertoire: the name of the corresponding directory to the specified link
+ Returns:
+ --------
+ list: list of images contained in the directory .tif
+ ok: it returns 1 if the link exists 0 otherwise    
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.test_existe_lien ( dlg,  lienDonnee,  nomRepertoire)"
+
+.PP
+.nf
+verify the existence of a connection and displays a message if the link does not exist.
+
+ Parameters:
+ ----------
+ lienDonnee: check link
+ nomRpertoire: the name of the corresponding directory to the specified link
+ 
+ Returns:
+ ------
+ returns 1 if the link exists 0 otherwise    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.test_lien_data_date ( dlg,  lienNdvi,  nomRepertoire,  imageParAn,  checked,  iDebut,  iFin,  debutSerie,  finSerie,  debutT,  finT,  dureeSerie,  dureeT)"
+
+.PP
+.nf
+used to test the existence of the links, the presence of data and tests 
+the dates entered and returns a list corresponding to the processing time required.    
+.fi
+.PP
+ 
+.PP
+Références VERSAO_VegaMonitor\&.function_data_raster\&.open_data(), VERSAO_VegaMonitor\&.class_pretraitement\&.test_bande_data(), VERSAO_VegaMonitor\&.class_pretraitement\&.test_existe_data(), et VERSAO_VegaMonitor\&.class_pretraitement\&.test_existe_lien()\&.
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.

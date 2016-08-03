@@ -1,0 +1,50 @@
+.TH "VERSAO_VegaMonitor.TVDI" 3 "Mercredi 3 Août 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_VegaMonitor.TVDI \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Fonctions"
+
+.in +1c
+.ti -1c
+.RI "def \fBTVDI_function\fP (inNDVI, inLST, pas=0\&.02, t=1, s1Min=0\&.3, s2Max=0\&.8, ss1Min=0\&.2, ss2Max=0\&.8)"
+.br
+.in -1c
+.SH "Documentation des fonctions"
+.PP 
+.SS "def VERSAO_VegaMonitor\&.TVDI\&.TVDI_function ( inNDVI,  inLST,  pas = \fC0\&.02\fP,  t = \fC1\fP,  s1Min = \fC0\&.3\fP,  s2Max = \fC0\&.8\fP,  ss1Min = \fC0\&.2\fP,  ss2Max = \fC0\&.8\fP)"
+
+.PP
+.nf
+Allows to calculates the TVDI.
+
+cette fonction est une version modifié du script IDL publié par Monica Garcia:
+(Garcia,M., Fernández, N., Villagarcía, L., Domingo, F.,  Puigdefábregas,J. & I. Sandholt. 2014. 2014. 
+Accuracy of the Temperature–Vegetation Dryness Index using MODIS under water-limited vs. 
+energy-limited evapotranspiration conditions  Remote Sensing of Environment 149, 100-117.) 
+
+Input:
+    inNDVI: NDVI 
+    inLST: land surface temperature
+    pas: intervall of the NDVI
+
+
+    S1min: lower threshold to determine the interval which will be used to determine the design parameters of LSTmax
+    S2max: upper threshold to determine the interval which will be used to determine the design parameters of LSTmax
+    ss1Min: lower threshold to determine the interval which will be used to determine the calculation of parmaètres LSTmin
+    ss2Max: upper threshold to determine the interval which will be used to determine the design parameters of LSTmin
+
+    
+    t : t=0 to use Garcia M method  and t=1 to calculate the TVDI without using the threshold .
+Output: 
+    TVDI
+
+.fi
+.PP
+ 
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.
