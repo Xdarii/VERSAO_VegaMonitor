@@ -1,0 +1,55 @@
+.TH "VERSAO_VegaMonitor.function_data_raster" 3 "Mercredi 3 Août 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_VegaMonitor.function_data_raster \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Fonctions"
+
+.in +1c
+.ti -1c
+.RI "def \fBopen_data\fP (filename)"
+.br
+.ti -1c
+.RI "def \fBwrite_data\fP (outname, im, GeoTransform, Projection)"
+.br
+.in -1c
+.SH "Documentation des fonctions"
+.PP 
+.SS "def VERSAO_VegaMonitor\&.function_data_raster\&.open_data ( filename)"
+
+.PP
+.nf
+The function open and load the image given its name. 
+The type of the data is checked from the file and the scipy array is initialized accordingly.
+Input:
+    filename: the name of the file
+Output:
+    im: the data cube
+    GeoTransform: the geotransform information 
+    Projection: the projection information
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.function_data_raster\&.write_data ( outname,  im,  GeoTransform,  Projection)"
+
+.PP
+.nf
+The function write the image on the  hard drive.
+Input: 
+    outname: the name of the file to be written
+    im: the image cube
+    GeoTransform: the geotransform information 
+    Projection: the projection information
+Output:
+    Nothing --
+
+.fi
+.PP
+ 
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.

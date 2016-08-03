@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['block_5freduce',['block_reduce',['../namespace_v_e_r_s_a_o___p2_i_1_1my__aggregate.html#a13de724ecd2ff3e45c18adec73c602c8',1,'VERSAO_P2I::my_aggregate']]]
+  ['block_5freduce',['block_reduce',['../namespace_v_e_r_s_a_o___vega_monitor_1_1my__aggregate.html#aafd1b50ca70d0f97424a5b1458757710',1,'VERSAO_VegaMonitor::my_aggregate']]]
 ];

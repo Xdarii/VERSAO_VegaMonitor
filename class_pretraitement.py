@@ -2,30 +2,41 @@
 """
 Created on Tue Jun 07 12:50:27 2016
 
-@author: U115-H016
+@author: MDian
 """
 
-from PyQt4.QtCore import QSettings, QTranslator, qVersion, QCoreApplication,Qt
-from PyQt4.QtGui import QAction, QIcon,QWidget, QPushButton, QApplication, QFileDialog, QMessageBox
+from PyQt4.QtCore import  Qt
+from PyQt4.QtGui import   QApplication,  QMessageBox
 from qgis.core import QgsMessageLog
 from qgis.gui import QgsMessageBar
-# Initialize Qt resources from file resources.py
-# Import the code for the dialog
+
 import os
 import os.path
-from function_data_raster import open_data, write_data
-from metriquePheno import metrique_pheno_Tang,metrique_pheno_vito,metrique_pheno_greenbrown,metrique_pheno_param
-from clip import clipRaster
 
-from scipy.signal import savgol_filter
-from scipy import interpolate
+#chek if scipy is installed
+try:
+    import scipy as sp
+except:
+    print "scipy is not installed"
+    
+try:
+    from scipy.signal import savgol_filter
+except:
+    print "scipy.signal.savgol_filter is not installed"
+
+try:
+    from scipy import interpolate
+except:
+    print "scipy.interpolate is not installed"
+#function that I made or modify
+from function_data_raster import open_data, write_data
+from metriquePheno import metrique_pheno_vito,metrique_pheno_greenbrown,metrique_pheno_param,metrique_pheno_derivative
+from clip import clipRaster
 from wh_filter import whfilter
-import scipy as sp
 from TVDI import TVDI_function
 from my_aggregate import block_reduce
-        
-            
-        
+
+       
 def test_existe_lien(dlg,lienDonnee, nomRepertoire):
     """    
     verify the existence of a connection and displays a message if the link does not exist.
@@ -41,7 +52,7 @@ def test_existe_lien(dlg,lienDonnee, nomRepertoire):
     if not (os.path.exists(str(lienDonnee))) :        
     
     #teste si le lien fournit pour le NDVI et /ou du DOY existe
-          QMessageBox.warning(dlg, u'Problème de lien ', u"le lien du répertoire " +nomRepertoire + " est inexistant ")
+          QMessageBox.warning(dlg, u'Warning ', u"The directory " +nomRepertoire + " doesn't exist ")
               
           return 0
                 
@@ -63,7 +74,7 @@ def test_existe_data(dlg,lienDonnee, nomRepertoire):
     donnee= os.listdir(str(lienDonnee))
     ok=0
     if len(donnee)<1:
-          QMessageBox.warning(dlg, u'répertoire vide', u"le répertoire " +nomRepertoire + u" ne contient aucune donnée")
+          QMessageBox.warning(dlg, u'Warning', u"The directory" +nomRepertoire + u" is empty")
           return liste,ok
           
     
@@ -72,7 +83,7 @@ def test_existe_data(dlg,lienDonnee, nomRepertoire):
             liste.append(element);
     
     if len(liste)<1:
-          QMessageBox.warning(dlg, u'Fichier .tif', u"le répertoire " +nomRepertoire + u" ne contient aucun .tif")
+          QMessageBox.warning(dlg, u'Warning', u"The directory " +nomRepertoire + u" doesn't have  .tif files")
           return liste,ok
     
     ok=1      
@@ -81,7 +92,7 @@ def test_existe_data(dlg,lienDonnee, nomRepertoire):
 def test_bande_data(dlg,data,liste, nomRepertoire,checked,imageParAn,iDebut,iFin,):
     """
      verifies that the supplied data type corresponds to what was in the directory
-     #parameters:
+     parameters:
      -----------
          data: data
          list: list data
@@ -90,7 +101,7 @@ def test_bande_data(dlg,data,liste, nomRepertoire,checked,imageParAn,iDebut,iFin
          imageParAn: number of images per year
          iDebut: index of the first image from the list
          IFIN: index of the last image
-     #Returns:
+     Returns:
      --------
          lList: the list corresponding to the processing period specified by the user
          Nyear: Duration in year of treatment
@@ -107,7 +118,7 @@ def test_bande_data(dlg,data,liste, nomRepertoire,checked,imageParAn,iDebut,iFin
             z=0
         if z >1 :
             
-              QMessageBox.warning(dlg, u'Problème de fichier ', u"Dans le répertoire " +nomRepertoire + ", les images ne sont pas monobandes ")
+              QMessageBox.warning(dlg, u'Warning', u"In The directory " +nomRepertoire + ", the files are not monoband ")
               return lListe,nYear,ok
               
         nYear=len(liste)/imageParAn
@@ -120,9 +131,8 @@ def test_bande_data(dlg,data,liste, nomRepertoire,checked,imageParAn,iDebut,iFin
             [x,y]=data.shape
             z=0
             
-        if z <2 :
-            
-              QMessageBox.warning(dlg, u'Problème de fichier ', u"Dans le répertoire " +nomRepertoire + " les images sont monobandes")
+        if z <2 :            
+              QMessageBox.warning(dlg, u'Warning ', u"In The directory " +nomRepertoire + ", The files are monoband")
               return lListe,nYear,ok
         if checked==1:      
             nYear=len(liste)
@@ -153,42 +163,42 @@ def test_date (dlg,debutSerie,finSerie,debutT,finT,dureeSerie,dureeT,nYear,check
     
     """
     if debutT<debutSerie:
-          QMessageBox.warning(dlg, u'Problème de date ', u"date du début de traitement ("+str(debutT)+u" < date du début de série "+str(debutSerie))
+          QMessageBox.warning(dlg, u'Warning ', u" date of processing start("+str(debutT)+u" < start date of the data "+str(debutSerie))
           return 0
     
     if debutSerie>finSerie:
-          QMessageBox.warning(dlg, u'Problème de date ', u"date du début de serie > date de fin de série ")
+          QMessageBox.warning(dlg, u'Warning ', u"start date > date de fin de série ")
           return 0
           
     if debutT>finSerie:
-          QMessageBox.warning(dlg, u'Problème de date ', u"date du début de traitement > date de fin de série ")
+          QMessageBox.warning(dlg, u'Warning ', u"date of processing start > end date of the data set ")
           return 0
     if finT<debutT:
-          QMessageBox.warning(dlg, u'Problème de date ', u"date fin de traitement < date du début de traitement ")
+          QMessageBox.warning(dlg, u'Warning ', u"date of processing end < date of processing start ")
           return 0
     
     if finT>finSerie:
-          QMessageBox.warning(dlg, u'Problème de date ', u"date fin de traitement > date de fin de la serie ")
+          QMessageBox.warning(dlg, u'Warning', u"date of processing end > end date of the data set ")
           return 0
     
     
     if dureeT>dureeSerie:
-          QMessageBox.warning(dlg, u'Problème de date ', u"durée de traitement > durée de la série ")
+          QMessageBox.warning(dlg, u'Warning', u"Processing duration > the data set duration ")
           return 0
         
     if nYear> dureeSerie:
         if checked<2:
-          QMessageBox.warning(dlg, u'Problème de date ', u"la durée de la série est inférieure aux données disponibles dans le répertoire "+nomRepertoire+ " ("+str(nYear)+">"+str( dureeSerie)+")")
+          QMessageBox.warning(dlg, u'Warning ', u"the duration of the data set is less than what is available in the directory "+nomRepertoire+ " ("+str(nYear)+">"+str( dureeSerie)+")")
           return 0
         if checked==2:
-          QMessageBox.warning(dlg, u'Problème de date ', u"la durée de la série est inférieure aux nombres de bandes de l'images multi-annuelle"+nomRepertoire+ " ("+str(nYear)+">"+str( dureeSerie)+")")
+          QMessageBox.warning(dlg, u'Warning ', u"the duration of the series is less than the number of bands of the multi-annual Images"+nomRepertoire+ " ("+str(nYear)+">"+str( dureeSerie)+")")
           return 0
     if nYear < dureeSerie:
         if checked<2:
-          QMessageBox.warning(dlg, u'Problème de date ', u"la durée de la série est supérieure aux données disponibles dans le répertoire "+nomRepertoire+ " ("+str(nYear)+"<"+str( dureeSerie)+")")
+          QMessageBox.warning(dlg, u'Warning ', u"the duration of the series exceeds the data available in the directory "+nomRepertoire+ " ("+str(nYear)+"<"+str( dureeSerie)+")")
           return 0
         if checked==2:
-          QMessageBox.warning(dlg, u'Problème de date ', u"la durée de la série est supérieure aux nombres de bandes de l'images multi-annuelle"+nomRepertoire+ " ("+str(nYear)+"<"+str( dureeSerie)+")")
+          QMessageBox.warning(dlg, u'Warning ', u"the duration of the series exceeds the number of bands of the multi-annual Images"+nomRepertoire+ " ("+str(nYear)+"<"+str( dureeSerie)+")")
           return 0
     
     return 1
@@ -200,8 +210,6 @@ def test_lien_data_date(dlg,lienNdvi,nomRepertoire,imageParAn,checked,iDebut,iFi
     the dates entered and returns a list corresponding to the processing time required.    
 
     """    
-    
-    
     liste=[]
     lListe=[]
     ok=0
@@ -259,7 +267,7 @@ def gestion_temperature(inData,inUnit,inMin,inMax):
     
     return outData
         
-def concatenation_serie(lienDonnee,lListe,dureeT,imageParAn,checked_multi):
+def concatenation_serie(lienDonnee,lListe,dureeT,imageParAn,checked_multi,iDebut,iFin):
     """
     create a series containing all the images that are in the specified directory    
     """
@@ -287,7 +295,7 @@ def concatenation_serie(lienDonnee,lListe,dureeT,imageParAn,checked_multi):
     if checked_multi==2:
             imageNDVI=os.path.join(lienDonnee , lListe[0])
             [NDVI,GeoTransform,Projection]=open_data(imageNDVI) 
-            sortie=NDVI
+            sortie=NDVI[:,:,iDebut*imageParAn:(iFin+1)*imageParAn]
     return sortie
         
     
@@ -372,6 +380,24 @@ class Pretraitement():
         """
         self.interface=dlg
         self.qgisInterface=iface
+        try:    
+            import scipy as sp
+        except:
+             self.qgisInterface.messageBar().pushMessage("Error", u"Scipy is not installed", level=QgsMessageBar.CRITICAL)
+             self.stop()
+             return
+        try:    
+            from scipy.signal import savgol_filter
+        except:
+            self.qgisInterface.messageBar().pushMessage("Error", u"Scipy or scipy.signal.savgol_filter not installed", level=QgsMessageBar.CRITICAL)
+            self.stop()
+            return
+        try:    
+            from scipy import interpolate
+        except:
+            self.qgisInterface.messageBar().pushMessage("Error", u"Scipy or scipy.interpolate is not installed", level=QgsMessageBar.CRITICAL)
+            self.stop()
+            return
         self.on=1
         self.Bar=ProgressBar(dlg.progressBar)
         dlg.cancel.clicked.connect(self.stop)
@@ -419,7 +445,7 @@ class Pretraitement():
           
         self.checked_multi=dlg.type_image.currentIndex()
         try:
-            self.lListe,self.nYear,ok=test_lien_data_date(dlg,self.lienDonnee,u"Données (NDVI ou Température)",self.imageParAn,self.checked_multi,self.iDebut,self.iFin,self.debutSerie,self.finSerie,self.debutT,self.finT,self.dureeSerie,self.dureeT)    
+            self.lListe,self.nYear,ok=test_lien_data_date(dlg,self.lienDonnee,u"Input 1 directory",self.imageParAn,self.checked_multi,self.iDebut,self.iFin,self.debutSerie,self.finSerie,self.debutT,self.finT,self.dureeSerie,self.dureeT)    
             self.ok=ok
             if not ok:
                 
@@ -427,20 +453,17 @@ class Pretraitement():
                 self.stop()
                 return 
     
-            ok_lien_save=test_existe_lien(dlg,self.lienSave,u"Enrégistrement") 
+            ok_lien_save=test_existe_lien(dlg,self.lienSave,u"Save directory") 
             self.ok=ok_lien_save
             if not ok_lien_save:
-                self.stop()
-    
-                return
-    
+                self.stop()    
+                return   
                 
             self.reechantillonage=dlg.spinBox_reechantillonage.value()       
         except:
-              self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été renccontré lors de la récuperation des données, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+              self.qgisInterface.messageBar().pushMessage("Error", u"a problem was encountered during the Recovery of data", level=QgsMessageBar.CRITICAL)
               self.stop()
               return
-    
     def stop(self):
         """
         STOP
@@ -470,7 +493,7 @@ class Pretraitement():
           
           lienZoneEtudes=self.interface.zoneEmprise.text()
           self.depart()
-          ok_lien_zone=test_existe_lien(self.interface,lienZoneEtudes,u"lien de la zone d'etudes")    
+          ok_lien_zone=test_existe_lien(self.interface,lienZoneEtudes,u"Mask")    
           if not ok_lien_zone:
                 QApplication.restoreOverrideCursor()
                 self.stop()
@@ -485,7 +508,7 @@ class Pretraitement():
 #          try:
           nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
           try:
-              self.qgisInterface.messageBar().pushMessage("Info", u"découpage et création d'une image multibande ...", level=QgsMessageBar.INFO, duration=3)
+              self.qgisInterface.messageBar().pushMessage("Info", u"Croping ...", level=QgsMessageBar.INFO, duration=3)
               #si on a des images multibandes avec un nombre de bandes= imageParAn
               if self.checked_multi==1:
                     if not self.on:
@@ -504,11 +527,11 @@ class Pretraitement():
                         try:
                             [sortie,G,P,ok,message]=clipRaster(NDVI,GeoTransform,Projection,lienZoneEtudes)
                         except:
-                              self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré lors du découpage des données", level=QgsMessageBar.CRITICAL)
+                              self.qgisInterface.messageBar().pushMessage("Error", u"a problem was encountered when cutting data", level=QgsMessageBar.CRITICAL)
                               self.stop()
                               return
                         if not ok:
-                              QMessageBox.warning(self.interface, u'Problème de découpage ', message)
+                              QMessageBox.warning(self.interface, u'a problem was encountered when cutting data ', message)
                               self.stop()
                               return 
                         serie[:,:,deb:fin]=sortie
@@ -529,12 +552,12 @@ class Pretraitement():
                         try:
                             [sortie,G,P,ok,message]=clipRaster(NDVI,GeoTransform,Projection,lienZoneEtudes)
                         except:
-                              self.qgisInterface.messageBar().pushMessage("Error", "un problème a été rencontré lors du découpage des données", level=QgsMessageBar.CRITICAL)
+                              self.qgisInterface.messageBar().pushMessage("Error", "a problem was encountered when cutting data", level=QgsMessageBar.CRITICAL)
                               QApplication.restoreOverrideCursor()
                               self.stop()
                               return
                         if not ok:
-                              QMessageBox.warning(self.interface, u'Problème de découpage ', message)
+                              QMessageBox.warning(self.interface, u'a problem was encountered when cutting data ', message)
                               self.stop()
                               return 
                         serie[:,:,k]=sortie[:,:,0]
@@ -545,13 +568,13 @@ class Pretraitement():
                               return 0
                   
                         try:
-                            [serie,G,P,ok,message]=clipRaster(NDVI,GeoTransform,Projection,lienZoneEtudes)
+                            [serie,G,P,ok,message]=clipRaster(NDVI[self.iDebut*self.imageParAn:(self.iFin+1)*self.imageParAn]  ,GeoTransform,Projection,lienZoneEtudes)
                         except:
-                              self.qgisInterface.messageBar().pushMessage("Error", "un problème a été rencontré lors du découpage des données", level=QgsMessageBar.CRITICAL)
+                              self.qgisInterface.messageBar().pushMessage("Error", "a problem was encountered when cutting data", level=QgsMessageBar.CRITICAL)
                               self.stop()
                               return
                         if not ok:
-                              QMessageBox.warning(self.interface, u'Problème de découpage ', message)
+                              QMessageBox.warning(self.interface, u'a problem was encountered when cutting data ', message)
                               self.stop()
                               return 
                         progress=progress+ 50
@@ -561,7 +584,7 @@ class Pretraitement():
               Projection=P
           except:
               
-              self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré lors de la concatenation des données", level=QgsMessageBar.CRITICAL)
+              self.qgisInterface.messageBar().pushMessage("Error", u"a problem was encountered during the concatenation data", level=QgsMessageBar.CRITICAL)
               self.stop()
               return
           try:
@@ -569,7 +592,7 @@ class Pretraitement():
               if self.temperatureChecked:
                       serie=gestion_temperature(serie,self.inUnit,self.inMin,self.inMax)
           except:
-              self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré lors de la gestion des données de temperature", level=QgsMessageBar.CRITICAL)
+              self.qgisInterface.messageBar().pushMessage("Error", u"a problem was encountered during the management of temperature data", level=QgsMessageBar.CRITICAL)
           prefixe='noFilter_'
           concat=sp.zeros((nL,nC))
           try:
@@ -597,12 +620,12 @@ class Pretraitement():
                   lissageNdvi=serie
                   newNdvi=serie
           except:
-              self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré lors du réechantillonage des données, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+              self.qgisInterface.messageBar().pushMessage("Error", u"ua problem was encountered during data resampling", level=QgsMessageBar.CRITICAL)
               self.stop()
               return
           try:
               if self.lissage>0:
-                 self.qgisInterface.messageBar().pushMessage("Info", u"lissage ...", level=QgsMessageBar.INFO, duration=3)
+                 self.qgisInterface.messageBar().pushMessage("Info", u"Smoothing ...", level=QgsMessageBar.INFO, duration=3)
                  for l in range(nL) :
                      if not self.on:
                           self.stop()
@@ -625,11 +648,11 @@ class Pretraitement():
                      
                      self.Bar.set_value(progress)
           except:
-              self.qgisInterface.messageBar().pushMessage("Error", "un problème a été rencontré lors du lissgae des données en sortie, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+              self.qgisInterface.messageBar().pushMessage("Error", "Smoothing problem", level=QgsMessageBar.CRITICAL)
               self.stop()
               return
-          message=u"découpage effectué avec succès" 
-          self.save(lissageNdvi,u"_decoupage_",prefixe,GeoTransform,Projection,progress,message)
+          message=u"recadrage réalisé avec succès" 
+          self.save(lissageNdvi,u"_crop_",prefixe,GeoTransform,Projection,progress,message)
           self.stop()
          
 #%%    
@@ -639,7 +662,7 @@ class Pretraitement():
         Allow to interpol and save data
         """        
         
-        
+        QApplication.processEvents()
         self.depart()
 #        try:
         lienDoy=self.interface.cheminDOY.text() 
@@ -663,14 +686,14 @@ class Pretraitement():
                 a=self.periodeTemporelle/self.interface.njours_interpolation.value()
                 r=self.periodeTemporelle%self.interface.njours_interpolation.value()
                 if  r>0:
-                    QMessageBox.warning(self.interface, u'interpolation ', u"La valeur choisie pour l'interpolation doit être un diviseur de la période temporelle des données")
+                    QMessageBox.warning(self.interface, u'interpolation ', u"The value chosen for interpolation must be a divisor of the time period of data")
                     self.stop()
                     QApplication.restoreOverrideCursor()
                     return 
                 self.periodeTemporelle=self.interface.njours_interpolation.value()
             imageParAn1=self.imageParAn*a
         except:
-          self.qgisInterface.messageBar().pushMessage("Error", u"erreur sur la récupération des paramètres interpolation", level=QgsMessageBar.CRITICAL)
+          self.qgisInterface.messageBar().pushMessage("Error", u" error on the interpolation parameters ", level=QgsMessageBar.CRITICAL)
           self.stop()
           QApplication.restoreOverrideCursor()
           return
@@ -686,14 +709,14 @@ class Pretraitement():
             self.qgisInterface.messageBar().pushMessage("Info", u"concatenation...", level=QgsMessageBar.INFO, duration=3)
             pas=(1./(self.dureeT))*50/nL
             
-            m=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
-            DOY_=concatenation_serie(lienDoy,liste,self.dureeT,self.imageParAn,self.checked_multi)
+            m=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
+            DOY_=concatenation_serie(lienDoy,liste,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
             NDVI_=m*self.facteureEchelle
             nZ=self.dureeT*imageParAn1 #23images par années * le nombre d'années
             newNdvi=sp.zeros((nL,nC,nZ),dtype='float16') #variable qui stocke le  NDVI après interpolation
             self.qgisInterface.messageBar().pushMessage("Info", u"interpolation...", level=QgsMessageBar.INFO, duration=3)
         except:
-          self.qgisInterface.messageBar().pushMessage("Error", u"erreur sur la récupération et concaténation des données", level=QgsMessageBar.CRITICAL)
+          self.qgisInterface.messageBar().pushMessage("Error", u"error on the concatenation data. Maybe you have a lot of data.", level=QgsMessageBar.CRITICAL)
           self.stop()
           QApplication.restoreOverrideCursor()
           return
@@ -741,7 +764,7 @@ class Pretraitement():
             
             prefixe='noFilter_'
         except:
-          self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré lors de l'interpolation des données", level=QgsMessageBar.CRITICAL)
+          self.qgisInterface.messageBar().pushMessage("Error", u"Error on interpolation", level=QgsMessageBar.CRITICAL)
           self.stop()
           QApplication.restoreOverrideCursor()
           return
@@ -756,7 +779,7 @@ class Pretraitement():
                   lissageNdvi=newNdvi
                   
             if self.lissage>0:
-                 self.qgisInterface.messageBar().pushMessage("Info", u"lissage...", level=QgsMessageBar.INFO, duration=3)
+                 self.qgisInterface.messageBar().pushMessage("Info", u"Smoothing...", level=QgsMessageBar.INFO, duration=3)
                  for l in range(nL) :
                      progress=(1.0/len(self.lListe)*34.0)+progress
                      self.Bar.progression(progress)  
@@ -775,17 +798,17 @@ class Pretraitement():
                      
                      self.Bar.progression(progress)
         except:
-              self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré lors du réechantillonage et/ou du lissage des données", level=QgsMessageBar.CRITICAL)
+              self.qgisInterface.messageBar().pushMessage("Error", u"resampling or smoothing problem", level=QgsMessageBar.CRITICAL)
               self.stop()
               return
-        message=u"interpolation effectuée avec succès"  
+        message=u"Interpolation successfully accomplished"  
         try:
-            self.qgisInterface.messageBar().pushMessage("Info", u"enregistrement...", level=QgsMessageBar.INFO, duration=3)
+            self.qgisInterface.messageBar().pushMessage("Info", u"Saving...", level=QgsMessageBar.INFO, duration=3)
             self.save(lissageNdvi,"_interpolation_",prefixe,GeoTransform,Projection,progress,message)
             self.stop()
             QApplication.restoreOverrideCursor()
         except:
-              self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été renccontré pendant l'enregistrement, veillez signaler votre erreur en décrivant les données que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+              self.qgisInterface.messageBar().pushMessage("Error", u"Error of saving", level=QgsMessageBar.CRITICAL)
               self.stop()
               return
         
@@ -808,7 +831,7 @@ class Pretraitement():
             
         """
         lissageNdvi=inData
-        self.qgisInterface.messageBar().pushMessage("Info", u"Enrégistrement...", level=QgsMessageBar.INFO, duration=3)
+        self.qgisInterface.messageBar().pushMessage("Info", u"saving...", level=QgsMessageBar.INFO, duration=3)
         if  self.interface.resolution_spatiale.value()>1:
             
             inNdvi=lissageNdvi
@@ -857,7 +880,7 @@ class Pretraitement():
                                  
             
         self.Bar.set_value(100)
-        QMessageBox.information(self.interface, u'succès', message)
+        QMessageBox.information(self.interface, u'Done', message)
                 
         self.stop()
         
@@ -894,14 +917,14 @@ class Pretraitement():
     def lisser(self):
         
             """
-            smoothes the data and / or to create multi-time series            
+            smoothes the data and  to create multi-time series            
             """
         
             self.depart()
             
             if (self.lissage==0):
                  
-                QMessageBox.information(self.interface, u'Lissage', u"si le type de lissage n'est pas choisi, en sortie vous obtiendrez des données non lissées dont l'enregistrement respecte le type d'image selectionné pour les données en sortie")
+                QMessageBox.information(self.interface, u'Lissage', u"if the type of smoothing is not selected, the output you will get not smoothed data saved according to the type of images selected for the output data")
                 
             imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
             [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
@@ -909,9 +932,9 @@ class Pretraitement():
             progress=5            
             self.Bar.set_value(progress)
             try:
-                newNdvi=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
+                newNdvi=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré pendant la concatenation, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"concatenation problem", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
 
@@ -927,7 +950,7 @@ class Pretraitement():
                 
                 prefixe='noFilter_'
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", "un problème a été rencontré pendant la gestion de la temperature, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", "a problem was encountered during the management of temperature", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
                   return
@@ -939,7 +962,7 @@ class Pretraitement():
                 else:
                       lissageNdvi=newNdvi
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré pendant le réechantillonnage, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"resampling problem", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
                   return
@@ -969,7 +992,7 @@ class Pretraitement():
                          
                      self.Bar.set_value(progress)
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré pendant le lissage, veillez signaler votre erreur en décrivant les données utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"smoothing problem", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   return
             try:
@@ -977,7 +1000,7 @@ class Pretraitement():
                 self.save(lissageNdvi,"_lissage_",prefixe,GeoTransform,Projection,progress,message)
                 QApplication.restoreOverrideCursor()
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré pendant l'enregistrement, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"saving problem", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   return
 class detection_phenologique():
@@ -994,7 +1017,12 @@ class detection_phenologique():
         Constructor.
         """
         self.qgisInterface=iface
-               
+        try:    
+            import scipy as sp
+        except:
+             self.qgisInterface.messageBar().pushMessage("Error", u"Scipy is not installed", level=QgsMessageBar.CRITICAL)
+             self.stop()
+             return
         self.interface=dlg
         dlg.cancel.clicked.connect(self.stop)
         self.on=1
@@ -1034,7 +1062,7 @@ class detection_phenologique():
                 self.ok=0
                 self.stop()
                 return 
-            ok_lien_save=test_existe_lien(dlg,self.lienSave,u"Enrégistrement") 
+            ok_lien_save=test_existe_lien(dlg,self.lienSave,u"Saving directory") 
             self.ok=ok_lien_save
             if not ok_lien_save:
                 self.stop()
@@ -1044,7 +1072,7 @@ class detection_phenologique():
             self.radioButton_defaultChecked=dlg.radioButton_default.isChecked() 
             self.methode=dlg.methode.currentIndex()
         except:
-              self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été detecté lors de la récuperation des liens, vérifier les liens soumis, si le problème persiste, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+              self.qgisInterface.messageBar().pushMessage("Error", u"Links problem", level=QgsMessageBar.CRITICAL)
               self.stop()
               return
         
@@ -1078,7 +1106,7 @@ class detection_phenologique():
             detects phenological metrics and returns images of metric cumulated 
             and anomalies            
             """
-            self.qgisInterface.messageBar().pushMessage("Info", u"détection de métrique phénologique...", level=QgsMessageBar.INFO, duration=3)
+            self.qgisInterface.messageBar().pushMessage("Info", u" detection...", level=QgsMessageBar.INFO, duration=3)
             self.depart()
             imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
             [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
@@ -1090,10 +1118,10 @@ class detection_phenologique():
             #variable qui stocke les 11 metriques pour chaque années 
                 metrique=sp.empty((L,C,11),dtype='float16') 
                 #tableaux dans les quelles les differentes metriques seront stockées séparemment
-                sos=sp.zeros((L,C,self.dureeT),dtype='uint16')
-                eos=sp.zeros((L,C,self.dureeT),dtype='uint16') #start of season
-                los=sp.zeros((L,C,self.dureeT),dtype='uint16') #length of seaon
-                maxi=sp.zeros((L,C,self.dureeT),dtype='uint16')
+                sos=sp.zeros((L,C,self.dureeT),dtype='float16')
+                eos=sp.zeros((L,C,self.dureeT),dtype='float16') #start of season
+                los=sp.zeros((L,C,self.dureeT),dtype='float16') #length of seaon
+                maxi=sp.zeros((L,C,self.dureeT),dtype='float16')
                 
                 area=sp.empty((L,C,self.dureeT),dtype='float16') #cumule du ndvi sur l'ensemble de la saison
                 areaBef=sp.empty((L,C,self.dureeT),dtype='float16')# cumul du NDVI avant le max de la saison
@@ -1107,10 +1135,10 @@ class detection_phenologique():
                 anomalieAreaBef=sp.empty((L,C,self.dureeT),dtype='float16') #anomalie sur le cumul avant max
                 anomalieAreaAft=sp.empty((L,C,self.dureeT),dtype='float16') #anomalie sur le cumul après max
             except:
-                QgsMessageLog.logMessage("un problème rencontré lors de la déclaration des variables qui doivent stocker les differents paramètres")
+                QgsMessageLog.logMessage("a problem encountered when declaring variables that need to store differents parameters")
             try:
                 annee=self.debutT
-                NDVI_=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
+                NDVI_=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
                 for k in range(self.dureeT):
                     progress=progress+(1.0/self.dureeT*20)
                     deb1=k*self.imageParAn
@@ -1128,39 +1156,23 @@ class detection_phenologique():
                                  return 
                                  
                              ndvi=NDVI[x,y,:]*self.facteureEchelle
-    #                         try:
                              #détection des métriques en fonction de la méthode choisie
                              if self.methode==0:
-                                 methode="_white_"
-                                 out1= metrique_pheno_greenbrown(ndvi,"white",self.seuil1,self.seuil2)
-    #                         except:
-    #                              QgsMessageLog.logMessage("un problème rencontré avec la méthode white")
-    #                         try:     
-                             if self.methode==1:
-                                 methode="_trs_"
+                                 methode="_NDVI absolute Threshold_"
                                  if self.radioButton_defaultChecked:
                                       out1= metrique_pheno_greenbrown(ndvi,"trs")
                                  else:
                                       out1= metrique_pheno_greenbrown(ndvi,"trs",self.seuil1,self.seuil2)
-    #                         except:
-    #                              QgsMessageLog.logMessage("un problème rencontré avec la méthode trs")
-                             
-    #                         try:
-                             if self.methode==2:
-                                 methode="_vito_"
+                             if self.methode==1:
+                                 methode="_NDVI Relative Threshold _"
                                  if self.radioButton_defaultChecked:
                                      out1= metrique_pheno_vito(ndvi)
                                  else:
                                      out1= metrique_pheno_vito(ndvi,self.seuil1,self.seuil2)
-    #                         except:
-    #                              QgsMessageLog.logMessage("un problème rencontré avec la méthode wito")
-    #                         try:     
-                             if self.methode==3:     
-                                 methode="_seuilVariable_"
-                                 if self.radioButton_defaultChecked:
-                                     out1=metrique_pheno_Tang(ndvi)
-                                 else:
-                                     out1=metrique_pheno_Tang(ndvi,self.seuil1,self.seuil2)
+                             if self.methode==2:
+                                 methode="_auto_"
+                                 out1=metrique_pheno_derivative(ndvi)
+                                     
                              outListe=metrique_pheno_param(ndvi,out1[0],out1[1],out1[4])
                              parametre=out1[0:3]+outListe
                              self.Bar.progression(progress)
@@ -1177,12 +1189,12 @@ class detection_phenologique():
                     areaAft[:,:,k]=metrique[:,:,5]
                             
                     #Enregistrement des metriques année/année
-                    output_name=os.path.join(self.lienSave,self.nomPrefixe+u'_metrique'+methode+str(annee)+'.tif')
+                    output_name=os.path.join(self.lienSave,self.nomPrefixe+u'_metric'+methode+str(annee)+"_seuil1_"+str(self.seuil1)+"_seuil2_"+str(self.seuil2)+'.tif')
                     write_data(output_name,metrique,GeoTransform,Projection)
                     annee=annee+1
                 name=methode+str(self.debutT)+'-'+str(self.finT)+".tif"
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été rencontré lors du calcul des métriques phénologiques, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"Problem on phenology detection", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
                   return
@@ -1191,7 +1203,7 @@ class detection_phenologique():
                  return 
             try:
     #=================moyenne et ecart type=============================================================
-                self.qgisInterface.messageBar().pushMessage("Info", u"Calcul d'anomalies...", level=QgsMessageBar.INFO, duration=2)
+                self.qgisInterface.messageBar().pushMessage("Info", u"anomalies ...", level=QgsMessageBar.INFO, duration=2)
                 moySos=sp.nanmean(sos,2)
                 moyEos=sp.nanmean(eos,2)
                 moyLos=sp.nanmean(los,2)
@@ -1222,10 +1234,14 @@ class detection_phenologique():
                     progress=progress+pas2
                     self.Bar.progression(progress)
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été lors du calcul des anomalies", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"error on anomalies calculation", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   return
-            try:         
+            try:
+                #enregistrement de moyenne EOS
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_MOY_EOS_"+name),moyEos.astype(int),GeoTransform,Projection)
+                #enregistrement de moyenne SOS
+                write_data(os.path.join(self.lienSave,self.nomPrefixe+"_MOY_SOS_"+name),moySos.astype(int),GeoTransform,Projection)
                 #enregistrement de TOS
                 write_data(os.path.join(self.lienSave,self.nomPrefixe+"_TOS_"+name),maxi,GeoTransform,Projection)
                 #enregistrement de sos
@@ -1254,13 +1270,13 @@ class detection_phenologique():
                 #enregistrement anomalie AreaAFT
                 write_data(os.path.join(self.lienSave,self.nomPrefixe+"_anomalie_areaBefore_max_"+name),anomalieAreaAft,GeoTransform,Projection)
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été lors de l'enregistrement des métriques phénologiques et ou anomalies, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"Saving error", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
                   return
 
             self.Bar.set_value(100)
-            QMessageBox.information(self.interface, u'calcul de paramètre ', u"Extraction des paramètres réussie")
+            QMessageBox.information(self.interface, u'Done ', u"phenology detection successfully accomplished")
             QApplication.restoreOverrideCursor()
             
             self.stop()
@@ -1278,6 +1294,12 @@ class CalculIndicateur():
         """
         self.interface=dlg
         self.qgisInterface=iface
+        try:    
+            import scipy as sp
+        except:
+             self.qgisInterface.messageBar().pushMessage("Error", u"Scipy is not installed", level=QgsMessageBar.CRITICAL)
+             self.stop()
+             return
         dlg.cancel.clicked.connect(self.stop)
         self.on=1
         self.ok=1
@@ -1317,13 +1339,13 @@ class CalculIndicateur():
                 self.stop()
                 QApplication.restoreOverrideCursor() 
                 return 
-            ok_lien_save=test_existe_lien(dlg,self.lienSave,u"Enrégistrement") 
+            ok_lien_save=test_existe_lien(dlg,self.lienSave,u"Saving directory") 
             self.ok=ok_lien_save
             if not ok_lien_save:
                 self.stop()
                 return
         except:
-              self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été lors de la récuperation des liens, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+              self.qgisInterface.messageBar().pushMessage("Error", u"links problem", level=QgsMessageBar.CRITICAL)
               self.stop()
               QApplication.restoreOverrideCursor()
               return
@@ -1341,7 +1363,8 @@ class CalculIndicateur():
         
     def depart(self):
         """
-        START, disable the validation button and the active progress bar        """
+        START, disable the validation button and the active progress bar       
+        """
         QApplication.setOverrideCursor(Qt.WaitCursor)
         self.on=1
         self.Bar.active(1)
@@ -1350,10 +1373,10 @@ class CalculIndicateur():
         
     def cumule (self,new):
             """
-            permet de prétraiter les données de sos, eos et tos (agrégation ou pas, gère les tailles, ..)            
+            Allows to preprocess sos, eos et tos           
             """
             try:
-                self.qgisInterface.messageBar().pushMessage("Info", u"récuperation des métriques phénologiques...", level=QgsMessageBar.INFO, duration=2)
+                self.qgisInterface.messageBar().pushMessage("Info", u"links of SOS EOS TOS...", level=QgsMessageBar.INFO, duration=2)
                 lienSos=self.interface.cheminSOS_temperature.text()
                 lienEos=self.interface.cheminEOS_temperature.text()
                 lienTos=self.interface.cheminTOS_temperature.text()
@@ -1389,7 +1412,7 @@ class CalculIndicateur():
                 if sos.shape==eos.shape and sos.shape==tos.shape :
                     pass
                 else:
-                    QMessageBox.warning(self.interface, u'Problème de données ', u"le SOS, TOS et EOS doivent avoir la même taille ")
+                    QMessageBox.warning(self.interface, u'Warning ', u"SOS, TOS and EOS must have the same size")
                     self.stop
                     QApplication.restoreOverrideCursor() 
                     return new,sos,eos,tos
@@ -1400,9 +1423,9 @@ class CalculIndicateur():
                     a=self.interface.facteur_aggregate.value()  
                     
                     if self.interface.function_aggregate.currentText().lower()=="mean":
-                        sos1=block_reduce(sos,(a,a,1),sp.mean)
-                        eos1=block_reduce(eos,(a,a,1),sp.mean)
-                        tos1=block_reduce(tos,(a,a,1),sp.mean)
+                        sos1=block_reduce(sos,(a,a,1),sp.mean).astype(int)
+                        eos1=block_reduce(eos,(a,a,1),sp.mean).astype(int)
+                        tos1=block_reduce(tos,(a,a,1),sp.mean).astype(int)
                     if self.interface.function_aggregate.currentText().lower()=="min":
                         sos1=block_reduce(sos,(a,a,1),sp.min)
                         eos1=block_reduce(eos,(a,a,1),sp.min)
@@ -1415,9 +1438,9 @@ class CalculIndicateur():
                         tos1=block_reduce(tos,(a,a,1),sp.max)
                         
                     if self.interface.function_aggregate.currentText().lower()=="median":
-                        sos1=block_reduce(sos,(a,a,1),sp.median)
-                        eos1=block_reduce(eos,(a,a,1),sp.median)
-                        tos1=block_reduce(tos,(a,a,1),sp.median)
+                        sos1=block_reduce(sos,(a,a,1),sp.median).astype(int)
+                        eos1=block_reduce(eos,(a,a,1),sp.median).astype(int)
+                        tos1=block_reduce(tos,(a,a,1),sp.median).astype(int)
                         
                     [nLL,nCC,nZZ]=tos1.shape
                     
@@ -1437,7 +1460,7 @@ class CalculIndicateur():
                 else:
                     [nLL,nCC,nZZ]=tos.shape
                     if nL > nLL or nL < nLL or nC > nCC or nC < nCC :
-                        QMessageBox.warning(self.interface, u'Problème de données ', u"les données doivent avoir la même taille ")
+                        QMessageBox.warning(self.interface, u'Warning ', u" data must have the same size ")
                     
                     if nL > nLL :
                         nLLL=nLL
@@ -1456,19 +1479,19 @@ class CalculIndicateur():
                 if sos.ndim>2 and eos.ndim>2 and tos.ndim>2:
                     
                     if sos.shape[2]> self.dureeSerie or sos.shape[2]< self.dureeSerie:
-                        QMessageBox.warning(self.interface, u'Problème de données ', u"le nombre de bande des données SOS est different de la durée de la série ")
+                        QMessageBox.warning(self.interface, u'Warning ', u"the number of band of SOS is different from the duration of the data set ")
                         self.stop()
                         QApplication.restoreOverrideCursor() 
                         return new,sos,eos,tos
                          
                     if eos.shape[2]> self.dureeSerie or eos.shape[2]< self.dureeSerie:
-                        QMessageBox.warning(self.dlg, u'Problème de données ', u"le nombre de bande des données EOS est different de la durée de la série ")
+                        QMessageBox.warning(self.dlg, u'Warning', u"the number of band of EOS is different from the duration of the data set ")
                         self.stop()
                         QApplication.restoreOverrideCursor() 
                         return new,sos,eos,tos
                         
                     if tos.shape[2]> self.dureeSerie or tos.shape[2]< self.dureeSerie:
-                        QMessageBox.warning(self.dlg, u'Problème de données ', u"le nombre de bande des données TOS est different de la durée de la série ")
+                        QMessageBox.warning(self.dlg, u'Warning ', u"the number of band of TOS is different from the duration of the data set ")
                         self.stop()
                         QApplication.restoreOverrideCursor() 
                         return new,sos,eos,tos
@@ -1476,41 +1499,41 @@ class CalculIndicateur():
                 else:
                     
                     if sos.ndim<3:
-                        QMessageBox.warning(self.interface, u'Problème de données ', u"le nombre de bande des données SOS est different de la durée de la série ")
+                        QMessageBox.warning(self.interface, u'WARNING ', u"the number of band of SOS is different from the duration of the data set ")
                         self.stop()
                         QApplication.restoreOverrideCursor() 
                         return new,sos,eos,tos
                     
                     if eos.ndim<3:
-                        QMessageBox.warning(self.interface, u'Problème de données ', u"le nombre de bande des données SOS est different de la durée de la série ")
+                        QMessageBox.warning(self.interface, u'WARNING ', u"the number of band of EOS is different from the duration of the data set ")
                         self.stop()                    
                         return new,sos,eos,tos
                     
                     if tos.ndim<3:
-                        QMessageBox.warning(self.interface, u'Problème de données ', u"le nombre de bande des données SOS est different de la durée de la série ")
+                        QMessageBox.warning(self.interface, u'WARNING ', u"the number of band of TOS is different from the duration of the data set ")
                         self.stop()  
                         QApplication.restoreOverrideCursor() 
                         return new,sos,eos,tos
                 return new,sos,eos,tos
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème au niveau de la fonction cumule, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"error on integration during growing season", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor() 
                   return
     def cwsi(self):
         
             """
-            permet de calculer le crop water stress index
+            Allows to  calculate  crop water stress index
             """
             try:
-                self.qgisInterface.messageBar().pushMessage("Info", u"calcul du CWSI...", level=QgsMessageBar.INFO, duration=3)
+                self.qgisInterface.messageBar().pushMessage("Info", u"CWSI...", level=QgsMessageBar.INFO, duration=3)
                 imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
                 [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
                 [nL,nC,i]=NDVI.shape
                 
                 nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
                 out=sp.zeros((nL,nC,nZ))
-                new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
+                new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
         #        out=sp.empty((nL,nC,nZ),dtype='float16')
                 sos=0
                 eos=0
@@ -1536,15 +1559,15 @@ class CalculIndicateur():
     #            except:
     #                QgsMessageLog.logMessage("un problème rencontré lors du  calcul du cswi")
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calcul du cswi, veillez signaler votre erreur en décrivant les donnant que vous avez utilisées", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"a problem was detected when calculating CSWI", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   return
     def tci(self):
             """
-            calculates the TCI (temperature conditions index)  
+            Allows to calculate the TCI (temperature conditions index)  
             """
             try:
-                self.qgisInterface.messageBar().pushMessage("Info", u"calcul du TCI...", level=QgsMessageBar.INFO, duration=3)
+                self.qgisInterface.messageBar().pushMessage("Info", u"TCI...", level=QgsMessageBar.INFO, duration=3)
                 self.depart()
                 imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
                 [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
@@ -1552,7 +1575,7 @@ class CalculIndicateur():
                 
                 nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
                 out=sp.zeros((nL,nC,nZ))
-                new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
+                new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
                 sos=0
                 eos=0
                 tos=0
@@ -1584,18 +1607,18 @@ class CalculIndicateur():
                 self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,1)
                 QApplication.restoreOverrideCursor()
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calcul tci", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"a problem was detected when calculating TCI", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
                   return
         
     def vhi(self):
             """
-            calculates the VHI (vegetation health index)
+            Allows to calculate  the VHI (vegetation health index)
             """
             self.depart()
             try:
-                self.qgisInterface.messageBar().pushMessage("Info", u"calcul du VHI...", level=QgsMessageBar.INFO, duration=3)
+                self.qgisInterface.messageBar().pushMessage("Info", u" VHI...", level=QgsMessageBar.INFO, duration=3)
                 imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
                 [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
                 [nL,nC,i]=NDVI.shape
@@ -1604,7 +1627,7 @@ class CalculIndicateur():
                 tos=0
                 nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
                 out=sp.zeros((nL,nC,nZ))
-                new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
+                new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
                 if self.cumuleChecked:
                     new,sos,eos,tos=self.cumule(new)
                 if not self.on:
@@ -1617,7 +1640,7 @@ class CalculIndicateur():
                 try:
                     lListe,nYear,ok=test_lien_data_date(self.interface,lienNdvi,"NDVI",self.imageParAn,self.checked_multi,self.iDebut,self.iFin,self.debutSerie,self.finSerie,self.debutT,self.finT,self.dureeSerie,self.dureeT)    
                 except:
-                    QgsMessageLog.logMessage(u"un problème rencontré sur les données du NDVI")
+                    QgsMessageLog.logMessage(u"problem on NDVI data")
                     
                 if not ok:
                     QApplication.restoreOverrideCursor()
@@ -1626,7 +1649,7 @@ class CalculIndicateur():
               
                 imageNDVI=os.path.join(lienNdvi , lListe[0])
                 [temp,GeoTransform1,Projection1]=open_data(imageNDVI)                 
-                inNdvi=concatenation_serie(lienNdvi,lListe,self.dureeT,self.imageParAn,self.checked_multi)
+                inNdvi=concatenation_serie(lienNdvi,lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
                 
                 if  self.interface.aggregate_Yes.isChecked() :
                     QApplication.processEvents()
@@ -1708,7 +1731,7 @@ class CalculIndicateur():
                 self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,)
                 QApplication.restoreOverrideCursor()   
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calul du vhi", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"a problem was detected when calculating VHI", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
                   return
@@ -1716,9 +1739,9 @@ class CalculIndicateur():
     def tvdi (self):
             
             """
-            calculates the TVDI (temperature-vegetation dryness index)
+            Allows to calculate the TVDI (temperature-vegetation dryness index)
             """
-            self.qgisInterface.messageBar().pushMessage("Info", u"calcul du TVDI...", level=QgsMessageBar.INFO, duration=3)
+            self.qgisInterface.messageBar().pushMessage("Info", u" TVDI...", level=QgsMessageBar.INFO, duration=3)
             self.depart()
             try:
                     imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
@@ -1729,7 +1752,7 @@ class CalculIndicateur():
                     tos=0
                     nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
                     out=sp.zeros((nL,nC,nZ))
-                    new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi)
+                    new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
             #        out=sp.empty((nL,nC,nZ),dtype='float16')
                     if self.cumuleChecked:
                         new,sos,eos,tos=self.cumule(new)
@@ -1751,7 +1774,7 @@ class CalculIndicateur():
                     
                     imageNDVI=os.path.join(lienNdvi , lListe[0])
                     [temp,GeoTransform1,Projection1]=open_data(imageNDVI)                 
-                    inNdvi=concatenation_serie(lienNdvi,lListe,self.dureeT,self.imageParAn,self.checked_multi)                
+                    inNdvi=concatenation_serie(lienNdvi,lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)                
                     if not self.on:
                          self.stop()
                          return
@@ -1813,7 +1836,7 @@ class CalculIndicateur():
                     self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,)
                     QApplication.restoreOverrideCursor()
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"un problème a été détecté lors du calcul du tvdi", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"a problem was detected when calculating TVDI", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
                   return
@@ -1822,12 +1845,15 @@ class CalculIndicateur():
         """
         saves the calculated indicators with the corresponding anomalies        
         """
-        self.qgisInterface.messageBar().pushMessage("Info", u"caclcul d'anomalies...", level=QgsMessageBar.INFO, duration=3)
+        self.qgisInterface.messageBar().pushMessage("Info", u"anomalies...", level=QgsMessageBar.INFO, duration=3)
         [xx,yy,zz]=out.shape
         nZ=self.dureeT*self.imageParAn
         moy=sp.zeros((xx,yy))
         ecartT=sp.zeros((xx,yy))
         anomalie=sp.zeros((xx,yy,zz))
+        eos=eos.astype(int)
+        sos=sos.astype(int)
+        tos=tos.astype(int)
         for m in range(self.imageParAn):
              
              for x in range(xx):
@@ -1860,15 +1886,15 @@ class CalculIndicateur():
                         
                         deb= kk*self.imageParAn+sos[x,y,kk] 
                         fin= kk *self.imageParAn + tos[x,y,kk]
-                        tSosTos[x,y,kk]=sp.sum(out[x,y,deb:fin ])#CUMULE SOS_TOS
+                        tSosTos[x,y,kk]=sp.nanmean(out[x,y,deb:fin ])#CUMULE SOS_TOS
                         
                         deb= kk*self.imageParAn+tos[x,y,kk] 
                         fin= kk *self.imageParAn + eos[x,y,kk]
-                        tTosEos[x,y,kk]=sp.sum(out[x,y,deb:fin ])#CUMULE TOS_EOS
+                        tTosEos[x,y,kk]=sp.nanmean(out[x,y,deb:fin ])#CUMULE TOS_EOS
                         
                         deb= kk*self.imageParAn+sos[x,y,kk] 
                         fin= kk *self.imageParAn + eos[x,y,kk]
-                        tSosEos[x,y,kk]=sp.sum( out[x,y, deb:fin ]) #CUMULE SOS_EOS
+                        tSosEos[x,y,kk]=sp.nanmean( out[x,y, deb:fin ]) #CUMULE SOS_EOS
             #calcul d'anomalies
             
             anomalieTsos_tos=(tSosTos-sp.nanmean(tSosTos))/sp.nanstd(tSosTos)
@@ -1878,9 +1904,9 @@ class CalculIndicateur():
             anomalieTtos_eos=(tTosEos-sp.nanmean(tTosEos))/sp.nanstd(tTosEos)
             
             #enregistrement
-            output_name3=os.path.join(self.lienSave,self.nomPrefixe+'_cumul_tSosTos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-            output_name4=os.path.join(self.lienSave,self.nomPrefixe+'_cumul_tTosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-            output_name5=os.path.join(self.lienSave,self.nomPrefixe+'_cumul_tSosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+            output_name3=os.path.join(self.lienSave,self.nomPrefixe+'_moy_tSosTos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+            output_name4=os.path.join(self.lienSave,self.nomPrefixe+'_moy_tTosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+            output_name5=os.path.join(self.lienSave,self.nomPrefixe+'_moy_tSosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
 
             output_name6=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tSosTos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
             output_name7=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tTosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
@@ -1895,11 +1921,11 @@ class CalculIndicateur():
             write_data(output_name8,anomalieTtos_eos,GeoTransform,Projection)
                     
         annee=self.debutT
-        self.qgisInterface.messageBar().pushMessage("Info", u"Enrégistrement...", level=QgsMessageBar.INFO, duration=3)
+        self.qgisInterface.messageBar().pushMessage("Info", u"Saving...", level=QgsMessageBar.INFO, duration=3)
         
         for ll in range(0,self.imageParAn):
             
-            output_name2=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_'+prefixe +str(ll)+'.tif') 
+            output_name2=os.path.join(self.lienSave,self.nomPrefixe+'_anomaly_'+prefixe +str(ll)+'.tif') 
             write_data(output_name2,anomalie[:,:,sp.arange(ll,nZ,self.imageParAn)],GeoTransform,Projection)  
             
         if tci==0:
@@ -1928,7 +1954,7 @@ class CalculIndicateur():
                 
     
         self.Bar.set_value(100)
-        QMessageBox.information(self.interface, u'succès', u"traitement effectué avec succès")
+        QMessageBox.information(self.interface, u'Done', u"sucessfull")
         
         self.stop()
         QApplication.restoreOverrideCursor()

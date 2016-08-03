@@ -1,0 +1,98 @@
+.TH "VERSAO_VegaMonitor.metriquePheno" 3 "Mercredi 3 Août 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_VegaMonitor.metriquePheno \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Fonctions"
+
+.in +1c
+.ti -1c
+.RI "def \fBmetrique_pheno_greenbrown\fP (ndvi=sp\&.empty, methode='trs', seuil1=\-1, seuil2=\-1)"
+.br
+.ti -1c
+.RI "def \fBmetrique_pheno_vito\fP (ndvi=sp\&.empty, seuil1=0\&.25, seuil2=0\&.75)"
+.br
+.ti -1c
+.RI "def \fBmetrique_pheno_derivative\fP (ndvi=sp\&.empty)"
+.br
+.ti -1c
+.RI "def \fBmetrique_pheno_param\fP (inNdvi=sp\&.empty, inSos=0, inEos=0, inIndMax=0)"
+.br
+.in -1c
+.SH "Documentation des fonctions"
+.PP 
+.SS "def VERSAO_VegaMonitor\&.metriquePheno\&.metrique_pheno_derivative ( ndvi = \fCsp\&.empty\fP)"
+
+.PP
+.nf
+This method use the second derivative of the NDVI to identifie the dates of beginning of season, end of season and more.
+ Parameters:
+ ----------
+    
+    ndvi : correspond à l'evolution DU NDVI pour un pixel sur une année
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.metriquePheno\&.metrique_pheno_greenbrown ( ndvi = \fCsp\&.empty\fP,  methode = \fC'trs'\fP,  seuil1 = \fC\-1\fP,  seuil2 = \fC\-1\fP)"
+
+.PP
+.nf
+This script uses an absolue threshold to identifie the dates of beginning ,end , length, of season and other metrics
+ Parameters:
+ ----------
+     ndvi: ndvi of data
+     threshold1: corresponds to the threshold around which we think to find the beginning of the vegetation
+     threshold2: corresponds to the threshold around which we think to find senescence
+     ndvi: is the Evolution OF NDVI for a pixel over a year
+     method: is the method used to estimate
+ Returns:
+ ------
+     a list containing the sos, eos, los, indMin n (index min), indMax (index max) ndvi min and max ndvi    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.metriquePheno\&.metrique_pheno_param ( inNdvi = \fCsp\&.empty\fP,  inSos = \fC0\fP,  inEos = \fC0\fP,  inIndMax = \fC0\fP)"
+
+.PP
+.nf
+This script aims to calculate different metrics phenological from NDVI   
+
+ Parameters:
+ ----------
+ inNDVI: NDVI
+ Insos: seizaine the corresponding early in season
+ inEos: the seizaine corresponding to the end of season
+ inIndMax: index of the maximum NDVI value (flowering)
+
+ Returns:
+ ------
+ outListe: a list containing all the phenological metric calculated    
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.metriquePheno\&.metrique_pheno_vito ( ndvi = \fCsp\&.empty\fP,  seuil1 = \fC0\&.25\fP,  seuil2 = \fC0\&.75\fP)"
+
+.PP
+.nf
+This script uses a relative threshold to identifie the dates of beginning of season, end of season .    
+ Parameters:
+ ----------
+     ndvi: ndvi of data
+     threshold1: corresponds to the threshold around which we think to find the beginning of the vegetation
+     threshold2: corresponds to the threshold around which we think to find senescence
+     ndvi: is the Evolution OF NDVI for a pixel over a year
+     method: is the method used to estimate
+ Returns:
+ ------
+     a list containing the sos, eos, los, indMin n (index min), indMax (index max), ndvi min and max ndvi    
+
+.fi
+.PP
+ 
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.

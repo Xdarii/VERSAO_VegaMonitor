@@ -2,35 +2,37 @@
 """
 Created on Sun May 29 22:42:25 2016
 
-@author: MamadouDian
+@author: Mamadou Dian BAH
 """
 
 import scipy as sp
 #import matplotlib.pyplot as plt
-from scipy import stats
+#from scipy import stats
 
 def TVDI_function(inNDVI,inLST,pas=0.02,t=1,s1Min=0.3,s2Max=0.8,ss1Min=0.2,ss2Max=0.8):
     """
-    Ce script permet de calculer le TVDI.
+    Allows to calculates the TVDI.
 
-    cette fonction est une traduction en python du script IDL publié par Monica Garcia, et il est basé sur l'article:
+    this function is a modified version of the IDL script published by Monica Garcia:
     (Garcia,M., Fernández, N., Villagarcía, L., Domingo, F.,  Puigdefábregas,J. & I. Sandholt. 2014. 2014. 
     Accuracy of the Temperature–Vegetation Dryness Index using MODIS under water-limited vs. 
     energy-limited evapotranspiration conditions  Remote Sensing of Environment 149, 100-117.) 
 
-    Entrée:
-        inNDVI: image de NDVI en entrée
-        inLST: image de temperature en entrée
-        pas: intervalle du NDVI
+    Input:
+        inNDVI: NDVI 
+        inLST: land surface temperature
+        pas: intervall of the NDVI
+
+
+        S1min: lower threshold to determine the interval which will be used to determine the design parameters of LSTmax
+        S2max: upper threshold to determine the interval which will be used to determine the design parameters of LSTmax
+        ss1Min: lower threshold to determine the interval which will be used to determine the calculation of parmaètres LSTmin
+        ss2Max: upper threshold to determine the interval which will be used to determine the design parameters of LSTmin
+
         
-        s1Min: seuil inferieur pour determiner l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmax
-        s2Max: seuil superieur pour determiner  l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmax
-        ss1Min: seuil inferieur pour determiner  l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmin
-        ss2Max: sseuil superieur pour determiner  l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmin
-        
-        t : t=0 pour utiliser la méthode implémenté par Garcia M (voir l'article) et t=1 pour utiliser toutes les valeurs sans aucun seuils.
-    Sortie: 
-        TVDI: correspond au TVDI calculé 
+        t : t=0 to use Garcia M method  and t=1 to calculate the TVDI without using the threshold .
+    Output: 
+        TVDI
     """
     TVDI=sp.zeros(inLST.shape)
     if inNDVI.shape == inLST.shape :
@@ -120,8 +122,10 @@ def TVDI_function(inNDVI,inLST,pas=0.02,t=1,s1Min=0.3,s2Max=0.8,ss1Min=0.2,ss2Ma
             iis=iValMax
             ii2=iValMin
             iis2=iValMax
+            
         #calcul de la regression linéaire
         estimation1=sp.stats.linregress(vx[ii:iis+1],vMaxi[ii:iis+1])
+        
         #LSTmax= a * NDVI + b
         lstmax_a=estimation1[0] #recuperation du paramètre de pente
         lstmax_b=estimation1[1] #recuperation du paramètre de l'ordonnée à l'origine
@@ -129,8 +133,6 @@ def TVDI_function(inNDVI,inLST,pas=0.02,t=1,s1Min=0.3,s2Max=0.8,ss1Min=0.2,ss2Ma
         estimation1=sp.stats.linregress(vx[ii2:iis2+1],vMini[ii2:iis2+1])
         #LSTmax= a * NDVI + b
         lstmin=sp.nanmin(vMini[ii2:iis2+1])
-#        lstmin=sp.nanmin(inT)
-#        print lstmin
         #calcul de TVDI
         TVDI=( inLST - lstmin) / ( lstmax_b + (lstmax_a * inNDVI )- lstmin+0.00000001 )
 #        TVDI=( inLST - lstmin) / ( ( lstmax_b + (lstmax_a * inNDVI ))- lstmin +0.00001 )

@@ -330,13 +330,13 @@ def block_reduce(image, block_size, func=np.sum, cval=0):
     return out
 
 ##A=np.arange(46)
-#image = np.arange(6*6*6).reshape(6, 6, 6)
-##print A
+#image = np.arange(3*3*3).reshape(3, 3, 3)
+#print image
 #print "__________"
-#B=block_reduce(image, block_size=( 2,1,1), func=np.mean)
+#B=block_reduce(image, block_size=( 2,2,1), func=np.median).astype(int)
 #print B
-#y=np.zeros((1,6,6))
-#y[0,:,:]=image[:,:,0]
-#C=np.dstack((B,image[1,:,:]))
-#print "___"
-#print C
+##y=np.zeros((1,6,6))
+##y[0,:,:]=image[:,:,0]
+##C=np.dstack((B,image[1,:,:]))
+##print "___"
+##print C

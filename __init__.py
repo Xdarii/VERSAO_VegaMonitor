@@ -6,7 +6,7 @@
  calcul de metrique phenologique et pretraitement
                              -------------------
         begin                : 2016-04-29
-        copyright            : (C) 2016 by Dian
+        copyright            : (C) 2016 by Mamadou Dian BAH
         email                : bah.mamadian@yahoo.fr
         git sha              : $Format:%H$
  ***************************************************************************/

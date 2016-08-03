@@ -7,7 +7,7 @@
                              -------------------
         begin                : 2016-04-29
         git sha              : $Format:%H$
-        copyright            : (C) 2016 by Dian
+        copyright            : (C) 2016 by Mamadou Dian BAH
         email                : bah.mamadian@yahoo.fr
  ***************************************************************************/
 

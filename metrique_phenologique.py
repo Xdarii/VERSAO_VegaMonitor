@@ -7,7 +7,7 @@
                               -------------------
         begin                : 2016-04-29
         git sha              : $Format:%H$
-        copyright            : (C) 2016 by Dian
+        copyright            : (C) 2016 by Mamadou Dian BAH
         email                : bah.mamadian@yahoo.fr
  ***************************************************************************/
 
@@ -31,11 +31,7 @@ import resources
 from metrique_phenologique_dialog import metriquePhenologiqueDialog
 import os
 import os.path
-#from function_data_raster import open_data, write_data
-#from clip import clipRaster
 
-#from TVDI import TVDI_function
-#from my_aggregate import block_reduce
 from class_pretraitement import Pretraitement,detection_phenologique,CalculIndicateur
 
 class metriquePhenologique:
@@ -71,20 +67,18 @@ class metriquePhenologique:
         self.dlg = metriquePhenologiqueDialog()
         # Declare instance attributes
         self.actions = []
-        self.menu = self.tr(u'&pretraitement et pheno')
+        self.menu = self.tr(u'&VERSAO_VegaMonitor')
         QApplication.restoreOverrideCursor()
         self.on= 1
         # TODO: We are going to let the user set this up in a future iteration
-        self.toolbar = self.iface.addToolBar(u'metriquePhenologique')
-        self.toolbar.setObjectName(u'metriquePhenologique')
-        
+        self.toolbar = self.iface.addToolBar(u'VERSAO_VegaMonitor')
+        self.toolbar.setObjectName(u'VERSAO_VegaMonitor')
         
         
     
     def mes_action(self):
         
         """
-        Gère les interactions entre utilisateur et l'interface.
         Manages interactions between user and interface.
         
         """
@@ -127,6 +121,7 @@ class metriquePhenologique:
 
         
         self.dlg.filtreInterpol.currentIndexChanged.connect(self.active_parametre)
+        self.dlg.methode.currentIndexChanged.connect(self.change_default_value)
         
         self.dlg.temperature_oui.clicked.connect(self.active_temperature)
         self.dlg.temperature_non.clicked.connect(self.active_temperature)
@@ -138,7 +133,7 @@ class metriquePhenologique:
         
     def choixTab(self,index):
         """
-        Permet de gerer les differentes options déja choisies par l'utilisateur ou les paramètres par défaut
+        Allows to manage the different options already chosen by the user or the default settings      
         """
         if self.dlg.radioButton_default.isChecked():
             self.dlg.frame_seuil.setEnabled(0)
@@ -292,6 +287,7 @@ class metriquePhenologique:
             manages the vhi parameters
             """
             self.dlg.vhi.setChecked(1)
+            self.dlg.frame_ndvi.setEnabled(1)
             if self.dlg.cumule.isChecked():
                 self.dlg.frame_metrique.setEnabled(1)
             else:
@@ -319,18 +315,6 @@ class metriquePhenologique:
             
               self.dlg.cheminTemperature.setText(ndviPath)
               
-
-
-#    def acces_repertoire_temperature_ndvi(self):
-#
-#        """ allows to select the directory in where  the link of  NDVI  data is located for the
-#        
-#        """
-#        ndviPath = QFileDialog.getExistingDirectory(self.dlg,'Directory-NDVI','.')
-#        if ndviPath:
-#            
-#              self.dlg.cheminNDVI_temperature.setText(ndviPath)
-
     def acces_repertoire_temperature_sos(self):
 
         """ allows to select the directory in where  the link of  SOS data is located    
@@ -372,13 +356,6 @@ class metriquePhenologique:
               self.dlg.cheminNDVI_metrique.setText(ndviPath)
             if self.dlg.MOD13Q1.currentIndex()==2: 
               self.dlg.cheminNDVI_temperature.setText(ndviPath)
-#    def acces_Repertoire_NdviMetrique(self):
-#        
-#        ndviPath = QFileDialog.getExistingDirectory(self.dlg,u'Directory-NDVI','.')
-#          
-#        if ndviPath:
-#          
-#          self.dlg.cheminNDVI_metrique.setText(ndviPath)
 
     def acces_fichier_sos(self):
         """ allows to select the file of SOS data    
@@ -433,15 +410,6 @@ class metriquePhenologique:
           
           self.dlg.cheminDOY.setText(doyPath)
           
-#    def acces_Chemin_save_temperature(self):
-#        """
-#        permet de selectionner le repertoire d'enregistrement des fichiers
-#        """
-#        savePath = QFileDialog.getExistingDirectory(self.dlg,u"Directory-save",'.')
-#              
-#        if savePath:
-#        
-#                self.dlg.cheminOut_temperature.setText(savePath)
       
     def acces_repertoire_save(self):
         
@@ -459,15 +427,6 @@ class metriquePhenologique:
                 self.dlg.cheminOut_temperature.setText(savePath)
                 
                       
-#    def acces_Chemin_SaveMetrique(self,var):
-#        """
-#        permet de selectionner le repertoire d'enregistrement des fichiers
-#        """
-#        savePath = QFileDialog.getExistingDirectory(self.dlg,u'Directory-save','.')
-#                  
-#        if savePath:
-#                      
-#                      self.dlg.cheminOut_metrique.setText(savePath)
 
 
 
@@ -493,15 +452,37 @@ class metriquePhenologique:
         avoids the user to change the threshold by locking        
         """
         self.dlg.frame_seuil.setEnabled(0)
+        if self.dlg.methode.currentIndex()==1:
+            self.dlg.threshold.setEnabled(1)
+            self.dlg.seuilSOS.setValue(0.45)
+            self.dlg.seuilEOS.setValue(0.6)
+        if self.dlg.methode.currentIndex()==0:
+            self.dlg.seuilSOS.setValue(0.25)
+            self.dlg.seuilEOS.setValue(0.75)
+            self.dlg.threshold.setEnabled(1)
+        if self.dlg.methode.currentIndex()==2:
+            self.dlg.threshold.setEnabled(0)
+    def change_default_value  (self):
+        if self.dlg.methode.currentIndex()==1:
+            self.dlg.seuilSOS.setValue(0.45)
+            self.dlg.seuilEOS.setValue(0.6)
+            self.dlg.threshold.setEnabled(1)
+        if self.dlg.methode.currentIndex()==0:
+            self.dlg.seuilSOS.setValue(0.25)
+            self.dlg.seuilEOS.setValue(0.75)
+            self.dlg.threshold.setEnabled(1)
+        if self.dlg.methode.currentIndex()==2:
+            self.dlg.threshold.setEnabled(0)
         
+          
     def selection_Seuil(self):
         """
         alloiws the user to change the threshold        
         """
-        
-        self.dlg.frame_seuil.setEnabled(1)
-        self.dlg.seuilEOS.setEnabled(1)
-        self.dlg.seuilSOS.setEnabled(1)
+        if self.dlg.methode.currentIndex()<3:
+            self.dlg.frame_seuil.setEnabled(1)
+            self.dlg.seuilEOS.setEnabled(1)
+            self.dlg.seuilSOS.setEnabled(1)
         
     def selection_NDVI(self):
         """
@@ -665,7 +646,7 @@ class metriquePhenologique:
         icon_path = ':/plugins/metriquePhenologique/icon.png'
         self.add_action(
             icon_path,
-            text=self.tr(u'pretraite et métrique pheno'),
+            text=self.tr(u'VERSAO_VegaMonitor'),
             callback=self.showDlg,
             parent=self.iface.mainWindow())
 
