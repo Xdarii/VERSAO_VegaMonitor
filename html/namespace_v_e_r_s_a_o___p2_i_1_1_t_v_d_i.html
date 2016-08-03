@@ -159,33 +159,35 @@ Fonctions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Ce script permet de calculer le TVDI.
+<pre class="fragment">Allows to calculates the TVDI.
 
-cette fonction est une traduction en python du script IDL publié par Monica Garcia, et il est basé sur l'article:
+this function is a modified version of the IDL script published by Monica Garcia:
 (Garcia,M., Fernández, N., Villagarcía, L., Domingo, F.,  Puigdefábregas,J. &amp; I. Sandholt. 2014. 2014. 
 Accuracy of the Temperature–Vegetation Dryness Index using MODIS under water-limited vs. 
 energy-limited evapotranspiration conditions  Remote Sensing of Environment 149, 100-117.) 
 
-Entrée:
-    inNDVI: image de NDVI en entrée
-    inLST: image de temperature en entrée
-    pas: intervalle du NDVI
+Input:
+    inNDVI: NDVI 
+    inLST: land surface temperature
+    pas: intervall of the NDVI
+
+
+    S1min: lower threshold to determine the interval which will be used to determine the design parameters of LSTmax
+    S2max: upper threshold to determine the interval which will be used to determine the design parameters of LSTmax
+    ss1Min: lower threshold to determine the interval which will be used to determine the calculation of parmaètres LSTmin
+    ss2Max: upper threshold to determine the interval which will be used to determine the design parameters of LSTmin
+
     
-    s1Min: seuil inferieur pour determiner l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmax
-    s2Max: seuil superieur pour determiner  l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmax
-    ss1Min: seuil inferieur pour determiner  l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmin
-    ss2Max: sseuil superieur pour determiner  l'intervalle qui va servir à determiner les parmaètres de calcul du LSTmin
-    
-    t : t=0 pour utiliser la méthode implémenté par Garcia M (voir l'article) et t=1 pour utiliser toutes les valeurs sans aucun seuils.
-Sortie: 
-    TVDI: correspond au TVDI calculé 
+    t : t=0 to use Garcia M method  and t=1 to calculate the TVDI without using the threshold .
+Output: 
+    TVDI
 </pre> 
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Généré le Jeudi 30 Juin 2016 16:05:40 pour VERSAO par &#160;<a href="http://www.doxygen.org/index.html">
+Généré le Mercredi 3 Août 2016 16:49:05 pour VERSAO par &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.11
 </small></address>
