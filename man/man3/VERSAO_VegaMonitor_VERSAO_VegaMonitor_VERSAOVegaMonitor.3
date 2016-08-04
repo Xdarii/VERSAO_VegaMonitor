@@ -1,0 +1,550 @@
+.TH "VERSAO_VegaMonitor.VERSAO_VegaMonitor.VERSAOVegaMonitor" 3 "Jeudi 4 Août 2016" "VERSAO" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VERSAO_VegaMonitor.VERSAO_VegaMonitor.VERSAOVegaMonitor \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Fonctions membres publiques"
+
+.in +1c
+.ti -1c
+.RI "def \fB__init__\fP (self, \fBiface\fP)"
+.br
+.ti -1c
+.RI "def \fBmes_action\fP (self)"
+.br
+.ti -1c
+.RI "def \fBchoixTab\fP (self, index)"
+.br
+.ti -1c
+.RI "def \fBstop\fP (self)"
+.br
+.ti -1c
+.RI "def \fBactive_defaut_interpol\fP (self)"
+.br
+.ti -1c
+.RI "def \fBactive_temperature\fP (self)"
+.br
+.ti -1c
+.RI "def \fBactive_parametre\fP (self, index)"
+.br
+.ti -1c
+.RI "def \fBselection_Decoupage\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_Interpolation\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_Lissage\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_cwsi\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_tci\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_tvdi\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_cumule\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_vhi\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_aggregate_yes\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_aggregate_no\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_repertoire_temperature\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_repertoire_temperature_sos\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_repertoire_temperature_eos\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_repertoire_temperature_tos\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_repertoire_ndvi\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_fichier_sos\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_fichier_eos\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_fichier_tos\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_Repertoire_Doy\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_repertoire_save\fP (self)"
+.br
+.ti -1c
+.RI "def \fBacces_Zone_Etudes\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_Default\fP (self)"
+.br
+.ti -1c
+.RI "def \fBchange_default_value\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_Seuil\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_NDVI\fP (self)"
+.br
+.ti -1c
+.RI "def \fBselection_DOY\fP (self)"
+.br
+.ti -1c
+.RI "def \fBtr\fP (self, message)"
+.br
+.ti -1c
+.RI "def \fBvalidation\fP (self)"
+.br
+.ti -1c
+.RI "def \fBadd_action\fP (self, icon_path, text, callback, enabled_flag=True, add_to_menu=True, add_to_toolbar=True, status_tip=None, whats_this=None, parent=None)"
+.br
+.ti -1c
+.RI "def \fBshowDlg\fP (self)"
+.br
+.ti -1c
+.RI "def \fBinitGui\fP (self)"
+.br
+.ti -1c
+.RI "def \fBunload\fP (self)"
+.br
+.in -1c
+.SS "Attributs publics"
+
+.in +1c
+.ti -1c
+.RI "\fBiface\fP"
+.br
+.ti -1c
+.RI "\fBplugin_dir\fP"
+.br
+.ti -1c
+.RI "\fBtranslator\fP"
+.br
+.ti -1c
+.RI "\fBdlg\fP"
+.br
+.ti -1c
+.RI "\fBactions\fP"
+.br
+.ti -1c
+.RI "\fBmenu\fP"
+.br
+.ti -1c
+.RI "\fBtoolbar\fP"
+.br
+.ti -1c
+.RI "\fBon\fP"
+.br
+.in -1c
+.SH "Description détaillée"
+.PP 
+
+.PP
+.nf
+QGIS Plugin Implementation.
+.fi
+.PP
+ 
+.SH "Documentation des constructeurs et destructeur"
+.PP 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.__init__ ( self,  iface)"
+
+.PP
+.nf
+Constructor.
+
+:param iface: An interface instance that will be passed to this class
+    which provides the hook by which you can manipulate the QGIS
+    application at run time.
+:type iface: QgsInterface
+
+.fi
+.PP
+ 
+.SH "Documentation des fonctions membres"
+.PP 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_fichier_eos ( self)"
+
+.PP
+.nf
+allows to select the file of EOS data    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_fichier_sos ( self)"
+
+.PP
+.nf
+allows to select the file of SOS data    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_fichier_tos ( self)"
+
+.PP
+.nf
+allows to select the file of TOS data    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_Repertoire_Doy ( self)"
+
+.PP
+.nf
+allows to select the directory  of  DOY data   
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_repertoire_ndvi ( self)"
+
+.PP
+.nf
+allows to select the directory in where  the link of  NDVI data is located    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_repertoire_save ( self)"
+
+.PP
+.nf
+allows to select the directory in where  the data will be save   
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_repertoire_temperature ( self)"
+
+.PP
+.nf
+allows to select the directory in where  the link of  TEMPERATURE data is located    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_repertoire_temperature_eos ( self)"
+
+.PP
+.nf
+allows to select the directory in where  the link of  EOS data is located    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_repertoire_temperature_sos ( self)"
+
+.PP
+.nf
+allows to select the directory in where  the link of  SOS data is located    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_repertoire_temperature_tos ( self)"
+
+.PP
+.nf
+allows to select the directory in where  the link of  TOS data is located    
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.acces_Zone_Etudes ( self)"
+
+.PP
+.nf
+allows to select the directory  of  ROI data   
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.active_defaut_interpol ( self)"
+
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.active_parametre ( self,  index)"
+
+.PP
+.nf
+Manages   filters  parameters
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.active_temperature ( self)"
+
+.PP
+.nf
+Manages parameters of temperature  
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.add_action ( self,  icon_path,  text,  callback,  enabled_flag = \fCTrue\fP,  add_to_menu = \fCTrue\fP,  add_to_toolbar = \fCTrue\fP,  status_tip = \fCNone\fP,  whats_this = \fCNone\fP,  parent = \fCNone\fP)"
+
+.PP
+.nf
+Add a toolbar icon to the toolbar.
+
+:param icon_path: Path to the icon for this action. Can be a resource
+    path (e.g. ':/plugins/foo/bar.png') or a normal file system path.
+:type icon_path: str
+
+:param text: Text that should be shown in menu items for this action.
+:type text: str
+
+:param callback: Function to be called when the action is triggered.
+:type callback: function
+
+:param enabled_flag: A flag indicating if the action should be enabled
+    by default. Defaults to True.
+:type enabled_flag: bool
+
+:param add_to_menu: Flag indicating whether the action should also
+    be added to the menu. Defaults to True.
+:type add_to_menu: bool
+
+:param add_to_toolbar: Flag indicating whether the action should also
+    be added to the toolbar. Defaults to True.
+:type add_to_toolbar: bool
+
+:param status_tip: Optional text to show in a popup when mouse pointer
+    hovers over the action.
+:type status_tip: str
+
+:param parent: Parent widget for the new action. Defaults None.
+:type parent: QWidget
+
+:param whats_this: Optional text to show in the status bar when the
+    mouse pointer hovers over the action.
+
+:returns: The action that was created. Note that the action is also
+    added to self.actions list.
+:rtype: QAction
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.change_default_value ( self)"
+
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.choixTab ( self,  index)"
+
+.PP
+.nf
+Allows to manage the different options already chosen by the user or the default settings      
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.initGui ( self)"
+
+.PP
+.nf
+Create the menu entries and toolbar icons inside the QGIS GUI.
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.mes_action ( self)"
+
+.PP
+.nf
+Manages interactions between user and interface.
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_aggregate_no ( self)"
+
+.PP
+.nf
+manages the aggregation parameters if it is not checks
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_aggregate_yes ( self)"
+
+.PP
+.nf
+manages the aggregation parameters if it is checks
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_cumule ( self)"
+
+.PP
+.nf
+manages the cumul parameters
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_cwsi ( self)"
+
+.PP
+.nf
+manages the cwsi parameters
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_Decoupage ( self)"
+
+.PP
+.nf
+manages the cutting parameters
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_Default ( self)"
+
+.PP
+.nf
+avoids the user to change the threshold by locking        
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_DOY ( self)"
+
+.PP
+.nf
+unlocks the DOY       
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_Interpolation ( self)"
+
+.PP
+.nf
+manages the interpolation parameters
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_Lissage ( self)"
+
+.PP
+.nf
+manages the smoothing options
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_NDVI ( self)"
+
+.PP
+.nf
+locks the DOY       
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_Seuil ( self)"
+
+.PP
+.nf
+alloiws the user to change the threshold        
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_tci ( self)"
+
+.PP
+.nf
+manages the tci parameters
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_tvdi ( self)"
+
+.PP
+.nf
+manages the tvdi parameters
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.selection_vhi ( self)"
+
+.PP
+.nf
+manages the vhi parameters
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.showDlg ( self)"
+
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.stop ( self)"
+
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.tr ( self,  message)"
+
+.PP
+.nf
+Get the translation for a string using Qt translation API.
+
+We implement this ourselves since we do not inherit QObject.
+
+:param message: String for translation.
+:type message: str, QString
+
+:returns: Translated version of message.
+:rtype: QString
+
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.unload ( self)"
+
+.PP
+.nf
+Removes the plugin menu item and icon from QGIS GUI.
+.fi
+.PP
+ 
+.SS "def VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.validation ( self)"
+
+.PP
+.nf
+cette fonction permet de determiner l'action à réaliser quand on clique sur 
+Valider
+.fi
+.PP
+ 
+.SH "Documentation des données membres"
+.PP 
+.SS "VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.actions"
+
+.SS "VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.dlg"
+
+.SS "VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.iface"
+
+.SS "VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.menu"
+
+.SS "VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.on"
+
+.SS "VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.plugin_dir"
+
+.SS "VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.toolbar"
+
+.SS "VERSAO_VegaMonitor\&.VERSAO_VegaMonitor\&.VERSAOVegaMonitor\&.translator"
+
+
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour VERSAO à partir du code source\&.
