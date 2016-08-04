@@ -584,7 +584,7 @@ class Pretraitement():
               Projection=P
           except:
               
-              self.qgisInterface.messageBar().pushMessage("Error", u"a problem was encountered during the concatenation data", level=QgsMessageBar.CRITICAL)
+              self.qgisInterface.messageBar().pushMessage("Error", u"concatenation problem, check  the size of your data", level=QgsMessageBar.CRITICAL)
               self.stop()
               return
           try:
@@ -716,7 +716,7 @@ class Pretraitement():
             newNdvi=sp.zeros((nL,nC,nZ),dtype='float16') #variable qui stocke le  NDVI après interpolation
             self.qgisInterface.messageBar().pushMessage("Info", u"interpolation...", level=QgsMessageBar.INFO, duration=3)
         except:
-          self.qgisInterface.messageBar().pushMessage("Error", u"error on the concatenation data. Maybe you have a lot of data.", level=QgsMessageBar.CRITICAL)
+          self.qgisInterface.messageBar().pushMessage("Error", u"concatenation problem, check the size of your data.", level=QgsMessageBar.CRITICAL)
           self.stop()
           QApplication.restoreOverrideCursor()
           return
@@ -934,7 +934,7 @@ class Pretraitement():
             try:
                 newNdvi=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"concatenation problem", level=QgsMessageBar.CRITICAL)
+                  self.qgisInterface.messageBar().pushMessage("Error", u"concatenation problem, check your the size of data", level=QgsMessageBar.CRITICAL)
                   self.stop()
                   QApplication.restoreOverrideCursor()
 
@@ -1534,7 +1534,6 @@ class CalculIndicateur():
                 nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
                 out=sp.zeros((nL,nC,nZ))
                 new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
-        #        out=sp.empty((nL,nC,nZ),dtype='float16')
                 sos=0
                 eos=0
                 tos=0
@@ -1542,7 +1541,6 @@ class CalculIndicateur():
                     M,sos,eos,tos=self.cumule(new)
                     new=M
                 progress=1
-    #            try:
                 prefixe="cwsi_"
                 for t in range(nZ):
                      if not self.on:
@@ -1556,8 +1554,6 @@ class CalculIndicateur():
                      out[:,:,t]=(new[:,:,t]-mini)/(maxi-mini)
                 self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,)
                 QApplication.restoreOverrideCursor()                
-    #            except:
-    #                QgsMessageLog.logMessage("un problème rencontré lors du  calcul du cswi")
             except:
                   self.qgisInterface.messageBar().pushMessage("Error", u"a problem was detected when calculating CSWI", level=QgsMessageBar.CRITICAL)
                   self.stop()

@@ -7,17 +7,17 @@
 # This file should be included when you package your plugin.# Mandatory items:
 
 [general]
-name=pretraitement et pheno
+name=VERSAO VegaMonitor
 qgisMinimumVersion=2.0
-description=calcul de metrique phenologique et pretraitement
+description=Pre-processing, Phenology detection, Vegetative drought indices
 version=0.1
 author=Dian
 email=bah.mamadian@yahoo.fr
 
-about=ce plugin permet de faire le pretraitment d'images MOD13Q1 de MODIS et permet d'extraire des metriques phenologique
+about=This plugin was devellops in the VERSAO project (Vers une Estimation spatialisées des Rendements par télédétection pour la Sécurité alimentaire en Afrique de l’Ouest). It allows to preprocess the data, extract phenological metrics and calculate various indicators describing the evolution of vegetation and climate condidtions.
 
-tracker=https://github.com/Xdarii/metriquePheno/issues
-repository=https://github.com/Xdarii/metriquePheno/blob/master/metriquePheno.py
+tracker=https://github.com/Xdarii/VERSAO_VegaMonitor/issues
+repository=https://github.com/Xdarii/VERSAO_VegaMonitor
 # End of mandatory metadata
 
 # Recommended items:
@@ -26,13 +26,13 @@ repository=https://github.com/Xdarii/metriquePheno/blob/master/metriquePheno.py
 # changelog=
 
 # Tags are comma separated with spaces allowed
-tags=
+tags=Pre-processing, Phenology detection, Vegetative drought indices
 
-homepage=
-category=Plugins
+homepage=https://github.com/Xdarii/VERSAO_VegaMonitor/wiki
+category=Raster
 icon=icon.png
 # experimental flag
-experimental=True
+experimental=False
 
 # deprecated flag (applies to the whole plugin, not just a single version)
 deprecated=False
