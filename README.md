@@ -6,7 +6,7 @@ Ce plugin a été dévélloppé dans le cadre du projet VERSAO (Vers une Estimat
 Il permet de prétraiter les données, d'extraire les métriques phénologiques et de calculer differents indicateurs décrivant l'évolution de la végétation et des condidtions climatiques.
 
 
-*[Lien vers le wiki sur Github pour plus d'informations](https://github.com/Xdarii/VERSAO_VegaMonitor/wiki/User Guide)*
+*[Lien vers le wiki sur Github pour plus d'informations](https://github.com/Xdarii/VERSAO_VegaMonitor/wiki)*
 
 *[Lien vers le projet](https://github.com/Xdarii/VERSAO_VegaMonitor/)*
 
