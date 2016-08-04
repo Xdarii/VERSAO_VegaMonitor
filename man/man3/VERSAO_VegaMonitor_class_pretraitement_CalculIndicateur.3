@@ -1,4 +1,4 @@
-.TH "VERSAO_VegaMonitor.class_pretraitement.CalculIndicateur" 3 "Mercredi 3 Août 2016" "VERSAO" \" -*- nroff -*-
+.TH "VERSAO_VegaMonitor.class_pretraitement.CalculIndicateur" 3 "Jeudi 4 Août 2016" "VERSAO" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
@@ -34,7 +34,7 @@ VERSAO_VegaMonitor.class_pretraitement.CalculIndicateur \-
 .RI "def \fBtvdi\fP (self)"
 .br
 .ti -1c
-.RI "def \fBsave\fP (self, out, sos, eos, tos, \fBprefixe\fP, \fBprogress\fP, GeoTransform, Projection, \fBtci\fP=0)"
+.RI "def \fBsave\fP (self, out, sos, eos, tos, prefixe, progress, GeoTransform, Projection, \fBtci\fP=0)"
 .br
 .in -1c
 .SS "Attributs publics"
@@ -104,25 +104,6 @@ VERSAO_VegaMonitor.class_pretraitement.CalculIndicateur \-
 .RI "\fBchecked_multi\fP"
 .br
 .in -1c
-.SS "Attributs publics statiques"
-
-.in +1c
-.ti -1c
-.RI "string \fBprefixe\fP = 'cwsi_'"
-.br
-.ti -1c
-.RI "\fBprogress\fP = progress+(1\&.0/nZ*75)"
-.br
-.ti -1c
-.RI "\fBmini\fP = sp\&.nanmin(new[:,:,t])"
-.br
-.ti -1c
-.RI "\fBmaxi\fP = sp\&.nanmax(new[:,:,t])"
-.br
-.ti -1c
-.RI "\fBlevel\fP"
-.br
-.in -1c
 .SH "Description détaillée"
 .PP 
 
@@ -156,8 +137,6 @@ Allows to preprocess sos, eos et tos
 .fi
 .PP
  
-.PP
-Références VERSAO_VegaMonitor\&.my_aggregate\&.block_reduce(), VERSAO_VegaMonitor\&.metrique_phenologique\&.metriquePhenologique\&.dlg, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.dureeSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.dureeSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.dureeSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.interface, VERSAO_VegaMonitor\&.function_data_raster\&.open_data(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.stop(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.stop(), et VERSAO_VegaMonitor\&.class_pretraitement\&.test_existe_lien()\&.
 .SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.cwsi ( self)"
 
 .PP
@@ -167,8 +146,6 @@ Allows to  calculate  crop water stress index
 .fi
 .PP
  
-.PP
-Références VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.concatenation_serie(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.cumule(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.cumuleChecked, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.lienDonnee, et VERSAO_VegaMonitor\&.function_data_raster\&.open_data()\&.
 .SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.depart ( self)"
 
 .PP
@@ -178,8 +155,6 @@ START, disable the validation button and the active progress bar
 .fi
 .PP
  
-.PP
-Références VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.on, et VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.on\&.
 .SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.save ( self,  out,  sos,  eos,  tos,  prefixe,  progress,  GeoTransform,  Projection,  tci = \fC0\fP)"
 
 .PP
@@ -189,8 +164,6 @@ saves the calculated indicators with the corresponding anomalies
 .fi
 .PP
  
-.PP
-Références VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.cumuleChecked, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.debutT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.debutT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.debutT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.finT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.finT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.finT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.lienSave, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.lienSave, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.lienSave, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.nomPrefixe, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.nomPrefixe, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.nomPrefixe, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.stop(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.stop(), et VERSAO_VegaMonitor\&.function_data_raster\&.write_data()\&.
 .SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.stop ( self)"
 
 .PP
@@ -200,8 +173,6 @@ STOP, activate the validation button and disable progress bar
 .fi
 .PP
  
-.PP
-Références VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.on, et VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.on\&.
 .SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.tci ( self)"
 
 .PP
@@ -211,8 +182,6 @@ Allows to calculate the TCI (temperature conditions index)
 .fi
 .PP
  
-.PP
-Références VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.concatenation_serie(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.cumule(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.cumuleChecked, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.depart(), VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.depart(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.depart(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.on, VERSAO_VegaMonitor\&.function_data_raster\&.open_data(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.save(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.save(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.stop(), et VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.stop()\&.
 .SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.tvdi ( self)"
 
 .PP
@@ -222,8 +191,6 @@ Allows to calculate the TVDI (temperature-vegetation dryness index)
 .fi
 .PP
  
-.PP
-Références VERSAO_VegaMonitor\&.my_aggregate\&.block_reduce(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.concatenation_serie(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.cumule(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.cumuleChecked, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.debutSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.debutSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.debutSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.debutT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.debutT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.debutT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.depart(), VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.depart(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.depart(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.dureeSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.dureeSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.dureeSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.finSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.finSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.finSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.finT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.finT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.finT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.on, VERSAO_VegaMonitor\&.function_data_raster\&.open_data(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.save(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.save(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.stop(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.stop(), VERSAO_VegaMonitor\&.class_pretraitement\&.test_lien_data_date(), et VERSAO_VegaMonitor\&.TVDI\&.TVDI_function()\&.
 .SS "def VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.vhi ( self)"
 
 .PP
@@ -233,8 +200,6 @@ Allows to calculate  the VHI (vegetation health index)
 .fi
 .PP
  
-.PP
-Références VERSAO_VegaMonitor\&.my_aggregate\&.block_reduce(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.checked_multi, VERSAO_VegaMonitor\&.class_pretraitement\&.concatenation_serie(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.cumule(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.cumuleChecked, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.debutSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.debutSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.debutSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.debutT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.debutT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.debutT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.depart(), VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.depart(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.depart(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.dureeSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.dureeSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.dureeSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.dureeT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.finSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.finSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.finSerie, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.finT, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.finT, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.finT, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.iDebut, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.iFin, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.imageParAn, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.interface, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.lienDonnee, VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.on, VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.on, VERSAO_VegaMonitor\&.function_data_raster\&.open_data(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.save(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.save(), VERSAO_VegaMonitor\&.class_pretraitement\&.Pretraitement\&.stop(), VERSAO_VegaMonitor\&.class_pretraitement\&.detection_phenologique\&.stop(), VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.stop(), et VERSAO_VegaMonitor\&.class_pretraitement\&.test_lien_data_date()\&.
 .SH "Documentation des données membres"
 .PP 
 .SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.Bar"
@@ -265,15 +230,9 @@ Références VERSAO_VegaMonitor\&.my_aggregate\&.block_reduce(), VERSAO_VegaMoni
 
 .SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.interface"
 
-.SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.level\fC [static]\fP"
-
 .SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.lienDonnee"
 
 .SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.lienSave"
-
-.SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.maxi = sp\&.nanmax(new[:,:,t])\fC [static]\fP"
-
-.SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.mini = sp\&.nanmin(new[:,:,t])\fC [static]\fP"
 
 .SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.nomPrefixe"
 
@@ -282,10 +241,6 @@ Références VERSAO_VegaMonitor\&.my_aggregate\&.block_reduce(), VERSAO_VegaMoni
 .SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.on"
 
 .SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.periodeTemporelle"
-
-.SS "string VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.prefixe = 'cwsi_'\fC [static]\fP"
-
-.SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.progress = progress+(1\&.0/nZ*75)\fC [static]\fP"
 
 .SS "VERSAO_VegaMonitor\&.class_pretraitement\&.CalculIndicateur\&.qgisInterface"
 
