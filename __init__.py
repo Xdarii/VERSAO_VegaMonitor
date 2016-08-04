@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """
 /***************************************************************************
- metriquePhenologique
+ VERSAOVegaMonitor
                                  A QGIS plugin
- calcul de metrique phenologique et pretraitement
+ Pre-processing, Phenology detection, Vegetative drought indices
                              -------------------
-        begin                : 2016-04-29
-        copyright            : (C) 2016 by Mamadou Dian BAH
+        begin                : 2016-08-04
+        copyright            : (C) 2016 by Dian
         email                : bah.mamadian@yahoo.fr
         git sha              : $Format:%H$
  ***************************************************************************/
@@ -25,11 +25,11 @@
 
 # noinspection PyPep8Naming
 def classFactory(iface):  # pylint: disable=invalid-name
-    """Load metriquePhenologique class from file metriquePhenologique.
+    """Load VERSAOVegaMonitor class from file VERSAOVegaMonitor.
 
     :param iface: A QGIS interface instance.
     :type iface: QgsInterface
     """
     #
-    from .metrique_phenologique import metriquePhenologique
-    return metriquePhenologique(iface)
+    from .VERSAO_VegaMonitor import VERSAOVegaMonitor
+    return VERSAOVegaMonitor(iface)
