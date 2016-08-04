@@ -1,5 +1,5 @@
 
-![Logo](https://github.com/Xdarii/QGIS_Traitement_and_Pheno/blob/master/icon.png "Prétraitement et Param Pheno QGIS")
+![Logo](https://github.com/Xdarii/VERSAO_VegaMonitor/blob/master/icon.png "Prétraitement et Param Pheno QGIS")
 
 # Plugin Qgis VERSAO_VegaMonitor: 
 Ce plugin a été dévélloppé dans le cadre du projet VERSAO (Vers une Estimation spatialisées des Rendements par télédétection pour la Sécurité alimentaire en Afrique de l’Ouest).
