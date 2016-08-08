@@ -357,7 +357,7 @@
         </rect>
        </property>
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string/>
        </property>
        <property name="text">
         <string>Default</string>
@@ -376,7 +376,7 @@
         </rect>
        </property>
        <property name="toolTip">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string/>
        </property>
        <property name="text">
         <string>Other</string>
@@ -1943,7 +1943,7 @@
          </font>
         </property>
         <property name="value">
-         <double>0.600000000000000</double>
+         <double>0.750000000000000</double>
         </property>
        </widget>
        <widget class="QLabel" name="label_eos">
@@ -1989,7 +1989,7 @@
          </font>
         </property>
         <property name="value">
-         <double>0.450000000000000</double>
+         <double>0.250000000000000</double>
         </property>
        </widget>
        <widget class="QLabel" name="label_sos">
@@ -2068,12 +2068,12 @@
       </property>
       <item>
        <property name="text">
-        <string>NDVI absolute Threshold</string>
+        <string>NDVI relative Threshold</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>NDVI relative Threshold</string>
+        <string>NDVI absolute Threshold</string>
        </property>
       </item>
       <item>

@@ -6,8 +6,6 @@ Created on Sun May 29 22:42:25 2016
 """
 
 import scipy as sp
-#import matplotlib.pyplot as plt
-#from scipy import stats
 
 def TVDI_function(inNDVI,inLST,pas=0.02,t=1,s1Min=0.3,s2Max=0.8,ss1Min=0.2,ss2Max=0.8):
     """
@@ -32,6 +30,7 @@ def TVDI_function(inNDVI,inLST,pas=0.02,t=1,s1Min=0.3,s2Max=0.8,ss1Min=0.2,ss2Ma
         
         t : t=0 to use Garcia M method  and t=1 to calculate the TVDI without using the threshold .
     Output: 
+    
         TVDI
     """
     TVDI=sp.zeros(inLST.shape)

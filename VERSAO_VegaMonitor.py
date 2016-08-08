@@ -516,10 +516,9 @@ class VERSAOVegaMonitor:
     def validation(self):
         
         """
-        cette fonction permet de determiner l'action à réaliser quand on clique sur 
-        Valider
-        
+        it executes the options that have been selected by the user (pre-processing, Phenology detection or Vegetative drought indices)
         """
+        #pre-processing
         if self.dlg.MOD13Q1.currentIndex()==0:        
             pretraitement=Pretraitement(self.dlg,self.iface)
     
@@ -530,12 +529,14 @@ class VERSAOVegaMonitor:
                     pretraitement.interpolation()
                 if self.dlg.lissage.isChecked():
                     pretraitement.lisser()
+        # Phenology detection
         if self.dlg.MOD13Q1.currentIndex()==1:    
             
             pheno=detection_phenologique(self.dlg,self.iface)
             if pheno.on:
                 pheno.estimation()
-            
+        
+        #Vegetative drought indices
         if self.dlg.MOD13Q1.currentIndex()==2:        
             indicateur=CalculIndicateur(self.dlg,self.iface)
             

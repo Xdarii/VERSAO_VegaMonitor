@@ -1118,22 +1118,22 @@ class detection_phenologique():
             #variable qui stocke les 11 metriques pour chaque années 
                 metrique=sp.empty((L,C,11),dtype='float16') 
                 #tableaux dans les quelles les differentes metriques seront stockées séparemment
-                sos=sp.zeros((L,C,self.dureeT),dtype='float16')
-                eos=sp.zeros((L,C,self.dureeT),dtype='float16') #start of season
+                sos=sp.zeros((L,C,self.dureeT),dtype='float16')#start of season
+                eos=sp.zeros((L,C,self.dureeT),dtype='float16') #end of season
                 los=sp.zeros((L,C,self.dureeT),dtype='float16') #length of seaon
                 maxi=sp.zeros((L,C,self.dureeT),dtype='float16')
                 
-                area=sp.empty((L,C,self.dureeT),dtype='float16') #cumule du ndvi sur l'ensemble de la saison
-                areaBef=sp.empty((L,C,self.dureeT),dtype='float16')# cumul du NDVI avant le max de la saison
-                areaAft=sp.empty((L,C,self.dureeT),dtype='float16') # cumul après le max de la saison
+                area=sp.empty((L,C,self.dureeT),dtype='float16') #integration over all season
+                areaBef=sp.empty((L,C,self.dureeT),dtype='float16')# integration over growing season
+                areaAft=sp.empty((L,C,self.dureeT),dtype='float16') # integration over senescence period
     
-                anomalieSos=sp.empty((L,C,self.dureeT),dtype='float16') # anomalie sur le dé but de la saison
-                anomalieEos=sp.empty((L,C,self.dureeT),dtype='float16') #anomalie sur la fin de la saison
-                anomalieLos=sp.empty((L,C,self.dureeT),dtype='float16') #anomalie sur la longueur de la saison
+                anomalieSos=sp.empty((L,C,self.dureeT),dtype='float16') # anomaly of start of season
+                anomalieEos=sp.empty((L,C,self.dureeT),dtype='float16') #anomaly of end of season
+                anomalieLos=sp.empty((L,C,self.dureeT),dtype='float16') #anomaly of lenght of season
                 
-                anomalieArea=sp.empty((L,C,self.dureeT),dtype='float16')# anomalie sur le cumul total 
-                anomalieAreaBef=sp.empty((L,C,self.dureeT),dtype='float16') #anomalie sur le cumul avant max
-                anomalieAreaAft=sp.empty((L,C,self.dureeT),dtype='float16') #anomalie sur le cumul après max
+                anomalieArea=sp.empty((L,C,self.dureeT),dtype='float16')# anomaly of all season
+                anomalieAreaBef=sp.empty((L,C,self.dureeT),dtype='float16') #anomaly of growing period
+                anomalieAreaAft=sp.empty((L,C,self.dureeT),dtype='float16') #anomaly of senescence period
             except:
                 QgsMessageLog.logMessage("a problem encountered when declaring variables that need to store differents parameters")
             try:
@@ -1156,15 +1156,15 @@ class detection_phenologique():
                                  return 
                                  
                              ndvi=NDVI[x,y,:]*self.facteureEchelle
-                             #détection des métriques en fonction de la méthode choisie
-                             if self.methode==0:
-                                 methode="_NDVI absolute Threshold_"
+                             #method of phenology detection
+                             if self.methode==1:
+                                 methode="_NDVI absolute Threshold_"+str(annee)+"_seuil1_"+str(self.seuil1)+"_seuil2_"+str(self.seuil2)
                                  if self.radioButton_defaultChecked:
                                       out1= metrique_pheno_greenbrown(ndvi,"trs")
                                  else:
                                       out1= metrique_pheno_greenbrown(ndvi,"trs",self.seuil1,self.seuil2)
-                             if self.methode==1:
-                                 methode="_NDVI Relative Threshold _"
+                             if self.methode==0:
+                                 methode="_NDVI Relative Threshold _"+str(annee)+"_seuil1_"+str(self.seuil1)+"_seuil2_"+str(self.seuil2)
                                  if self.radioButton_defaultChecked:
                                      out1= metrique_pheno_vito(ndvi)
                                  else:
@@ -1189,7 +1189,7 @@ class detection_phenologique():
                     areaAft[:,:,k]=metrique[:,:,5]
                             
                     #Enregistrement des metriques année/année
-                    output_name=os.path.join(self.lienSave,self.nomPrefixe+u'_metric'+methode+str(annee)+"_seuil1_"+str(self.seuil1)+"_seuil2_"+str(self.seuil2)+'.tif')
+                    output_name=os.path.join(self.lienSave,self.nomPrefixe+u'_metric'+methode+'.tif')
                     write_data(output_name,metrique,GeoTransform,Projection)
                     annee=annee+1
                 name=methode+str(self.debutT)+'-'+str(self.finT)+".tif"
@@ -1294,6 +1294,7 @@ class CalculIndicateur():
         """
         self.interface=dlg
         self.qgisInterface=iface
+        #check if scipy is installed
         try:    
             import scipy as sp
         except:
@@ -1323,10 +1324,10 @@ class CalculIndicateur():
         
         self.nomPrefixe=dlg.prefixeOut_5.text()
       
-        self.lienSave=dlg.cheminOut_temperature.text()     #lien d'enregistrement
+        self.lienSave=dlg.cheminOut_temperature.text() #where to save     
       
-        self.lienDonnee=dlg.cheminTemperature.text()  # repertoire des données
-        self.facteureEchelle=dlg.facteurEchelle_5.value() #facteur d'échelle
+        self.lienDonnee=dlg.cheminTemperature.text()  # data
+        self.facteureEchelle=dlg.facteurEchelle_5.value() #scale factor
         
         self.cumuleChecked=dlg.cumule.isChecked()  
         self.checked_multi=dlg.type_image_3.currentIndex()
@@ -1600,6 +1601,7 @@ class CalculIndicateur():
                              self.stop()
                              return
                          out[:,:,ll]=(maxi-new[:,:,ll])/(maxi-mini+0.0000001)
+                #saving
                 self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,1)
                 QApplication.restoreOverrideCursor()
             except:
@@ -1749,7 +1751,6 @@ class CalculIndicateur():
                     nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
                     out=sp.zeros((nL,nC,nZ))
                     new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
-            #        out=sp.empty((nL,nC,nZ),dtype='float16')
                     if self.cumuleChecked:
                         new,sos,eos,tos=self.cumule(new)
                     if not self.on:
@@ -1804,7 +1805,8 @@ class CalculIndicateur():
                         inV=inNdvi1[:nLLL,:nCCC,:]
                         inT=new[:nLLL,:nCCC,:]
                         out=sp.zeros((nLLL,nCCC,nZ))
-        
+                        
+                    #if aggregate is not checked    
                     else:
                         
                         [nLL,nCC,nZZ]=inNdvi.shape
@@ -1867,8 +1869,11 @@ class CalculIndicateur():
                  anomalie[:,:,ll]=(out[:,:,ll]-moy)/(ecartT+0.0000001)
                  
         if self.cumuleChecked:
+            #Start of season - End of season
             tSosEos=sp.zeros((xx,yy,self.dureeT))
+            #Start of season - Top of season
             tSosTos=sp.zeros((xx,yy,self.dureeT))
+            #Top of season - End of season
             tTosEos=sp.zeros((xx,yy,self.dureeT))
             for kk in range(self.dureeT):
                 for x in range(xx):
@@ -1882,16 +1887,20 @@ class CalculIndicateur():
                         
                         deb= kk*self.imageParAn+sos[x,y,kk] 
                         fin= kk *self.imageParAn + tos[x,y,kk]
-                        tSosTos[x,y,kk]=sp.nanmean(out[x,y,deb:fin ])#CUMULE SOS_TOS
+                        #mean SOS_TOS
+                        tSosTos[x,y,kk]=sp.nanmean(out[x,y,deb:fin ])
                         
                         deb= kk*self.imageParAn+tos[x,y,kk] 
                         fin= kk *self.imageParAn + eos[x,y,kk]
-                        tTosEos[x,y,kk]=sp.nanmean(out[x,y,deb:fin ])#CUMULE TOS_EOS
+                        #mean TOS_EOS
+                        tTosEos[x,y,kk]=sp.nanmean(out[x,y,deb:fin ])
                         
                         deb= kk*self.imageParAn+sos[x,y,kk] 
                         fin= kk *self.imageParAn + eos[x,y,kk]
-                        tSosEos[x,y,kk]=sp.nanmean( out[x,y, deb:fin ]) #CUMULE SOS_EOS
-            #calcul d'anomalies
+                        #mean SOS_EOS
+                        tSosEos[x,y,kk]=sp.nanmean( out[x,y, deb:fin ])
+                        
+            #Anomaly
             
             anomalieTsos_tos=(tSosTos-sp.nanmean(tSosTos))/sp.nanstd(tSosTos)
             
@@ -1899,14 +1908,13 @@ class CalculIndicateur():
             
             anomalieTtos_eos=(tTosEos-sp.nanmean(tTosEos))/sp.nanstd(tTosEos)
             
-            #enregistrement
-            output_name3=os.path.join(self.lienSave,self.nomPrefixe+'_moy_tSosTos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-            output_name4=os.path.join(self.lienSave,self.nomPrefixe+'_moy_tTosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-            output_name5=os.path.join(self.lienSave,self.nomPrefixe+'_moy_tSosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-
-            output_name6=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tSosTos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-            output_name7=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tTosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
-            output_name8=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tSosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') #lien d'enregistrement de la serie de l'année (année)
+            #saving mean and anomalies
+            output_name3=os.path.join(self.lienSave,self.nomPrefixe+'_moy_tSosTos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') 
+            output_name4=os.path.join(self.lienSave,self.nomPrefixe+'_moy_tTosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') 
+            output_name5=os.path.join(self.lienSave,self.nomPrefixe+'_moy_tSosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') 
+            output_name6=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tSosTos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') 
+            output_name7=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tTosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') 
+            output_name8=os.path.join(self.lienSave,self.nomPrefixe+'_anomalie_tSosEos_'+prefixe +str(self.debutT)+'_'+str(self.finT)+'.tif') 
             
             write_data(output_name3,tSosTos,GeoTransform,Projection)
             write_data(output_name4,tTosEos,GeoTransform,Projection)
