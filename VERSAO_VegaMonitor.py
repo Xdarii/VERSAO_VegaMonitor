@@ -448,11 +448,11 @@ class VERSAOVegaMonitor:
         avoids the user to change the threshold by locking        
         """
         self.dlg.frame_seuil.setEnabled(0)
-        if self.dlg.methode.currentIndex()==1:
+        if self.dlg.methode.currentIndex()==0:
             self.dlg.threshold.setEnabled(1)
             self.dlg.seuilSOS.setValue(0.45)
             self.dlg.seuilEOS.setValue(0.6)
-        if self.dlg.methode.currentIndex()==0:
+        if self.dlg.methode.currentIndex()==1:
             self.dlg.seuilSOS.setValue(0.25)
             self.dlg.seuilEOS.setValue(0.75)
             self.dlg.threshold.setEnabled(1)
