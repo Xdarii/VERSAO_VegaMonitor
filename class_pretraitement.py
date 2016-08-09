@@ -52,7 +52,7 @@ def test_existe_lien(dlg,lienDonnee, nomRepertoire):
     if not (os.path.exists(str(lienDonnee))) :        
     
     #teste si le lien fournit pour le NDVI et /ou du DOY existe
-          QMessageBox.warning(dlg, u'Warning ', u"The directory " +nomRepertoire + " doesn't exist ")
+          QMessageBox.warning(dlg, u'Warning ', nomRepertoire + u" doesn't exist ")
               
           return 0
                 
@@ -74,7 +74,7 @@ def test_existe_data(dlg,lienDonnee, nomRepertoire):
     donnee= os.listdir(str(lienDonnee))
     ok=0
     if len(donnee)<1:
-          QMessageBox.warning(dlg, u'Warning', u"The directory" +nomRepertoire + u" is empty")
+          QMessageBox.warning(dlg, u'Warning', nomRepertoire + u" is empty")
           return liste,ok
           
     
@@ -83,7 +83,7 @@ def test_existe_data(dlg,lienDonnee, nomRepertoire):
             liste.append(element);
     
     if len(liste)<1:
-          QMessageBox.warning(dlg, u'Warning', u"The directory " +nomRepertoire + u" doesn't have  .tif files")
+          QMessageBox.warning(dlg, u'Warning', nomRepertoire + u" doesn't have  .tif files")
           return liste,ok
     
     ok=1      
@@ -118,7 +118,7 @@ def test_bande_data(dlg,data,liste, nomRepertoire,checked,imageParAn,iDebut,iFin
             z=0
         if z >1 :
             
-              QMessageBox.warning(dlg, u'Warning', u"In The directory " +nomRepertoire + ", the files are not monoband ")
+              QMessageBox.warning(dlg, u'Warning',  nomRepertoire + "', the files are not monoband ")
               return lListe,nYear,ok
               
         nYear=len(liste)/imageParAn
@@ -132,9 +132,12 @@ def test_bande_data(dlg,data,liste, nomRepertoire,checked,imageParAn,iDebut,iFin
             z=0
             
         if z <2 :            
-              QMessageBox.warning(dlg, u'Warning ', u"In The directory " +nomRepertoire + ", The files are monoband")
+              QMessageBox.warning(dlg, u'Warning ', nomRepertoire + "', The files are monoband")
               return lListe,nYear,ok
-        if checked==1:      
+        if checked==1:
+            if data.shape[2] != imageParAn:
+              QMessageBox.warning(dlg, u'Warning ', u"Images/Year is not correct")
+              return lListe,nYear,ok
             nYear=len(liste)
             lListe=liste[iDebut:(iFin+1)]
         if checked==2:
@@ -901,7 +904,7 @@ class Pretraitement():
         concat=sp.zeros((newNdvi.shape[0],newNdvi.shape[1]))
         
         for k in range(self.dureeT):
-            progress=(1.0/len(self.dureeT)*pourcent)+progress
+            progress=(1.0/(self.dureeT)*pourcent)+progress
             self.Bar.progression(progress)  
             deb=k*self.imageParAn
             fin=(k+1)*self.imageParAn            
@@ -962,10 +965,10 @@ class Pretraitement():
                 else:
                       lissageNdvi=newNdvi
             except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"resampling problem", level=QgsMessageBar.CRITICAL)
-                  self.stop()
-                  QApplication.restoreOverrideCursor()
-                  return
+                 self.qgisInterface.messageBar().pushMessage("Error", u"resampling problem", level=QgsMessageBar.CRITICAL)
+                 self.stop()
+                 QApplication.restoreOverrideCursor()
+                 return
             try:
                 if self.lissage>0:
                      if not self.on:
@@ -996,8 +999,8 @@ class Pretraitement():
                   self.stop()
                   return
             try:
-                message=u"lissage effectué avec succès"         
-                self.save(lissageNdvi,"_lissage_",prefixe,GeoTransform,Projection,progress,message)
+                message=u"successful"         
+                self.save(lissageNdvi,"Done",prefixe,GeoTransform,Projection,progress,message)
                 QApplication.restoreOverrideCursor()
             except:
                   self.qgisInterface.messageBar().pushMessage("Error", u"saving problem", level=QgsMessageBar.CRITICAL)
@@ -1526,39 +1529,39 @@ class CalculIndicateur():
             """
             Allows to  calculate  crop water stress index
             """
-            try:
-                self.qgisInterface.messageBar().pushMessage("Info", u"CWSI...", level=QgsMessageBar.INFO, duration=3)
-                imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
-                [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
-                [nL,nC,i]=NDVI.shape
-                
-                nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
-                out=sp.zeros((nL,nC,nZ))
-                new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
-                sos=0
-                eos=0
-                tos=0
-                if self.cumuleChecked:
-                    M,sos,eos,tos=self.cumule(new)
-                    new=M
-                progress=1
-                prefixe="cwsi_"
-                for t in range(nZ):
-                     if not self.on:
-                         self.stop()
-                         return
-                     progress=progress+(1.0/nZ*75)
-                     self.Bar.progression(progress)
-                         
-                     mini=sp.nanmin(new[:,:,t])
-                     maxi=sp.nanmax(new[:,:,t]) 
-                     out[:,:,t]=(new[:,:,t]-mini)/(maxi-mini)
-                self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,)
-                QApplication.restoreOverrideCursor()                
-            except:
-                  self.qgisInterface.messageBar().pushMessage("Error", u"a problem was detected when calculating CSWI", level=QgsMessageBar.CRITICAL)
-                  self.stop()
-                  return
+#            try:
+            self.qgisInterface.messageBar().pushMessage("Info", u"CWSI...", level=QgsMessageBar.INFO, duration=3)
+            imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
+            [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
+            [nL,nC,i]=NDVI.shape
+            
+            nZ=self.dureeT*self.imageParAn #23images par années * le nombre d'années
+            out=sp.zeros((nL,nC,nZ))
+            new=concatenation_serie(self.lienDonnee,self.lListe,self.dureeT,self.imageParAn,self.checked_multi,self.iDebut,self.iFin)
+            sos=0
+            eos=0
+            tos=0
+            if self.cumuleChecked:
+                M,sos,eos,tos=self.cumule(new)
+                new=M
+            progress=1
+            prefixe="cwsi_"
+            for t in range(nZ):
+                 if not self.on:
+                     self.stop()
+                     return
+                 progress=progress+(1.0/nZ*75)
+                 self.Bar.progression(progress)
+                     
+                 mini=sp.nanmin(new[:,:,t])
+                 maxi=sp.nanmax(new[:,:,t]) 
+                 out[:,:,t]=(new[:,:,t]-mini)/(maxi-mini)
+            self.save(out,sos,eos,tos,prefixe,progress,GeoTransform,Projection,)
+            QApplication.restoreOverrideCursor()                
+#            except:
+#                  self.qgisInterface.messageBar().pushMessage("Error", u"a problem was detected when calculating CSWI", level=QgsMessageBar.CRITICAL)
+#                  self.stop()
+#                  return
     def tci(self):
             """
             Allows to calculate the TCI (temperature conditions index)  
@@ -1614,8 +1617,8 @@ class CalculIndicateur():
             """
             Allows to calculate  the VHI (vegetation health index)
             """
-            self.depart()
             try:
+                self.depart()
                 self.qgisInterface.messageBar().pushMessage("Info", u" VHI...", level=QgsMessageBar.INFO, duration=3)
                 imageNDVI=os.path.join(self.lienDonnee , self.lListe[0])
                 [NDVI,GeoTransform,Projection]=open_data(imageNDVI)
@@ -1641,9 +1644,9 @@ class CalculIndicateur():
                     QgsMessageLog.logMessage(u"problem on NDVI data")
                     
                 if not ok:
-                    QApplication.restoreOverrideCursor()
-                    self.Bar.active(0)
-                    return
+                  self.stop()
+                  QApplication.restoreOverrideCursor()
+                  return
               
                 imageNDVI=os.path.join(lienNdvi , lListe[0])
                 [temp,GeoTransform1,Projection1]=open_data(imageNDVI)                 
@@ -1755,6 +1758,7 @@ class CalculIndicateur():
                         new,sos,eos,tos=self.cumule(new)
                     if not self.on:
                          self.stop()
+                         QApplication.restoreOverrideCursor()
                          return
                     progress=1
                 
@@ -1763,9 +1767,14 @@ class CalculIndicateur():
                     lListe=[]
                      
                     out=sp.zeros((nL,nC,nZ))
-                    lListe,nYear,ok=test_lien_data_date(self.interface,lienNdvi,"NDVI",self.imageParAn,self.checked_multi,self.iDebut,self.iFin,self.debutSerie,self.finSerie,self.debutT,self.finT,self.dureeSerie,self.dureeT)    
+                    try:
+                        lListe,nYear,ok=test_lien_data_date(self.interface,lienNdvi,"NDVI",self.imageParAn,self.checked_multi,self.iDebut,self.iFin,self.debutSerie,self.finSerie,self.debutT,self.finT,self.dureeSerie,self.dureeT)    
+                    except:
+                        QgsMessageLog.logMessage(u"problem on NDVI data")
+                        
                     if not ok:
                         self.stop()
+                        QApplication.restoreOverrideCursor()
                         return
                     
                     
@@ -1849,9 +1858,13 @@ class CalculIndicateur():
         moy=sp.zeros((xx,yy))
         ecartT=sp.zeros((xx,yy))
         anomalie=sp.zeros((xx,yy,zz))
-        eos=eos.astype(int)
-        sos=sos.astype(int)
-        tos=tos.astype(int)
+        #to be sure that the eos sos and TOS are Integers
+        try:
+            eos=eos.astype(int)
+            sos=sos.astype(int)
+            tos=tos.astype(int)
+        except:
+            pass
         for m in range(self.imageParAn):
              
              for x in range(xx):
